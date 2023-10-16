@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Kost extends Model
 {
     use HasFactory;
+    protected $table = 'kosts';
+	protected $guarded = [];
 }

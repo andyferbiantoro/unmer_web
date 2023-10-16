@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class MarketAgrikulture extends Model
 {
     use HasFactory;
+    protected $table = 'market_agrikultures';
+	protected $guarded = [];
 }
