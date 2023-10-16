@@ -13,19 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('market_agrikultures', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('no_telp');
-            $table->string('otp');
-            $table->string('role');
-            $table->string('status');
+            $table->integer('id_admin');
+            $table->string('nama_toko');
+            $table->string('status_buka');
             $table->string('longitude');
             $table->string('latitude');
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -37,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('market_agrikultures');
     }
 };
