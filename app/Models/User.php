@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'pin',
+        'nid_unmer',
         'no_telp',
         'otp',
         'role',
@@ -48,4 +50,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isSuperAdmin(){
+
+        if($this->role == 'superadmin'){
+
+            return true;
+        }
+        return false;
+    }
 }

@@ -16,6 +16,8 @@
 
        <li class="{{(request()->is('auditor-hasil_penilaian_lkps')) ? 'active' : ''}}"><a class="nav-link" href=""><i class="fas fa-book"></i><span>Hasil Penilaian Laporan Kinerja Program Studi</span></a></li>
     </ul>
+
+    <li class="{{(request()->is('logout_superadmin')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('logout_superadmin') }}" style="color: red;"><i class="fas fa-sign-out-alt"></i></i><span>Logout</span></a></li>
 </aside>
 
 
