@@ -45,4 +45,23 @@ class SuperadminController extends Controller
 
 		return response()->json($out, $out['code']);
 	}
+
+	public function superadmin_kelola_admin()
+	{
+
+		return view('super_admin.kelola_admin.index');
+	}
+
+
+	public function superadmin_kelola_produk()
+	{
+
+		return view('super_admin.kelola_produk.index');
+	}
+
+	public function superadmin_kelola_transaksi()
+	{
+
+		return view('super_admin.kelola_transaksi.index');
+	}
 }

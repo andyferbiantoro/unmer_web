@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Okt 2023 pada 06.38
+-- Waktu pembuatan: 18 Okt 2023 pada 13.25
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -50,10 +50,9 @@ CREATE TABLE `customers` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `id_user` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL,
-  `nik` varchar(255) NOT NULL,
-  `no_telp` varchar(255) NOT NULL,
-  `alamat` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL,
+  `nik` varchar(255) DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -347,7 +346,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (22, '2023_10_16_033238_create_produk_koperasis_table', 1),
 (23, '2023_10_16_033406_create_transaksi_koperasis_table', 1),
 (24, '2023_10_16_042817_create_favorit_agrikultures_table', 1),
-(25, '2023_10_16_043609_create_favorit_koperasis_table', 1);
+(25, '2023_10_16_043609_create_favorit_koperasis_table', 1),
+(26, '2023_10_18_111339_create_saldos_table', 2),
+(27, '2023_10_18_111955_create_transaksi_top_ups_table', 2);
 
 -- --------------------------------------------------------
 
@@ -423,6 +424,20 @@ CREATE TABLE `produk_koperasis` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `saldos`
+--
+
+CREATE TABLE `saldos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `nominal_saldo` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `transaksi_agrikultures`
 --
 
@@ -461,25 +476,50 @@ CREATE TABLE `transaksi_koperasis` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `transaksi_top_ups`
+--
+
+CREATE TABLE `transaksi_top_ups` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `metode_pembayaran` varchar(255) NOT NULL,
+  `nominal` int(11) NOT NULL,
+  `tanggal_topup` date NOT NULL,
+  `bukti_transfer` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `no_telp` varchar(255) NOT NULL,
-  `otp` varchar(255) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `pin` varchar(11) DEFAULT NULL,
+  `nid_unmer` varchar(100) DEFAULT NULL,
+  `no_telp` varchar(255) DEFAULT NULL,
+  `otp` varchar(255) DEFAULT NULL,
   `role` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `longitude` varchar(255) NOT NULL,
-  `latitude` varchar(255) NOT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `longitude` varchar(255) DEFAULT NULL,
+  `latitude` varchar(255) DEFAULT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `email_verified_at`, `password`, `pin`, `nid_unmer`, `no_telp`, `otp`, `role`, `status`, `longitude`, `latitude`, `remember_token`, `created_at`, `updated_at`) VALUES
+(2, 'andyfebri742@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', NULL, '000000', NULL, NULL, 'superadmin', '1', NULL, NULL, NULL, '2023-10-17 04:44:12', '2023-10-18 01:33:21');
 
 -- --------------------------------------------------------
 
@@ -645,6 +685,12 @@ ALTER TABLE `produk_koperasis`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `saldos`
+--
+ALTER TABLE `saldos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `transaksi_agrikultures`
 --
 ALTER TABLE `transaksi_agrikultures`
@@ -654,6 +700,12 @@ ALTER TABLE `transaksi_agrikultures`
 -- Indeks untuk tabel `transaksi_koperasis`
 --
 ALTER TABLE `transaksi_koperasis`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `transaksi_top_ups`
+--
+ALTER TABLE `transaksi_top_ups`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -779,7 +831,7 @@ ALTER TABLE `market_agrikultures`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
@@ -800,6 +852,12 @@ ALTER TABLE `produk_koperasis`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT untuk tabel `saldos`
+--
+ALTER TABLE `saldos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `transaksi_agrikultures`
 --
 ALTER TABLE `transaksi_agrikultures`
@@ -812,10 +870,16 @@ ALTER TABLE `transaksi_koperasis`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT untuk tabel `transaksi_top_ups`
+--
+ALTER TABLE `transaksi_top_ups`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `wisatas`

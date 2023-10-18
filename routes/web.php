@@ -29,6 +29,14 @@ Route::post('/proses_login', [AuthController::class, 'proses_login'])->name('pro
 Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::get('/superadmin_dashboard', [SuperadminController::class, 'superadmin_dashboard'])->name('superadmin_dashboard');
 
+	Route::get('/superadmin_kelola_admin', [SuperadminController::class, 'superadmin_kelola_admin'])->name('superadmin_kelola_admin');
+
+	Route::get('/superadmin_kelola_produk', [SuperadminController::class, 'superadmin_kelola_produk'])->name('superadmin_kelola_produk');
+
+	Route::get('/superadmin_kelola_transaksi', [SuperadminController::class, 'superadmin_kelola_transaksi'])->name('superadmin_kelola_transaksi');
+
+	Route::get('/superadmin_kelola_broadcast', [SuperadminController::class, 'superadmin_kelola_broadcast'])->name('superadmin_kelola_broadcast');
+
 	Route::get('/logout_superadmin', [AuthController::class, 'logout_superadmin'])->name('logout_superadmin');
 });	
 

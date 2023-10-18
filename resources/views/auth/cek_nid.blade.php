@@ -24,10 +24,10 @@
         <div class="row">
           <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
             <div class="login-brand">
-              <img src="assets/img/poliwangi_logo.png" alt="logo" width="100" >
+              <img src="assets/img/Unmer_Branding_Biru.png" alt="logo" width="200" >
             </div>
-             <div class="text-center" style="color: #6777ef"><h6>Silakan Masukkan NID</h6></div>
-             <div class="text-center" style="color: #6777ef"><h6>Universitas Merdeka Malang</h6></div><br>
+             <div class="text-center" style="color: #192999"><h6>Silakan Masukkan NID</h6></div>
+             <div class="text-center" style="color: #192999"><h6>Universitas Merdeka Malang</h6></div><br>
                           @if (session('success'))
                                 <div class="alert alert-success">
                                     {{ session('success') }}
