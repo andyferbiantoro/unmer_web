@@ -29,13 +29,37 @@ Route::post('/proses_login', [AuthController::class, 'proses_login'])->name('pro
 Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::get('/superadmin_dashboard', [SuperadminController::class, 'superadmin_dashboard'])->name('superadmin_dashboard');
 
+	//routing untuk mengelola admin
 	Route::get('/superadmin_kelola_admin', [SuperadminController::class, 'superadmin_kelola_admin'])->name('superadmin_kelola_admin');
+	Route::get('/superadmin_admin_event', [SuperadminController::class, 'superadmin_admin_event'])->name('superadmin_admin_event');
+	Route::get('/superadmin_admin_pendidikan', [SuperadminController::class, 'superadmin_admin_pendidikan'])->name('superadmin_admin_pendidikan');
+	Route::get('/superadmin_admin_kasir', [SuperadminController::class, 'superadmin_admin_kasir'])->name('superadmin_admin_kasir');
+	Route::post('/admin_add', [SuperadminController::class, 'admin_add'])->name('admin_add');
+	Route::post('/admin_update/{id}', [SuperadminController::class, 'admin_update'])->name('admin_update');
+	Route::post('/admin_delete/{id}', [SuperadminController::class, 'admin_delete'])->name('admin_delete');
 
-	Route::get('/superadmin_kelola_produk', [SuperadminController::class, 'superadmin_kelola_produk'])->name('superadmin_kelola_produk');
+	//routing untuk mengelola agrikulture
+	Route::get('/superadmin_market_agrikulture', [SuperadminController::class, 'superadmin_market_agrikulture'])->name('superadmin_market_agrikulture');
+	Route::post('/market_add', [SuperadminController::class, 'market_add'])->name('market_add');
+	Route::post('/market_update/{id}', [SuperadminController::class, 'market_update'])->name('market_update');
+	Route::post('/market_delete/{id}', [SuperadminController::class, 'market_delete'])->name('market_delete');
 
+	Route::get('/superadmin_agrikulture', [SuperadminController::class, 'superadmin_agrikulture'])->name('superadmin_agrikulture');
+	Route::post('/produk_agrikulture_add', [SuperadminController::class, 'produk_agrikulture_add'])->name('produk_agrikulture_add');
+
+
+	//routing untuk mengelola koperasi
+	Route::get('/superadmin_koperasi', [SuperadminController::class, 'superadmin_koperasi'])->name('superadmin_koperasi');
+
+	//routing untuk mengelola transaksi
 	Route::get('/superadmin_kelola_transaksi', [SuperadminController::class, 'superadmin_kelola_transaksi'])->name('superadmin_kelola_transaksi');
 
+
+
+
+	//routing untuk broadcast
 	Route::get('/superadmin_kelola_broadcast', [SuperadminController::class, 'superadmin_kelola_broadcast'])->name('superadmin_kelola_broadcast');
+
 
 	Route::get('/logout_superadmin', [AuthController::class, 'logout_superadmin'])->name('logout_superadmin');
 });	

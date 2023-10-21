@@ -16,9 +16,9 @@ Kelola Admin
                     Tambah Admin 
                   </button><br><hr>
 
-                  <a href="{{ route('superadmin_kelola_admin') }}"><button type="button" class="btn btn-warning btn-sm">Tabel Admin Penginapan</button></a>
+                  <a href="{{ route('superadmin_kelola_admin') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Penginapan</button></a>
                   <a href="{{ route('superadmin_admin_kasir') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Kasir</button></a>
-                  <a href="{{ route('superadmin_admin_pendidikan') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Pendidikan</button></a>
+                  <a href="{{ route('superadmin_admin_pendidikan') }}"><button type="button" class="btn btn-warning btn-sm">Tabel Admin Pendidikan</button></a>
                   <a href="{{ route('superadmin_admin_event') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Event</button><br><br></a>
 
 

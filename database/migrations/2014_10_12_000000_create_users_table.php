@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('otp');
             $table->string('role');
             $table->string('status');
+            $table->string('status_partner');
             $table->string('longitude');
             $table->string('latitude');
             $table->rememberToken();

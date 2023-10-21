@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Kelola Admin
+Kelola Produk Koperasi
 @endsection
 
 
@@ -13,14 +13,12 @@ Kelola Admin
               
                 <div class="card-body">
                   <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
-                    Tambah Admin 
+                    Tambah Produk Koperasi 
                   </button><br><hr>
 
-                  <a href="{{ route('superadmin_kelola_admin') }}"><button type="button" class="btn btn-warning btn-sm">Tabel Admin Penginapan</button></a>
-                  <a href="{{ route('superadmin_admin_kasir') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Kasir</button></a>
-                  <a href="{{ route('superadmin_admin_pendidikan') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Pendidikan</button></a>
-                  <a href="{{ route('superadmin_admin_event') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Event</button><br><br></a>
-
+                  <a href="{{ route('superadmin_agrikulture') }}"><button type="button" class="btn btn-warning btn-sm">Tabel Produk Agrikulture</button></a>
+                  <a href="{{ route('superadmin_market_agrikulture') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Market Agrikulture</button></a>
+                  <br><br>
 
                   @if (session('success'))
                   <div class="alert alert-success">
@@ -33,28 +31,35 @@ Kelola Admin
                       <thead>
                         <tr>
                           <th>No</th>
-                          <th>Nama</th>
-                          <th>NIK</th>
-                          <th>Tempat Lahir</th>
-                          <th>Tanggal Lahir</th>
-                          <th>Status</th>
-                          <th>Jabatan Admin</th>
-
+                          <th>Nama Admin</th>
+                          <th>Nama Produk</th>
+                          <th>Kode Produk</th>
+                          <th>kategori Produk</th>
+                          <th>Size</th>
+                          <th>Warna</th>
+                          <th>Harga</th>
+                          <th>Stok</th>
+                          <th>Terjual</th>
+                          <th>Foto</th>
                           <th>Opsi</th>
                           <th style="display: none;">hidden</th>
                         </tr>
                       </thead>
                       <tbody>
                         @php $no=1 @endphp
-                        @foreach($admin as $data)
+                        @foreach($produk_koperasi as $data)
                         <tr>
                           <td>{{$no++}}</td>
-                          <td>{{$data->nama}}</td>
-                          <td>{{$data->nik}}</td>
-                          <td>{{$data->tempat_lahir}}</td>
-                          <td>{{$data->tanggal_lahir}}</td>
-                          <td>{{$data->status}}</td>
-                          <td>{{$data->role_admin}}</td>
+                          <td>{{$data->id_admin}}</td>
+                          <td>{{$data->nama_produk}}</td>
+                          <td>{{$data->kode_produk}}</td>
+                          <td>{{$data->kategori_produk}}</td>
+                          <td>{{$data->size}}</td>
+                          <td>{{$data->warna}}</td>
+                          <td>{{$data->harga}}</td>
+                          <td>{{$data->stok}}</td>
+                          <td>{{$data->sold}}</td>
+                          <td>{{$data->foto}}</td>
                           <td>
                             <button class="btn btn-warning btn-sm icon-file menu-icon edit" title="Edit">Edit</button>
 
@@ -197,14 +202,7 @@ Kelola Admin
               </div>
 
 
-              <label>Role Admin</label>
-              <select type="text" class="form-control" id="id_prodi" name="id_prodi_tujuan" required="">
-                @foreach($admin as $data_admin)
-                <option value="{{$data_admin->role_admin}}" {{$data_admin->role_admin == $data_admin->role_admin ? "selected" : "" }}>{{$data_admin->role_admin}}</option>
-                @endforeach
-              </select><br>
-
-              <!--  -->
+            
 
               <div class="form-group">
                 <label for="role_admin">Role Admin</label>

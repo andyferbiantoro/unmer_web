@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Kelola Admin
+Kelola Market Agrikultur
 @endsection
 
 
@@ -13,14 +13,12 @@ Kelola Admin
               
                 <div class="card-body">
                   <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
-                    Tambah Admin 
+                    Tambah Market Agrikulture
                   </button><br><hr>
 
-                  <a href="{{ route('superadmin_kelola_admin') }}"><button type="button" class="btn btn-warning btn-sm">Tabel Admin Penginapan</button></a>
-                  <a href="{{ route('superadmin_admin_kasir') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Kasir</button></a>
-                  <a href="{{ route('superadmin_admin_pendidikan') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Pendidikan</button></a>
-                  <a href="{{ route('superadmin_admin_event') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Event</button><br><br></a>
-
+                  <a href="{{ route('superadmin_agrikulture') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Produk Agrikulture</button></a>
+                  <a href="{{ route('superadmin_market_agrikulture') }}"><button type="button" class="btn btn-warning btn-sm">Tabel Market Agrikulture</button></a>
+                  <br><br>
 
                   @if (session('success'))
                   <div class="alert alert-success">
@@ -33,12 +31,10 @@ Kelola Admin
                       <thead>
                         <tr>
                           <th>No</th>
-                          <th>Nama</th>
-                          <th>NIK</th>
-                          <th>Tempat Lahir</th>
-                          <th>Tanggal Lahir</th>
-                          <th>Status</th>
-                          <th>Jabatan Admin</th>
+                          <th>Nama Toko</th>
+                          <th>Nama Admin</th>
+                          <th>Status Buka</th>
+                         
 
                           <th>Opsi</th>
                           <th style="display: none;">hidden</th>
@@ -46,15 +42,13 @@ Kelola Admin
                       </thead>
                       <tbody>
                         @php $no=1 @endphp
-                        @foreach($admin as $data)
+                        @foreach($market_agrikulture as $data)
                         <tr>
                           <td>{{$no++}}</td>
+                          <td>{{$data->nama_toko}}</td>
                           <td>{{$data->nama}}</td>
-                          <td>{{$data->nik}}</td>
-                          <td>{{$data->tempat_lahir}}</td>
-                          <td>{{$data->tanggal_lahir}}</td>
-                          <td>{{$data->status}}</td>
-                          <td>{{$data->role_admin}}</td>
+                          <td>{{$data->status_buka}}</td>
+                         
                           <td>
                             <button class="btn btn-warning btn-sm icon-file menu-icon edit" title="Edit">Edit</button>
 
@@ -79,70 +73,76 @@ Kelola Admin
             </div>
           </div>
 
-
+        
 
 
 
 
           <!-- Modal Tambah -->
           <div class="modal fade" id="ModalTambah" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="myLargeModalLabel">Tambah Data Admin</h5>
+                  <h5 class="modal-title" id="myLargeModalLabel">Tambah Data Market</h5>
                 </div>
                 <div class="modal-body">
-                 <form method="post" action="{{route('admin_add')}}" enctype="multipart/form-data">
+                 <form method="post" action="{{route('market_add')}}" enctype="multipart/form-data">
 
                   {{csrf_field()}}
 
-                  <div class="form-group">
-                    <label for="nama">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="nama"  required=""></input>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email"  required=""></input>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="nid_unmer">Nid Unmer</label>
-                    <input type="number" class="form-control" id="nid_unmer" name="nid_unmer"  required=""></input>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="no_telp">Nomor Telp</label>
-                    <input type="number" class="form-control" id="no_telp" name="no_telp"  required=""></input>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="number">NIK</label>
-                    <input type="text" class="form-control" id="nik" name="nik"  required=""></input>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="tempat_lahir">Tempat Lahir</label>
-                    <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir"  required=""></input>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="tanggal_lahir">Tanggal Lahir</label>
-                    <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir"  required=""></input>
-                  </div>
-
-
                   <div class="form-group form-success">
-                    <label >Role Admin</label>
-                    <select  name="role_admin" class="form-control"  required="">
-                     <option selected disabled> -- Pilih Role Admin -- </option>
-                     <option value="Admin Kasir" >Admin Kasir</option>
-                     <option value="Admin Penginapan" >Admin Penginapan</option>
-                     <option value="Admin Pendidikan" >Admin Pendidikan</option>
-                     <option value="Admin Event" >Admin Event</option>
+                    <label >Pilh Admin</label>
+                    <select  name="id_admin" class="form-control"  required="">
+                     <option selected disabled> -- Pilih Admin -- </option>
+                     @foreach($admin as $data)
+                     <option value="{{$data->id}}" >{{$data->nama}}</option>
+                      @endforeach
                    </select>
                    <span class="form-bar"></span>
                  </div>
+
+
+                  <div class="form-group">
+                    <label for="nama_toko">Nama Toko</label>
+                    <input type="text" class="form-control" id="nama_toko" name="nama_toko"  required=""></input>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="status_buka">Status Buka</label>
+                    <input type="text" class="form-control" id="status_buka" name="status_buka"  required=""></input>
+                  </div>
+
+                  <div class="form-group">
+                  <label>Posisi Market</label>
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-12 col-12">
+                        <div id="mapInput" style="width: 100%; height: 320px; border-radius: 3px;"></div>
+                        <p>klik satu kali untuk menentukan posisi</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-12">
+
+                            <div class="form-group">
+                                <label for="latitude_lap">Latitude</label>
+                                <div class="input-group">
+                                    <input type="number" step="any" id="lat" name="latitude" class="form-control"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="longitude">Longitude</label>
+                                <div class="input-group">
+                                    <input name="longitude" step="any" id="leng" type="number" class="form-control"
+                                        required>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                </div>
+                  
+
+                  
+
+                  
 
 
                </div>
@@ -197,14 +197,7 @@ Kelola Admin
               </div>
 
 
-              <label>Role Admin</label>
-              <select type="text" class="form-control" id="id_prodi" name="id_prodi_tujuan" required="">
-                @foreach($admin as $data_admin)
-                <option value="{{$data_admin->role_admin}}" {{$data_admin->role_admin == $data_admin->role_admin ? "selected" : "" }}>{{$data_admin->role_admin}}</option>
-                @endforeach
-              </select><br>
-
-              <!--  -->
+            
 
               <div class="form-group">
                 <label for="role_admin">Role Admin</label>
@@ -290,6 +283,82 @@ Kelola Admin
       });
     </script>
 
+
+    <!-- ====================== Input Map ====================== -->
+
+    <script>
+        function initialize() {
+            //Cek Support Geolocation
+            if (navigator.geolocation) {
+                //Mengambil Fungsi golocation
+                navigator.geolocation.getCurrentPosition(lokasi);
+            } else {
+                swal("Maaf Browser tidak Support HTML 5");
+            }
+            //Variabel Marker
+            var marker;
+
+            function taruhMarker(peta, posisiTitik) {
+
+                if (marker) {
+                    // pindahkan marker
+                    marker.setPosition(posisiTitik);
+                } else {
+                    // buat marker baru
+                    marker = new google.maps.Marker({
+                        position: posisiTitik,
+                        map: peta,
+                        icon: 'https://img.icons8.com/plasticine/40/000000/marker.png',
+                    });
+                }
+
+            }
+            //Buat Peta
+            var peta = new google.maps.Map(document.getElementById("mapInput"), {
+                center: {
+                    lat: -8.408698,
+                    lng: 114.2339090
+                },
+                zoom: 9
+            });
+            //Fungsi untuk geolocation
+            function lokasi(position) {
+                //Mengirim data koordinat ke form input
+                document.getElementById("lat").value = position.coords.latitude;
+                document.getElementById("leng").value = position.coords.longitude;
+                //Current Location
+                var lat = position.coords.latitude;
+                var long = position.coords.longitude;
+                var latlong = new google.maps.LatLng(lat, long);
+                //Current Marker 
+                var currentMarker = new google.maps.Marker({
+                    position: latlong,
+                    icon: 'https://img.icons8.com/plasticine/40/000000/user-location.png',
+                    map: peta,
+                    title: "Anda Disini"
+                });
+                //Membuat Marker Map dengan Klik
+                var latLng = new google.maps.LatLng(-8.408698, 114.2339090);
+
+                var addMarkerClick = google.maps.event.addListener(peta, 'click', function(event) {
+
+
+                    taruhMarker(this, event.latLng);
+
+                    //Kirim data ke form input dari klik
+                    document.getElementById("lat").value = event.latLng.lat();
+                    document.getElementById("leng").value = event.latLng.lng();
+
+                });
+            }
+
+        }
+
+    </script>
+    <!-- ====================== End Input Map ====================== -->
+     <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv-h2II7DbFQkpL9pDxNRq3GWXqS5Epts&callback=initialize"
+        type="text/javascript"></script>
     @endsection
 
 

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Kelola Admin
+Kelola Produk Agrikultur
 @endsection
 
 
@@ -13,14 +13,12 @@ Kelola Admin
               
                 <div class="card-body">
                   <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
-                    Tambah Admin 
+                    Tambah Produk 
                   </button><br><hr>
 
-                  <a href="{{ route('superadmin_kelola_admin') }}"><button type="button" class="btn btn-warning btn-sm">Tabel Admin Penginapan</button></a>
-                  <a href="{{ route('superadmin_admin_kasir') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Kasir</button></a>
-                  <a href="{{ route('superadmin_admin_pendidikan') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Pendidikan</button></a>
-                  <a href="{{ route('superadmin_admin_event') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Event</button><br><br></a>
-
+                  <a href="{{ route('superadmin_agrikulture') }}"><button type="button" class="btn btn-warning btn-sm">Tabel Produk Agrikulture</button></a>
+                  <a href="{{ route('superadmin_market_agrikulture') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Market Agrikulture</button></a>
+                  <br><br>
 
                   @if (session('success'))
                   <div class="alert alert-success">
@@ -33,12 +31,12 @@ Kelola Admin
                       <thead>
                         <tr>
                           <th>No</th>
-                          <th>Nama</th>
-                          <th>NIK</th>
-                          <th>Tempat Lahir</th>
-                          <th>Tanggal Lahir</th>
+                          <th>Nama Produk</th>
+                          <th>Nama Toko</th>
+                          <th>Jenis Produk</th>
+                          <th>Harga Produk</th>
+                          <th>Foto Produk</th>
                           <th>Status</th>
-                          <th>Jabatan Admin</th>
 
                           <th>Opsi</th>
                           <th style="display: none;">hidden</th>
@@ -46,15 +44,15 @@ Kelola Admin
                       </thead>
                       <tbody>
                         @php $no=1 @endphp
-                        @foreach($admin as $data)
+                        @foreach($produk_agrikulture as $data)
                         <tr>
                           <td>{{$no++}}</td>
-                          <td>{{$data->nama}}</td>
-                          <td>{{$data->nik}}</td>
-                          <td>{{$data->tempat_lahir}}</td>
-                          <td>{{$data->tanggal_lahir}}</td>
+                          <td>{{$data->nama_produk}}</td>
+                          <td>{{$data->nama_toko}}</td>
+                          <td>{{$data->jenis_produk}}</td>
+                          <td>{{$data->harga_produk}}</td>
+                          <td>{{$data->foto}}</td>
                           <td>{{$data->status}}</td>
-                          <td>{{$data->role_admin}}</td>
                           <td>
                             <button class="btn btn-warning btn-sm icon-file menu-icon edit" title="Edit">Edit</button>
 
@@ -92,57 +90,50 @@ Kelola Admin
                   <h5 class="modal-title" id="myLargeModalLabel">Tambah Data Admin</h5>
                 </div>
                 <div class="modal-body">
-                 <form method="post" action="{{route('admin_add')}}" enctype="multipart/form-data">
+                 <form method="post" action="{{route('produk_agrikulture_add')}}" enctype="multipart/form-data">
 
                   {{csrf_field()}}
 
-                  <div class="form-group">
-                    <label for="nama">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="nama"  required=""></input>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email"  required=""></input>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="nid_unmer">Nid Unmer</label>
-                    <input type="number" class="form-control" id="nid_unmer" name="nid_unmer"  required=""></input>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="no_telp">Nomor Telp</label>
-                    <input type="number" class="form-control" id="no_telp" name="no_telp"  required=""></input>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="number">NIK</label>
-                    <input type="text" class="form-control" id="nik" name="nik"  required=""></input>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="tempat_lahir">Tempat Lahir</label>
-                    <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir"  required=""></input>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="tanggal_lahir">Tanggal Lahir</label>
-                    <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir"  required=""></input>
-                  </div>
-
-
                   <div class="form-group form-success">
-                    <label >Role Admin</label>
-                    <select  name="role_admin" class="form-control"  required="">
-                     <option selected disabled> -- Pilih Role Admin -- </option>
-                     <option value="Admin Kasir" >Admin Kasir</option>
-                     <option value="Admin Penginapan" >Admin Penginapan</option>
-                     <option value="Admin Pendidikan" >Admin Pendidikan</option>
-                     <option value="Admin Event" >Admin Event</option>
+                    <label >Pilh Market</label>
+                    <select  name="id_market" class="form-control"  required="">
+                     <option selected disabled> -- Pilih Market -- </option>
+                     @foreach($market as $data)
+                     <option value="{{$data->id}}" >{{$data->nama_toko}}</option>
+                     @endforeach
                    </select>
                    <span class="form-bar"></span>
                  </div>
+
+
+                  <div class="form-group">
+                    <label for="nama_produk">Nama Produk</label>
+                    <input type="text" class="form-control" id="nama_produk" name="nama_produk"  required=""></input>
+                  </div>
+
+                  <div class="form-group form-success">
+                    <label >Jenis Produk</label>
+                    <select  name="jenis_produk" class="form-control"  required="">
+                     <option selected disabled> -- Pilih jenis Produk -- </option>
+                     <option value="Buah" >Buah</option>
+                     <option value="Sayur" >Sayur</option>
+                   </select>
+                   <span class="form-bar"></span>
+                 </div>
+
+
+                 <div class="form-group">
+                  <label for="harga_produk">Harga Produk</label>
+                  <input type="number" class="form-control" id="harga_produk" name="harga_produk"  required=""></input>
+                </div>
+
+                 <div class="form-group">
+                  <label for="foto">Foto Produk</label>
+                  <input type="file" class="form-control" id="foto" name="foto"  required=""></input>
+                </div>
+                  
+
+
 
 
                </div>
@@ -197,14 +188,7 @@ Kelola Admin
               </div>
 
 
-              <label>Role Admin</label>
-              <select type="text" class="form-control" id="id_prodi" name="id_prodi_tujuan" required="">
-                @foreach($admin as $data_admin)
-                <option value="{{$data_admin->role_admin}}" {{$data_admin->role_admin == $data_admin->role_admin ? "selected" : "" }}>{{$data_admin->role_admin}}</option>
-                @endforeach
-              </select><br>
-
-              <!--  -->
+            
 
               <div class="form-group">
                 <label for="role_admin">Role Admin</label>

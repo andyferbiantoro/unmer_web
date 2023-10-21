@@ -13,13 +13,20 @@
 
         <li class="{{(request()->is('superadmin_kelola_admin')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_admin') }}"><i class="fas fa-users"></i><span>Kelola Admin</span></a></li>
 
-        <li class="{{(request()->is('superadmin_kelola_produk')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_produk') }}"><i class="fas fa-shopping-bag"></i><span>Kelola Produk</span></a></li>
+        <li class="{{(request()->is('superadmin_agrikulture')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_agrikulture') }}"><i class="fas fa-leaf"></i><span>Agrikulture</span></a></li>
+
+        <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-shopping-bag"></i></i><span>Koperasi</span></a></li>
+
+        
 
         <li class="{{(request()->is('superadmin_kelola_transaksi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_transaksi') }}"><i class="fas fa-money-bill"></i><span>Kelola Transaksi</span></a></li>
 
         <li class="{{(request()->is('auditor-profil')) ? 'active' : ''}}"><a class="nav-link" href=""><i class="fas fa-bullhorn"></i><span>Kelola Broadcast</span></a></li>
 
-        <li class="{{(request()->is('auditor-profil')) ? 'active' : ''}}"><a class="nav-link" href=""><i class="fas fa-leaf"></i><span>Agrikulture</span></a></li>
+        <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-user"></i></i><span>Kelola User</span></a></li>
+
+
+        <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-map-marker"></i></i><span>Lokasi User</span></a></li>
 
         @endif 
 
