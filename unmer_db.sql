@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Okt 2023 pada 06.36
+-- Waktu pembuatan: 21 Okt 2023 pada 13.10
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -119,6 +119,21 @@ CREATE TABLE `detail_market_agrikultures` (
   `id_market` int(11) NOT NULL,
   `jam_pengiriman_awal` int(11) NOT NULL,
   `jam_pengiriman_akhir` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `detail_transaksi_agrikultures`
+--
+
+CREATE TABLE `detail_transaksi_agrikultures` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_transaksi_agrikulture` int(11) NOT NULL,
+  `id_produk_agrikulture` int(11) NOT NULL,
+  `kuantitas` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -364,7 +379,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (24, '2023_10_16_042817_create_favorit_agrikultures_table', 1),
 (25, '2023_10_16_043609_create_favorit_koperasis_table', 1),
 (26, '2023_10_18_111339_create_saldos_table', 2),
-(27, '2023_10_18_111955_create_transaksi_top_ups_table', 2);
+(27, '2023_10_18_111955_create_transaksi_top_ups_table', 2),
+(28, '2023_10_21_104729_create_detail_transaksi_agrikultures_table', 3);
 
 -- --------------------------------------------------------
 
@@ -468,7 +484,7 @@ CREATE TABLE `saldos` (
 
 CREATE TABLE `transaksi_agrikultures` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `id_produk_agrikulture` int(11) NOT NULL,
+  `id_market_agrikulture` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `nominal` int(11) NOT NULL,
   `jenis_pembayaran` varchar(255) NOT NULL,
@@ -545,7 +561,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `email_verified_at`, `password`, `pin`, `nid_unmer`, `no_telp`, `otp`, `role`, `status`, `status_partner`, `longitude`, `latitude`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'andyfebri742@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', NULL, '000000', NULL, NULL, 'superadmin', '1', 'non_partner', NULL, NULL, NULL, '2023-10-17 04:44:12', '2023-10-20 20:09:20'),
+(2, 'andyfebri742@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', NULL, '000000', NULL, NULL, 'superadmin', '1', 'non_partner', NULL, NULL, NULL, '2023-10-17 04:44:12', '2023-10-20 23:39:02'),
 (5, 'andyfebri999@gmail.com', NULL, '$2y$10$YS0fSvqekQ2HlGjvmmrmW.72jSBzCceobQ9Ui9yG34EEWoz7aCmRy', NULL, '3232323', '085245677312', NULL, 'admin', '1', 'non_partner', NULL, NULL, NULL, '2023-10-18 21:25:56', '2023-10-18 21:25:56'),
 (6, 'anam@gmail.com', NULL, '$2y$10$6tvxfLQWaF5RjIPqXJ/8uujzf7fkWh/m9vzqIxGHh2ZIxKNrU6wy6', NULL, '222222', '085245677312', NULL, 'admin', '1', 'non_partner', NULL, NULL, NULL, '2023-10-19 01:01:25', '2023-10-19 01:01:25'),
 (8, 'andyfebri99@gmail.com', NULL, '$2y$10$tQQV8ITB2MG1SeXrzQvTb.X9OANICxr4rCpi6P2pTYNSK2RtlDc1C', NULL, '323123', '085245677312', NULL, 'admin', '1', 'non_partner', NULL, NULL, NULL, '2023-10-19 23:44:44', '2023-10-19 23:44:44');
@@ -612,6 +628,12 @@ ALTER TABLE `detail_kamar_hotels`
 -- Indeks untuk tabel `detail_market_agrikultures`
 --
 ALTER TABLE `detail_market_agrikultures`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `detail_transaksi_agrikultures`
+--
+ALTER TABLE `detail_transaksi_agrikultures`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -791,6 +813,12 @@ ALTER TABLE `detail_market_agrikultures`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT untuk tabel `detail_transaksi_agrikultures`
+--
+ALTER TABLE `detail_transaksi_agrikultures`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `detail_wisatas`
 --
 ALTER TABLE `detail_wisatas`
@@ -860,7 +888,7 @@ ALTER TABLE `market_agrikultures`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`

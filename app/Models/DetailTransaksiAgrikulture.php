@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DetailSaldo extends Model
+class DetailTransaksiAgrikulture extends Model
 {
     use HasFactory;
-    protected $table = 'detail_saldos';
+    protected $table = 'detail_transaksi_agrikultures';
 	protected $guarded = [];
 }

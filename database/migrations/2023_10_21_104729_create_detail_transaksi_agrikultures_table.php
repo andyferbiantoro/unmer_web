@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transaksi_agrikultures', function (Blueprint $table) {
+        Schema::create('detail_transaksi_agrikultures', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_market_agrikulture');
-            $table->integer('id_user');
-            $table->integer('nominal');
-            $table->string('jenis_pembayaran');
-            $table->text('catatan');
-            $table->string('status_pemesanan');
-            $table->string('status_pembayaran');
+            $table->integer('id_transaksi_agrikulture');
+            $table->integer('id_produk_agrikulture');
+            $table->integer('kuantitas');
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaksi_agrikultures');
+        Schema::dropIfExists('detail_transaksis');
     }
 };
