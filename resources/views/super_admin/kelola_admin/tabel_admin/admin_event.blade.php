@@ -131,18 +131,11 @@ Kelola Admin
                     <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir"  required=""></input>
                   </div>
 
+                   <div class="form-group">
+                    <input type="text" class="form-control" id="role_admin" name="role_admin"  required="" value="Admin Event"></input>
+                  </div>
 
-                  <div class="form-group form-success">
-                    <label >Role Admin</label>
-                    <select  name="role_admin" class="form-control"  required="">
-                     <option selected disabled> -- Pilih Role Admin -- </option>
-                     <option value="Admin Kasir" >Admin Kasir</option>
-                     <option value="Admin Penginapan" >Admin Penginapan</option>
-                     <option value="Admin Pendidikan" >Admin Pendidikan</option>
-                     <option value="Admin Event" >Admin Event</option>
-                   </select>
-                   <span class="form-bar"></span>
-                 </div>
+                  
 
 
                </div>

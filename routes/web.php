@@ -38,18 +38,31 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::post('/admin_update/{id}', [SuperadminController::class, 'admin_update'])->name('admin_update');
 	Route::post('/admin_delete/{id}', [SuperadminController::class, 'admin_delete'])->name('admin_delete');
 
-	//routing untuk mengelola agrikulture
+	//routing untuk mengelola marketagrikulture
 	Route::get('/superadmin_market_agrikulture', [SuperadminController::class, 'superadmin_market_agrikulture'])->name('superadmin_market_agrikulture');
+	Route::get('/superadmin_market_agrikulture_edit{id}', [SuperadminController::class, 'superadmin_market_agrikulture_edit'])->name('superadmin_market_agrikulture_edit');
+	Route::get('/superadmin_tampil_peta_market{id}', [SuperadminController::class, 'superadmin_tampil_peta_market'])->name('superadmin_tampil_peta_market');
 	Route::post('/market_add', [SuperadminController::class, 'market_add'])->name('market_add');
 	Route::post('/market_update/{id}', [SuperadminController::class, 'market_update'])->name('market_update');
 	Route::post('/market_delete/{id}', [SuperadminController::class, 'market_delete'])->name('market_delete');
 
+    //routing mengelola produk Agrikulture
 	Route::get('/superadmin_agrikulture', [SuperadminController::class, 'superadmin_agrikulture'])->name('superadmin_agrikulture');
+	Route::get('/superadmin_produk_agrikulture_edit{id}', [SuperadminController::class, 'superadmin_produk_agrikulture_edit'])->name('superadmin_produk_agrikulture_edit');
 	Route::post('/produk_agrikulture_add', [SuperadminController::class, 'produk_agrikulture_add'])->name('produk_agrikulture_add');
+	Route::post('/produk_agrikulture_update/{id}', [SuperadminController::class, 'produk_agrikulture_update'])->name('produk_agrikulture_update');
+	Route::post('/produk_agrikulture_delete/{id}', [SuperadminController::class, 'produk_agrikulture_delete'])->name('produk_agrikulture_delete');
 
 
 	//routing untuk mengelola koperasi
 	Route::get('/superadmin_koperasi', [SuperadminController::class, 'superadmin_koperasi'])->name('superadmin_koperasi');
+	Route::post('/produk_koperasi_add', [SuperadminController::class, 'produk_koperasi_add'])->name('produk_koperasi_add');
+	Route::get('/produk_koperasi_detail{id}', [SuperadminController::class, 'produk_koperasi_detail'])->name('produk_koperasi_detail');
+	Route::get('/produk_koperasi_edit{id}', [SuperadminController::class, 'produk_koperasi_edit'])->name('produk_koperasi_edit');
+	Route::post('/produk_koperasi_update/{id}', [SuperadminController::class, 'produk_koperasi_update'])->name('produk_koperasi_update');
+	Route::post('/produk_koperasi_delete/{id}', [SuperadminController::class, 'produk_koperasi_delete'])->name('produk_koperasi_delete');
+
+
 
 	//routing untuk mengelola transaksi
 	Route::get('/superadmin_kelola_transaksi', [SuperadminController::class, 'superadmin_kelola_transaksi'])->name('superadmin_kelola_transaksi');
