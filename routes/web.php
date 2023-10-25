@@ -60,6 +60,8 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::get('/produk_koperasi_detail{id}', [SuperadminController::class, 'produk_koperasi_detail'])->name('produk_koperasi_detail');
 	Route::get('/produk_koperasi_edit{id}', [SuperadminController::class, 'produk_koperasi_edit'])->name('produk_koperasi_edit');
 	Route::post('/produk_koperasi_update/{id}', [SuperadminController::class, 'produk_koperasi_update'])->name('produk_koperasi_update');
+	Route::post('/produk_koperasi_update_size/{id}', [SuperadminController::class, 'produk_koperasi_update_size'])->name('produk_koperasi_update_size');
+	Route::post('/produk_koperasi_update_warna/{id}', [SuperadminController::class, 'produk_koperasi_update_warna'])->name('produk_koperasi_update_warna');
 	Route::post('/produk_koperasi_delete/{id}', [SuperadminController::class, 'produk_koperasi_delete'])->name('produk_koperasi_delete');
 
 

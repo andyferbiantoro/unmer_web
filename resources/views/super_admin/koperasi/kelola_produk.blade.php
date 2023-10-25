@@ -150,23 +150,17 @@ Kelola Produk Koperasi
         <div class="row">
           <div id="size_id" style="display: none" class="col-lg-6 col-sm-12 col-12" >
             <label><strong>Size</strong></label><br>
-            <label><input type="checkbox" name="size[]" value="XS"> XS</label><br>
-            <label><input type="checkbox" name="size[]" value="S"> S</label><br>
-            <label><input type="checkbox" name="size[]" value="M"> M</label><br>
-            <label><input type="checkbox" name="size[]" value="L"> L</label><br>
-            <label><input type="checkbox" name="size[]" value="XL"> XL</label><br>
-            <label><input type="checkbox" name="size[]" value="XXL"> XXL</label><br>
+            @foreach($list_size as $list)
+            <label><input type="checkbox" name="size[]" value="{{$list->size}}"> {{$list->size}}</label><br>
+            @endforeach
             
           </div>
 
            <div id="warna_id" style="display: none" class="col-lg-6 col-sm-12 col-12">
             <label><strong>Warna</strong></label><br>
-            <label><input type="checkbox" name="warna[]" value="Merah"> Merah</label><br>
-            <label><input type="checkbox" name="warna[]" value="Hitam"> Hitam</label><br>
-            <label><input type="checkbox" name="warna[]" value="Kunig"> Kunig</label><br>
-            <label><input type="checkbox" name="warna[]" value="Hijau"> Hijau</label><br>
-            <label><input type="checkbox" name="warna[]" value="Ungu"> Ungu</label><br>
-            <label><input type="checkbox" name="warna[]" value="Putih"> Putih</label><br>
+            @foreach($list_warna as $list)
+            <label><input type="checkbox" name="warna[]" value="{{$list->warna}}"> {{$list->warna}}</label><br>
+            @endforeach
             
           </div>
         </div>

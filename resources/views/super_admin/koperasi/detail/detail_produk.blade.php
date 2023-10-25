@@ -15,7 +15,7 @@ Edit Produk Agrikultur
 
       <a href="{{ route('superadmin_koperasi') }}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
       @foreach($produk_koperasi_detail as $dat)
-       <a href="{{route('produk_koperasi_edit',$dat->id)}}"><button type="button" class="btn btn-primary btn-sm">Edit</button></a>
+       <a href="{{route('produk_koperasi_edit',$dat->id)}}"><button type="button" class="btn btn-primary btn-sm">Edit Produk</button></a>
        @endforeach
       <br><br>
       <h2 class="primary">Detail Produk </h2><br>
@@ -100,6 +100,8 @@ Edit Produk Agrikultur
                             @endforeach
                         </table>
                     </div>
+                   
+
                   </div>
 
 

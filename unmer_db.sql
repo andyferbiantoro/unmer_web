@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 24 Okt 2023 pada 11.13
+-- Waktu pembuatan: 25 Okt 2023 pada 10.27
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -368,6 +368,59 @@ CREATE TABLE `kosts` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `list_sizes`
+--
+
+CREATE TABLE `list_sizes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `size` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `list_sizes`
+--
+
+INSERT INTO `list_sizes` (`id`, `size`, `created_at`, `updated_at`) VALUES
+(1, 'XS', NULL, NULL),
+(2, 'S', NULL, NULL),
+(3, 'M', NULL, NULL),
+(4, 'L', NULL, NULL),
+(5, 'XL', NULL, NULL),
+(6, 'XXL', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `list_warnas`
+--
+
+CREATE TABLE `list_warnas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `warna` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `list_warnas`
+--
+
+INSERT INTO `list_warnas` (`id`, `warna`, `created_at`, `updated_at`) VALUES
+(1, 'Hitam', NULL, NULL),
+(2, 'Putih', NULL, NULL),
+(3, 'Kuning', NULL, NULL),
+(4, 'Merah', NULL, NULL),
+(5, 'Biru', NULL, NULL),
+(6, 'Hijau', NULL, NULL),
+(7, 'Cokelat', NULL, NULL),
+(8, 'Ungu', NULL, NULL),
+(9, 'Orange', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `market_agrikultures`
 --
 
@@ -438,7 +491,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (29, '2023_10_22_004838_create_sizes_table', 4),
 (30, '2023_10_22_005205_create_warnas_table', 4),
 (31, '2023_10_24_080711_create_kategori_produk_agrikultures_table', 5),
-(32, '2023_10_24_082200_create_kategori_produk_koperasis_table', 5);
+(32, '2023_10_24_082200_create_kategori_produk_koperasis_table', 5),
+(33, '2023_10_25_062425_create_list_sizes_table', 6),
+(34, '2023_10_25_062607_create_list_warnas_table', 6);
 
 -- --------------------------------------------------------
 
@@ -563,8 +618,9 @@ INSERT INTO `sizes` (`id`, `id_produk_koperasi`, `size`, `created_at`, `updated_
 (14, 49, 'M', '2023-10-23 20:26:30', '2023-10-23 20:26:30'),
 (15, 49, 'L', '2023-10-23 20:26:30', '2023-10-23 20:26:30'),
 (16, 49, 'XL', '2023-10-23 20:26:30', '2023-10-23 20:26:30'),
-(17, 50, 'XS', '2023-10-24 01:35:38', '2023-10-24 01:35:38'),
-(18, 50, 'S', '2023-10-24 01:35:38', '2023-10-24 01:35:38');
+(39, 50, 'M', '2023-10-25 01:00:12', '2023-10-25 01:00:12'),
+(40, 50, 'L', '2023-10-25 01:00:12', '2023-10-25 01:00:12'),
+(41, 50, 'XL', '2023-10-25 01:00:12', '2023-10-25 01:00:12');
 
 -- --------------------------------------------------------
 
@@ -650,7 +706,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `email_verified_at`, `password`, `pin`, `nid_unmer`, `no_telp`, `otp`, `role`, `status`, `longitude`, `latitude`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'andyfebri742@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', NULL, '000000', NULL, NULL, 'superadmin', '1', NULL, NULL, NULL, '2023-10-17 04:44:12', '2023-10-23 01:42:53'),
+(2, 'andyfebri742@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', NULL, '000000', NULL, NULL, 'superadmin', '1', NULL, NULL, NULL, '2023-10-17 04:44:12', '2023-10-24 23:03:40'),
 (5, 'andyfebri999@gmail.com', NULL, '$2y$10$YS0fSvqekQ2HlGjvmmrmW.72jSBzCceobQ9Ui9yG34EEWoz7aCmRy', NULL, '3232323', '085245677312', NULL, 'admin', '1', NULL, NULL, NULL, '2023-10-18 21:25:56', '2023-10-18 21:25:56'),
 (6, 'anam@gmail.com', NULL, '$2y$10$6tvxfLQWaF5RjIPqXJ/8uujzf7fkWh/m9vzqIxGHh2ZIxKNrU6wy6', NULL, '222222', '085245677312', NULL, 'admin', '1', NULL, NULL, NULL, '2023-10-19 01:01:25', '2023-10-19 01:01:25'),
 (8, 'andyfebri99@gmail.com', NULL, '$2y$10$tQQV8ITB2MG1SeXrzQvTb.X9OANICxr4rCpi6P2pTYNSK2RtlDc1C', NULL, '323123', '085245677312', NULL, 'admin', '1', NULL, NULL, NULL, '2023-10-19 23:44:44', '2023-10-19 23:44:44'),
@@ -675,9 +731,11 @@ CREATE TABLE `warnas` (
 --
 
 INSERT INTO `warnas` (`id`, `id_produk_koperasi`, `warna`, `created_at`, `updated_at`) VALUES
-(5, 49, 'Hitam', '2023-10-23 20:26:30', '2023-10-23 20:26:30'),
-(6, 49, 'Kunig', '2023-10-23 20:26:30', '2023-10-23 20:26:30'),
-(7, 50, 'Kunig', '2023-10-24 01:35:38', '2023-10-24 01:35:38');
+(8, 50, 'Putih', '2023-10-25 01:04:26', '2023-10-25 01:04:26'),
+(9, 50, 'Kuning', '2023-10-25 01:04:26', '2023-10-25 01:04:26'),
+(10, 49, 'Hitam', '2023-10-25 01:25:54', '2023-10-25 01:25:54'),
+(11, 49, 'Biru', '2023-10-25 01:25:54', '2023-10-25 01:25:54'),
+(12, 49, 'Hijau', '2023-10-25 01:25:54', '2023-10-25 01:25:54');
 
 -- --------------------------------------------------------
 
@@ -820,6 +878,18 @@ ALTER TABLE `kategori_produk_koperasis`
 -- Indeks untuk tabel `kosts`
 --
 ALTER TABLE `kosts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `list_sizes`
+--
+ALTER TABLE `list_sizes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `list_warnas`
+--
+ALTER TABLE `list_warnas`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1028,6 +1098,18 @@ ALTER TABLE `kosts`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT untuk tabel `list_sizes`
+--
+ALTER TABLE `list_sizes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `list_warnas`
+--
+ALTER TABLE `list_warnas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT untuk tabel `market_agrikultures`
 --
 ALTER TABLE `market_agrikultures`
@@ -1037,7 +1119,7 @@ ALTER TABLE `market_agrikultures`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
@@ -1067,7 +1149,7 @@ ALTER TABLE `saldos`
 -- AUTO_INCREMENT untuk tabel `sizes`
 --
 ALTER TABLE `sizes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaksi_agrikultures`
@@ -1097,7 +1179,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `warnas`
 --
 ALTER TABLE `warnas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `wisatas`

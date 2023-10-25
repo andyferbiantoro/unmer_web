@@ -14,6 +14,8 @@ use App\Models\ProdukAgrikulture;
 use App\Models\ProdukKoperasi;
 use App\Models\Size;
 use App\Models\Warna;
+use App\Models\ListSize;
+use App\Models\ListWarna;
 use App\Models\Customer;
 use App\Models\KategoriprodukAgrikulture;
 use App\Models\KategoriprodukKoperasi;
@@ -380,7 +382,11 @@ class SuperadminController extends Controller
 		$admin = Admin::where('role_admin', 'Admin Kasir')->get();
 		$partner = Customer::where('status_partner', 'partner')->get();
 		$kat = KategoriprodukKoperasi::all();
-		return view('super_admin.koperasi.kelola_produk', compact('produk_koperasi', 'admin','partner','kat'));
+
+		$list_size =ListSize::all();
+		$list_warna =ListWarna::all();
+
+		return view('super_admin.koperasi.kelola_produk', compact('produk_koperasi', 'admin','partner','kat','list_size','list_warna'));
 	}
 
 
@@ -418,8 +424,16 @@ class SuperadminController extends Controller
 		$admin = Admin::where('role_admin', 'Admin Kasir')->get();
 		$partner = Customer::where('status_partner', 'partner')->get();
 		$kat = KategoriprodukKoperasi::all();
+		$list_size =ListSize::all();
+		$list_warna =ListWarna::all();
+
+
+		$get_produk =ProdukKoperasi::where('id', $id)->first();
+		$get_size = Size::where('id_produk_koperasi', $get_produk->id)->get();
+		$get_warna = Warna::where('id_produk_koperasi', $get_produk->id)->get();
+
 		// return $kat;
-		return view('super_admin.koperasi.edit.edit_produk', compact('produk_koperasi', 'admin','partner','kat'));
+		return view('super_admin.koperasi.edit.edit_produk', compact('produk_koperasi', 'admin','partner','kat','list_size','list_warna', 'get_size','get_warna'));
 	}
 
 
@@ -510,7 +524,61 @@ class SuperadminController extends Controller
 		$data_update->update($input);
 
 
+
 		return redirect()->back()->with('success', 'Produk Berhasil Diupdate');
+	}
+
+
+	public function produk_koperasi_update_size(Request $request, $id)
+	{
+
+		// proses update size
+		$delete_size = Size::where('id_produk_koperasi', $id)->get();
+		
+		foreach ($delete_size as $key) {
+			$key->delete();
+		}
+
+		$data_update_size = $request->input('size');
+		// return $data_update_size;
+		foreach ($data_update_size as $data) {
+
+			$update_size = new Size();
+			$update_size->id_produk_koperasi = $id;
+			$update_size->size = $data;
+
+			$update_size->save();
+			
+		}
+
+		return redirect()->back()->with('success', 'Size Berhasil Diupdate');
+	}
+
+
+
+	public function produk_koperasi_update_warna(Request $request, $id)
+	{
+
+		// proses update size
+		$delete_warna = Warna::where('id_produk_koperasi', $id)->get();
+		
+		foreach ($delete_warna as $key) {
+			$key->delete();
+		}
+
+		$data_update_warna = $request->input('warna');
+		// return $data_update_warna;
+		foreach ($data_update_warna as $data) {
+
+			$update_warna = new Warna();
+			$update_warna->id_produk_koperasi = $id;
+			$update_warna->warna = $data;
+
+			$update_warna->save();
+			
+		}
+
+		return redirect()->back()->with('success', 'Warna Berhasil Diupdate');
 	}
 
 
