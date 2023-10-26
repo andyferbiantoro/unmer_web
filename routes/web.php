@@ -74,7 +74,9 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 
 	//routing untuk broadcast
 	Route::get('/superadmin_kelola_broadcast', [SuperadminController::class, 'superadmin_kelola_broadcast'])->name('superadmin_kelola_broadcast');
-
+	Route::get('/superadmin_kelola_broadcast_detail{id}', [SuperadminController::class, 'superadmin_kelola_broadcast_detail'])->name('superadmin_kelola_broadcast_detail');
+	Route::post('/superadmin_kelola_broadcast_add', [SuperadminController::class, 'superadmin_kelola_broadcast_add'])->name('superadmin_kelola_broadcast_add');
+	Route::post('/superadmin_kelola_broadcast_delete/{id}', [SuperadminController::class, 'superadmin_kelola_broadcast_delete'])->name('superadmin_kelola_broadcast_delete');
 
 	Route::get('/logout_superadmin', [AuthController::class, 'logout_superadmin'])->name('logout_superadmin');
 });	

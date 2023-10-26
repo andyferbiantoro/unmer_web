@@ -12,14 +12,15 @@ Kelola Admin
   <div class="card">
               
                 <div class="card-body">
+                  <h2 class="primary">Admin Penginapan </h2><hr>
                   <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
                     Tambah Admin 
-                  </button><br><hr>
+                  </button><br><br>
 
-                  <a href="{{ route('superadmin_kelola_admin') }}"><button type="button" class="btn btn-warning btn-sm">Tabel Admin Penginapan</button></a>
-                  <a href="{{ route('superadmin_admin_kasir') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Kasir</button></a>
-                  <a href="{{ route('superadmin_admin_pendidikan') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Pendidikan</button></a>
-                  <a href="{{ route('superadmin_admin_event') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Event</button><br><br></a>
+                  <a href="{{ route('superadmin_kelola_admin') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Penginapan</button></a>
+                  <a href="{{ route('superadmin_admin_kasir') }}"><button type="button" class="btn btn-light btn-sm">Tabel Admin Kasir</button></a>
+                  <a href="{{ route('superadmin_admin_pendidikan') }}"><button type="button" class="btn btn-light btn-sm">Tabel Admin Pendidikan</button></a>
+                  <a href="{{ route('superadmin_admin_event') }}"><button type="button" class="btn btn-light btn-sm">Tabel Admin Event</button><br><br></a>
 
 
                   @if (session('success'))
@@ -132,7 +133,7 @@ Kelola Admin
                   </div>
 
                   <div class="form-group">
-                    <input type="text" class="form-control" id="role_admin" name="role_admin"  required="" value="Admin Penginapan"></input>
+                    <input type="hidden" class="form-control" id="role_admin" name="role_admin"  required="" value="Admin Penginapan"></input>
                   </div>
 
 

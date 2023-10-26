@@ -19,9 +19,12 @@ use App\Models\ListWarna;
 use App\Models\Customer;
 use App\Models\KategoriprodukAgrikulture;
 use App\Models\KategoriprodukKoperasi;
+use App\Models\Broadcast;
+use App\Models\DetailBroadcast;
 use File;
 use PDF;
 use DB;
+use Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -618,4 +621,85 @@ class SuperadminController extends Controller
 
 		return view('super_admin.kelola_transaksi.index', compact('transaksi_koperasi', 'transaksi_agrikulture'));
 	}
+
+
+
+	// =====================================================================================================================
+
+	public function superadmin_kelola_broadcast()
+	{
+
+		// $broadcast = DB::table('detail_broadcasts')
+		// ->join('broadcasts', 'detail_broadcasts.id_broadcast', '=', 'broadcasts.id')
+		// ->join('customers', 'detail_broadcasts.id_user_penerima', '=', 'customers.id_user')
+		// ->select('detail_broadcasts.*', 'customers.nama','broadcasts.isi_pesan')
+		// ->orderBy('broadcasts.id', 'DESC')
+		// ->get();
+
+		$broadcast = Broadcast::orderby('id', 'DESC')->get();
+		$customer = Customer::orderby('id', 'DESC')->get();
+		return view('super_admin.broadcast.index', compact('broadcast','customer'));
+	}
+
+	public function superadmin_kelola_broadcast_detail($id)
+	{
+
+		$penerima = DB::table('detail_broadcasts')
+		->join('customers', 'detail_broadcasts.id_user_penerima', '=', 'customers.id_user')
+		->select('detail_broadcasts.*', 'customers.nama')
+		->where('detail_broadcasts.id_broadcast',$id)
+		->get();
+
+		$pesan = Broadcast::where('id',$id)->first();
+		// $broadcast = Broadcast::orderby('id', 'DESC')->get();
+		$customer = Customer::orderby('id', 'DESC')->get();
+		return view('super_admin.broadcast.detail_broadcast', compact('penerima','customer','pesan'));
+	}
+
+
+	public function superadmin_kelola_broadcast_add(Request $request)
+	{
+
+		
+		$data = ([
+			'id_user_pengirim' => $request['id_user_pengirim'],
+			'isi_pesan' => $request['isi_pesan'],
+			
+		]);
+
+		// return $data;
+		$lastid = Broadcast::create($data)->id;
+
+
+		$data_penerima = $request->input('id_user_penerima');
+		// return $data_size;
+		foreach ($data_penerima as $data) {
+
+			$simpan_penerima = new DetailBroadcast();
+
+			$simpan_penerima->id_broadcast = $lastid;
+			$simpan_penerima->id_user_penerima = $data;
+
+			$simpan_penerima->save();
+		}
+
+
+		return redirect()->back()->with('success', 'Pesan Broadcast Berhasil Dikirm');
+	}
+
+	public function superadmin_kelola_broadcast_delete($id)
+	{
+
+		$delete_penerima = DetailBroadcast::where('id_broadcast', $id)->get();
+		foreach ($delete_penerima as $key) {
+			$key->delete();
+		}
+
+		$delete_broadcast = Broadcast::findOrFail($id);
+		$delete_broadcast->delete();
+
+		return redirect()->back()->with('success', 'Pesan Berhasil Dihapus');
+	}
+
+
 }

@@ -136,11 +136,6 @@ Edit Produk Agrikultur
                   src="{{asset('uploads/produk_koperasi/'.$data->foto)}}"></span>
                 </div>
 
-
-
-
-
-
               </div>
             </div>
            

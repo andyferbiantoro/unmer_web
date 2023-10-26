@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Okt 2023 pada 10.27
+-- Waktu pembuatan: 26 Okt 2023 pada 06.33
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -52,6 +52,28 @@ INSERT INTO `admins` (`id`, `id_user`, `nama`, `nik`, `tempat_lahir`, `tanggal_l
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `broadcasts`
+--
+
+CREATE TABLE `broadcasts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_user_pengirim` int(11) NOT NULL,
+  `isi_pesan` text NOT NULL,
+  `status_pesan` varchar(255) NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `broadcasts`
+--
+
+INSERT INTO `broadcasts` (`id`, `id_user_pengirim`, `isi_pesan`, `status_pesan`, `created_at`, `updated_at`) VALUES
+(4, 2, 'hallo', '1', '2023-10-25 21:01:46', '2023-10-25 21:01:46');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `customers`
 --
 
@@ -72,7 +94,30 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `id_user`, `nama`, `nik`, `alamat`, `status`, `status_partner`, `created_at`, `updated_at`) VALUES
-(1, 9, 'eggi maretino', '123456678', 'pesanggaran', '1', 'partner', NULL, NULL);
+(1, 9, 'eggi maretino', '123456678', 'pesanggaran', '1', 'partner', NULL, NULL),
+(2, 10, 'Egga Maretiyo', '123142114123', 'Pesanggaran', '1', 'non_partner', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `detail_broadcasts`
+--
+
+CREATE TABLE `detail_broadcasts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_broadcast` int(11) NOT NULL,
+  `id_user_penerima` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `detail_broadcasts`
+--
+
+INSERT INTO `detail_broadcasts` (`id`, `id_broadcast`, `id_user_penerima`, `created_at`, `updated_at`) VALUES
+(1, 4, 10, '2023-10-25 21:01:46', '2023-10-25 21:01:46'),
+(2, 4, 9, '2023-10-25 21:01:46', '2023-10-25 21:01:46');
 
 -- --------------------------------------------------------
 
@@ -493,7 +538,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (31, '2023_10_24_080711_create_kategori_produk_agrikultures_table', 5),
 (32, '2023_10_24_082200_create_kategori_produk_koperasis_table', 5),
 (33, '2023_10_25_062425_create_list_sizes_table', 6),
-(34, '2023_10_25_062607_create_list_warnas_table', 6);
+(34, '2023_10_25_062607_create_list_warnas_table', 6),
+(35, '2023_10_25_083457_create_broadcasts_table', 7),
+(36, '2023_10_26_034341_create_detail_broadcasts_table', 8);
 
 -- --------------------------------------------------------
 
@@ -579,7 +626,7 @@ CREATE TABLE `produk_koperasis` (
 
 INSERT INTO `produk_koperasis` (`id`, `id_admin`, `id_partner`, `nama_produk`, `kode_produk`, `kategori_produk`, `harga`, `stok`, `sold`, `foto`, `status`, `created_at`, `updated_at`) VALUES
 (49, 5, 1, 'crewneck', '123', 'Pakaian', 100000, 33, 0, 'crewneck.jpg', NULL, '2023-10-23 20:26:30', '2023-10-24 02:06:16'),
-(50, 5, 1, 'kaos', '123', 'Pakaian', 50000, 12, 0, 'hoodie.jpg', NULL, '2023-10-24 01:35:38', '2023-10-24 01:35:38');
+(50, 5, 1, 'Hodie', '123', 'Pakaian', 50000, 12, 0, 'hoodie.jpg', NULL, '2023-10-24 01:35:38', '2023-10-25 02:20:42');
 
 -- --------------------------------------------------------
 
@@ -706,11 +753,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `email_verified_at`, `password`, `pin`, `nid_unmer`, `no_telp`, `otp`, `role`, `status`, `longitude`, `latitude`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'andyfebri742@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', NULL, '000000', NULL, NULL, 'superadmin', '1', NULL, NULL, NULL, '2023-10-17 04:44:12', '2023-10-24 23:03:40'),
+(2, 'andyfebri742@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', NULL, '000000', NULL, NULL, 'superadmin', '1', NULL, NULL, NULL, '2023-10-17 04:44:12', '2023-10-25 02:13:41'),
 (5, 'andyfebri999@gmail.com', NULL, '$2y$10$YS0fSvqekQ2HlGjvmmrmW.72jSBzCceobQ9Ui9yG34EEWoz7aCmRy', NULL, '3232323', '085245677312', NULL, 'admin', '1', NULL, NULL, NULL, '2023-10-18 21:25:56', '2023-10-18 21:25:56'),
 (6, 'anam@gmail.com', NULL, '$2y$10$6tvxfLQWaF5RjIPqXJ/8uujzf7fkWh/m9vzqIxGHh2ZIxKNrU6wy6', NULL, '222222', '085245677312', NULL, 'admin', '1', NULL, NULL, NULL, '2023-10-19 01:01:25', '2023-10-19 01:01:25'),
 (8, 'andyfebri99@gmail.com', NULL, '$2y$10$tQQV8ITB2MG1SeXrzQvTb.X9OANICxr4rCpi6P2pTYNSK2RtlDc1C', NULL, '323123', '085245677312', NULL, 'admin', '1', NULL, NULL, NULL, '2023-10-19 23:44:44', '2023-10-19 23:44:44'),
-(9, 'eggi@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', '111111', NULL, '085334770518', NULL, 'customer', '1', NULL, NULL, NULL, NULL, NULL);
+(9, 'eggi@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', '111111', NULL, '085334770518', NULL, 'customer', '1', NULL, NULL, NULL, NULL, NULL),
+(10, 'egga_maretiyo@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', '222222', NULL, '231323123', NULL, 'customer', '1', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -772,9 +820,21 @@ ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `broadcasts`
+--
+ALTER TABLE `broadcasts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `customers`
 --
 ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `detail_broadcasts`
+--
+ALTER TABLE `detail_broadcasts`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -990,10 +1050,22 @@ ALTER TABLE `admins`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT untuk tabel `broadcasts`
+--
+ALTER TABLE `broadcasts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT untuk tabel `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `detail_broadcasts`
+--
+ALTER TABLE `detail_broadcasts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_events`
@@ -1119,7 +1191,7 @@ ALTER TABLE `market_agrikultures`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
@@ -1173,7 +1245,7 @@ ALTER TABLE `transaksi_top_ups`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `warnas`

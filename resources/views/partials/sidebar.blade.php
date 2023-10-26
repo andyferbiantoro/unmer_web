@@ -20,7 +20,7 @@
       
         <li class="{{(request()->is('superadmin_kelola_transaksi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_transaksi') }}"><i class="fas fa-money-bill"></i><span>Kelola Transaksi</span></a></li>
 
-        <li class="{{(request()->is('auditor-profil')) ? 'active' : ''}}"><a class="nav-link" href=""><i class="fas fa-bullhorn"></i><span>Kelola Broadcast</span></a></li>
+        <li class="{{(request()->is('superadmin_kelola_broadcast')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_broadcast') }}"><i class="fas fa-bullhorn"></i><span>Kelola Broadcast</span></a></li>
 
         <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-user"></i></i><span>Kelola User</span></a></li>
 

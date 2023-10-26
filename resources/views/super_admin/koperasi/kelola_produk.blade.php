@@ -19,7 +19,7 @@ Kelola Produk Koperasi
           Tambah Produk Koperasi
         </button><br><br>
 
-      <a href="{{ route('superadmin_koperasi') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Produk Koperasi</button></a>
+      <!-- <a href="{{ route('superadmin_koperasi') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Produk Koperasi</button></a> -->
 
       <br><br>
 
