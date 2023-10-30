@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     //
 
-    public function getRandomString($panjang = 6)
+    public function getRandomString($panjang = 4)
     {
         $karakter = '0123456789';
         $panjang_karakter = strlen($karakter);
@@ -43,6 +43,7 @@ class AuthController extends Controller
                 'status' => '1',
                 'otp' => $random,
                 'role' => 'customer',
+          
             ];
 
 
@@ -51,6 +52,8 @@ class AuthController extends Controller
                 Customer::create([
                     'id_user' => $users->id,
                     'nama' => $request->nama,
+                    'status' => '1',
+                    'saldo'=>0,
                 ]);
                 $email = $users->email;
                 $name = $users->name;
@@ -86,6 +89,8 @@ class AuthController extends Controller
         $random = $this->getRandomString();
 
         $cekemail = User::where('email', $request->email)->first();
+     
+        
 
 
         if ($cekemail) {
@@ -115,6 +120,7 @@ class AuthController extends Controller
             return response()->json([
                 'code' => '200',
                 'message' => "OTP terkirim, Silahkan Cek Email",
+               
             ]);
         } else {
 
@@ -129,7 +135,7 @@ class AuthController extends Controller
     {
 
         $cekotp = User::where('otp', $request->otp)->first();
-
+       
 
         if ($cekotp) {
 
@@ -137,11 +143,18 @@ class AuthController extends Controller
                 'otp' => '',
             ];
             $cekotp->update($req);
+            // return $cekotp->id;
 
+            $data = DB::table('customers')->leftJoin('users','customers.id_user','users.id')
+            ->select('users.*','users.id as id_user','customers.*','customers.id as id_customer')->where('users.id',$cekotp->id)->first();
+            // return $data;
+    
 
             return response()->json([
-                'pesan' => '200',
+                'code' => '200',
                 'message' => "OTP berhasil",
+                'user'=>$data,
+                // 'id'=>$data
             ]);
         } else {
 
@@ -176,7 +189,7 @@ class AuthController extends Controller
         } else {
 
             return response()->json([
-                'pesan' => '500',
+                'code' => '500',
                 'message' => "PIN gagal",
             ]);
         }
@@ -206,7 +219,7 @@ class AuthController extends Controller
         } else {
 
             return response()->json([
-                'pesan' => '500',
+                'code' => '500',
                 'message' => "PIN gagal",
             ]);
         }
@@ -220,12 +233,12 @@ class AuthController extends Controller
                 // 'password' => bcrypt($request->password)
             ]);
             return response()->json([
-                'pesan' => 'berhasil update password'
+                'message' => 'berhasil update password'
             ]);
         } else {
 
             return response()->json([
-                'pesan' => 'gagal update password'
+                'message' => 'gagal update password'
             ]);
         }
     }
@@ -254,7 +267,7 @@ class AuthController extends Controller
         } else {
             return response()->json([
                 'code' => '500',
-                'pesan' => 'gagal update profil'
+                'message' => 'gagal update profil'
             ]);
         }
     }
