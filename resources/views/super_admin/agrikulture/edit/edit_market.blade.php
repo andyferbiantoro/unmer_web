@@ -162,13 +162,16 @@ Edit Market Agrikultur
           var latlong = new google.maps.LatLng(lat, long);
           //Current Marker 
 
-          var currentMarker = new google.maps.Marker({
-            position: latlong,
-            icon: 'https://img.icons8.com/plasticine/40/000000/user-location.png',
-            map: peta,
-            title: "Anda Disini"
-          });
-         
+          var currentMarker = [ 
+          @foreach($market_agrikulture as $toko)
+                new google.maps.Marker({
+                    position: { lat: {{ $toko->latitude }}, lng: {{ $toko->longitude }} },
+                    map: peta,
+                    title: '{{ $toko->nama_toko }}',
+                    // icon: 'https://img.icons8.com/plasticine/40/000000/user-location.png',
+                }),
+          @endforeach 
+          ];        
 
           //Membuat Marker Map dengan Klik
           var latLng = new google.maps.LatLng(-8.408698, 114.2339090);

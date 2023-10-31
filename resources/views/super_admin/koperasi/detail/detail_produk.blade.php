@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Edit Produk Agrikultur
+Detail Koperasi
 @endsection
 
 

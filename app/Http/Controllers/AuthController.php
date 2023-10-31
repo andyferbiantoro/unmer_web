@@ -17,7 +17,7 @@ class AuthController extends Controller
 	public function proses_cek_nid(Request $request){
 
 
-		$cek_nid = User::where('nid_unmer', $request->nid_unmer)->where('role','superadmin')->first();
+		$cek_nid = User::where('nid_unmer', $request->nid_unmer)->first();
 		// return $cek_nid;
 		if ($cek_nid) {
 
@@ -29,7 +29,7 @@ class AuthController extends Controller
 			];
 
 			$update_otp->update($input);
-			$get_id = User::where('nid_unmer', $request->nid_unmer)->where('role','superadmin')->pluck('id');
+			$get_id = User::where('nid_unmer', $request->nid_unmer)->pluck('id');
 			// return $get_id;
 			$this->received($get_id);
 			return redirect('/cek_otp')->with('success', 'Kami telah mengirimkan kode OTP, Silahkan masukkan kode otp anda');
@@ -43,7 +43,7 @@ class AuthController extends Controller
 	public function received($get_id)
 	{
 
-		$send_otp= User::where('id', $get_id)->where('role','superadmin')->first();
+		$send_otp= User::where('id', $get_id)->first();
 
         //$catin = CalonPengantin::where('id',$id_catin)->first();
 
@@ -68,7 +68,7 @@ class AuthController extends Controller
 	public function proses_cek_otp(Request $request){
 
 
-		$cek_otp = User::where('otp', $request->otp)->where('role','superadmin')->first();
+		$cek_otp = User::where('otp', $request->otp)->first();
 		// return $cek_otp;
 		if ($cek_otp) {
 
@@ -105,13 +105,16 @@ class AuthController extends Controller
             //auth->user() untuk memanggil data user yang sudah login
         if(auth()->user()->role == "superadmin"){
             return redirect()->route('superadmin_dashboard')->with('success', 'Anda Berhasil Login');
-        }else if(auth()->user()->role == "admin1"){
-            return redirect()->route('admin1')->with('success', 'Anda Berhasil Login');
-        }else if(auth()->user()->role == "admin2"){
-            return redirect()->route('admin2')->with('success', 'Anda Berhasil Login');
-        }else if(auth()->user()->role == "admin3"){
-            return redirect()->route('admin2')->with('success', 'Anda Berhasil Login');
+        }else if(auth()->user()->role == "Admin Kasir"){
+            return redirect()->route('admin_kasir_dashboard')->with('success', 'Anda Berhasil Login');
+        }else if(auth()->user()->role == "Admin Penginapan"){
+            return redirect()->route('admin_penginapan_dashboard')->with('success', 'Anda Berhasil Login');
+        }else if(auth()->user()->role == "Admin Pendidikan"){
+            return redirect()->route('admin_pendidikan_dashboard')->with('success', 'Anda Berhasil Login');
+        }else if(auth()->user()->role == "Admin Event"){
+            return redirect()->route('admin_event_dashboard')->with('success', 'Anda Berhasil Login');
         }
+
     }else{
        
             return redirect()->route('login')->with('error', 'Email / Password anda salah'); //route itu isinya name dari route di web.php
@@ -120,6 +123,38 @@ class AuthController extends Controller
     }
 
     public function logout_superadmin(){
+
+        auth()->logout(); //logout
+        
+        return redirect()->route('cek_nid')->with('success', 'Anda Berhasil Logout');
+        
+    }
+
+    public function admin_kasir_logout(){
+
+        auth()->logout(); //logout
+        
+        return redirect()->route('cek_nid')->with('success', 'Anda Berhasil Logout');
+        
+    }
+
+    public function admin_penginapan_logout(){
+
+        auth()->logout(); //logout
+        
+        return redirect()->route('cek_nid')->with('success', 'Anda Berhasil Logout');
+        
+    }
+
+    public function admin_pendidikan_logout(){
+
+        auth()->logout(); //logout
+        
+        return redirect()->route('cek_nid')->with('success', 'Anda Berhasil Logout');
+        
+    }
+
+    public function admin_event_logout(){
 
         auth()->logout(); //logout
         

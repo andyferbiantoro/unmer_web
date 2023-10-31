@@ -106,6 +106,11 @@ Kelola Admin
                     <input type="email" class="form-control" id="email" name="email"  required=""></input>
                   </div>
 
+                   <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" class="form-control" id="password" name="password"  required=""></input>
+                  </div>
+                  
                   <div class="form-group">
                     <label for="nid_unmer">Nid Unmer</label>
                     <input type="number" class="form-control" id="nid_unmer" name="nid_unmer"  required=""></input>
@@ -133,6 +138,10 @@ Kelola Admin
 
                    <div class="form-group">
                     <input type="hidden" class="form-control" id="role_admin" name="role_admin"  required="" value="Admin Pendidikan"></input>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="hidden" class="form-control" id="role" name="role"  required="" value="Admin Kasir"></input>
                   </div>
 
 

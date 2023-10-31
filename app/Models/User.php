@@ -59,4 +59,40 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function isAdminKasir(){
+
+        if($this->role == 'Admin Kasir'){
+
+            return true;
+        }
+        return false;
+    }
+
+    public function isAdminPenginapan(){
+
+        if($this->role == 'Admin Penginapan'){
+
+            return true;
+        }
+        return false;
+    }
+
+    public function isAdminPendidikan(){
+
+        if($this->role == 'Admin Pendidikan'){
+
+            return true;
+        }
+        return false;
+    }
+
+    public function isAdminEvent(){
+
+        if($this->role == 'Admin Event'){
+
+            return true;
+        }
+        return false;
+    }
 }

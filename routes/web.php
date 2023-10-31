@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminKasirController;
+use App\Http\Controllers\AdminPenginapanController;
+use App\Http\Controllers\AdminPendidikanController;
+use App\Http\Controllers\AdminEventController;
 
 
 /*
@@ -53,6 +57,10 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::post('/produk_agrikulture_update/{id}', [SuperadminController::class, 'produk_agrikulture_update'])->name('produk_agrikulture_update');
 	Route::post('/produk_agrikulture_delete/{id}', [SuperadminController::class, 'produk_agrikulture_delete'])->name('produk_agrikulture_delete');
 
+	//transaksi agrikulture
+	Route::get('/superadmin_transaksi_agrikulture', [SuperadminController::class, 'superadmin_transaksi_agrikulture'])->name('superadmin_transaksi_agrikulture');
+	Route::get('/superadmin_transaksi_agrikulture_detail{id}', [SuperadminController::class, 'superadmin_transaksi_agrikulture_detail'])->name('superadmin_transaksi_agrikulture_detail');
+
 
 	//routing untuk mengelola koperasi
 	Route::get('/superadmin_koperasi', [SuperadminController::class, 'superadmin_koperasi'])->name('superadmin_koperasi');
@@ -65,10 +73,13 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::post('/produk_koperasi_delete/{id}', [SuperadminController::class, 'produk_koperasi_delete'])->name('produk_koperasi_delete');
 
 
+	//routing untuk mengelola Kost
+	Route::get('/superadmin_kost', [SuperadminController::class, 'superadmin_kost'])->name('superadmin_kost');
+
+
 
 	//routing untuk mengelola transaksi
 	Route::get('/superadmin_kelola_transaksi', [SuperadminController::class, 'superadmin_kelola_transaksi'])->name('superadmin_kelola_transaksi');
-
 
 
 
@@ -79,6 +90,57 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::post('/superadmin_kelola_broadcast_delete/{id}', [SuperadminController::class, 'superadmin_kelola_broadcast_delete'])->name('superadmin_kelola_broadcast_delete');
 
 	Route::get('/logout_superadmin', [AuthController::class, 'logout_superadmin'])->name('logout_superadmin');
+
+
+
 });	
+// ===========================================================================================================================
+
+
+//Routing untuk role Admin Kasir
+Route::middleware(['auth', 'admin_kasir'])->group(function () {
+	Route::get('/admin_kasir_dashboard', [AdminKasirController::class, 'admin_kasir_dashboard'])->name('admin_kasir_dashboard');
+
+
+	Route::get('/admin_kasir_logout', [AuthController::class, 'admin_kasir_logout'])->name('admin_kasir_logout');
+});	
+
+// ===========================================================================================================================
+
+//Routing untuk role Admin Penginapan
+Route::middleware(['auth', 'admin_penginapan'])->group(function () {
+	Route::get('/admin_penginapan_dashboard', [AdminPenginapanController::class, 'admin_penginapan_dashboard'])->name('admin_penginapan_dashboard');
+
+
+	Route::get('/admin_penginapan_logout', [AuthController::class, 'admin_penginapan_logout'])->name('admin_penginapan_logout');
+});	
+
+// ===========================================================================================================================
+
+
+//Routing untuk role Admin pendidikan
+Route::middleware(['auth', 'admin_pendidikan'])->group(function () {
+	Route::get('/admin_pendidikan_dashboard', [AdminPendidikanController::class, 'admin_pendidikan_dashboard'])->name('admin_pendidikan_dashboard');
+
+
+
+	Route::get('/admin_pendidikan_logout', [AuthController::class, 'admin_pendidikan_logout'])->name('admin_pendidikan_logout');
+
+});	
+// ===========================================================================================================================
+
+
+//Routing untuk role Admin Event
+Route::middleware(['auth', 'admin_event'])->group(function () {
+	Route::get('/admin_event_dashboard', [AdminEventController::class, 'admin_event_dashboard'])->name('admin_event_dashboard');
+
+
+
+	Route::get('/admin_event_logout', [AuthController::class, 'admin_event_logout'])->name('admin_event_logout');
+
+});	
+
+
+
 
 

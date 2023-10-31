@@ -7,11 +7,12 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
 use App\Models\Admin;
-use App\Models\TransaksiAgrikulture;
 use App\Models\TransaksiKoperasi;
+use App\Models\ProdukKoperasi;
+use App\Models\TransaksiAgrikulture;
 use App\Models\MarketAgrikulture;
 use App\Models\ProdukAgrikulture;
-use App\Models\ProdukKoperasi;
+use App\Models\DetailTransaksiAgrikulture;
 use App\Models\Size;
 use App\Models\Warna;
 use App\Models\ListSize;
@@ -34,8 +35,11 @@ class SuperadminController extends Controller
 	//
 	public function superadmin_dashboard()
 	{
+		$total_pengguna =Customer::count();
+		$belum_ver =Customer::where('status',0)->count();
+		$sudah_ver =Customer::where('status',1)->count();
 
-		return view('super_admin.index');
+		return view('super_admin.index', compact('total_pengguna','belum_ver','sudah_ver'));
 	}
 
 	public function register(Request $request)
@@ -107,7 +111,7 @@ class SuperadminController extends Controller
 			'nid_unmer' => $request['nid_unmer'],
 			'no_telp' => $request['no_telp'],
 			'password' => Hash::make($request['password']),
-			'role' => 'admin',
+			'role' => $request['role'],
 			'status' => '1',
 		]);
 
@@ -200,13 +204,14 @@ class SuperadminController extends Controller
 	public function produk_agrikulture_add(Request $request)
 	{
 
-
+		$kode_produk = mt_rand(1000000000, 9999999999);
 		$data_add = new ProdukAgrikulture();
 
 		$data_add->id_market = $request->input('id_market');
 		$data_add->nama_produk = $request->input('nama_produk');
 		$data_add->jenis_produk = $request->input('jenis_produk');
 		$data_add->harga_produk = $request->input('harga_produk');
+		$data_add->kode_produk = $kode_produk;
 		$data_add->status = '1';
 
 		if ($request->hasFile('foto')) {
@@ -266,6 +271,8 @@ class SuperadminController extends Controller
 
 		return redirect()->back()->with('success', 'Produk Agrikulture Berhasil Dihapus');
 	}
+
+
 	// ============================================================================================================
 
 
@@ -293,7 +300,7 @@ class SuperadminController extends Controller
 		->where('market_agrikultures.id', $id)
 		->orderBy('market_agrikultures.id', 'DESC')
 		->get();
-
+		// return $market_agrikulture;
 		$admin = Admin::where('role_admin', 'Admin Kasir')->get();
 
 		return view('super_admin.agrikulture.edit.edit_market', compact('market_agrikulture', 'admin'));
@@ -372,8 +379,48 @@ class SuperadminController extends Controller
 	}
 
 
+	// ======================================================================================================================
+	//Transaksi di Superadmin
+	public function superadmin_transaksi_agrikulture()
+	{
+		// $transaksi_agrikulture = TransaksiAgrikulture::orderby('id', 'DESC')->get();
+		$transaksi_agrikulture = DB::table('transaksi_agrikultures')
+		->join('customers', 'transaksi_agrikultures.id_user', '=', 'customers.id_user')
+		->select('transaksi_agrikultures.*', 'customers.nama')
+		->orderBy('transaksi_agrikultures.id', 'DESC')
+		->get();
+
+
+		return view('super_admin.agrikulture.transaksi_agrikulture.index', compact('transaksi_agrikulture'));
+	}
+
+
+	public function superadmin_transaksi_agrikulture_detail($id)
+	{
+		// $transaksi_agrikulture = TransaksiAgrikulture::orderby('id', 'DESC')->get();
+		$transaksi_agrikulture = DB::table('transaksi_agrikultures')
+		->join('customers', 'transaksi_agrikultures.id_user', '=', 'customers.id_user')
+		->join('market_agrikultures', 'transaksi_agrikultures.id_market_agrikulture', '=', 'market_agrikultures.id')
+		->select('transaksi_agrikultures.*', 'customers.nama','market_agrikultures.nama_toko')
+		->orderBy('transaksi_agrikultures.id', 'DESC')
+		->where('transaksi_agrikultures.id', $id)
+		->get();
+ 
+
+		$detail_produk = DB::table('detail_transaksi_agrikultures')
+		->join('produk_agrikultures', 'detail_transaksi_agrikultures.id_produk_agrikulture', '=', 'produk_agrikultures.id')
+		->select('detail_transaksi_agrikultures.*', 'produk_agrikultures.nama_produk', 'produk_agrikultures.kode_produk', 'produk_agrikultures.jenis_produk', 'produk_agrikultures.harga_produk')
+		->orderBy('detail_transaksi_agrikultures.id', 'DESC')
+		->get();
+		
+		
+		return view('super_admin.agrikulture.transaksi_agrikulture.detail_transaksi_agrikulture', compact('transaksi_agrikulture','detail_produk'));
+	}
 
 	// ================================================================================================================
+
+
+
 	public function superadmin_koperasi()
 	{
 		$produk_koperasi = DB::table('produk_koperasis')
@@ -444,12 +491,12 @@ class SuperadminController extends Controller
 	public function produk_koperasi_add(Request $request)
 	{
 
-
+		$kode_produk = mt_rand(1000000000, 9999999999);
 		$data = ([
 			'id_admin' => $request['id_admin'],
 			'id_partner' => $request['id_partner'],
 			'nama_produk' => $request['nama_produk'],
-			'kode_produk' => $request['kode_produk'],
+			'kode_produk' => $kode_produk,
 			'kategori_produk' => $request['kategori_produk'],
 			'harga' => $request['harga'],
 			'stok' => $request['stok'],
@@ -607,6 +654,32 @@ class SuperadminController extends Controller
 
 
 	// ====================================================================================================================
+	
+
+	public function superadmin_kost()
+	{
+		$produk_koperasi = DB::table('produk_koperasis')
+		->join('admins', 'produk_koperasis.id_admin', '=', 'admins.id')
+		->select('produk_koperasis.*', 'admins.nama')
+		->orderBy('produk_koperasis.id', 'DESC')
+		->get();
+
+		$admin = Admin::where('role_admin', 'Admin Kasir')->get();
+		$partner = Customer::where('status_partner', 'partner')->get();
+		$kat = KategoriprodukKoperasi::all();
+
+		$list_size =ListSize::all();
+		$list_warna =ListWarna::all();
+
+		return view('super_admin.koperasi.kelola_produk', compact('produk_koperasi', 'admin','partner','kat','list_size','list_warna'));
+	}
+
+
+
+
+	// ======================================================================================================================
+
+
 	public function superadmin_kelola_transaksi()
 	{
 		$transaksi_agrikulture = TransaksiAgrikulture::orderby('id', 'DESC')->get();

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('id_user');
             $table->string('nama');
             $table->string('nik');
+            $table->string('jenis_kelamin');
             $table->string('no_telp');
             $table->string('alamat');
             $table->string('status');

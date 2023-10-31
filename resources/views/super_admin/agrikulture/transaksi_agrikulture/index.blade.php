@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Kelola Produk Agrikultur
+Kelola Transaksi Agrikultur
 @endsection
 
 
@@ -12,14 +12,12 @@ Kelola Produk Agrikultur
   <div class="card">
 
     <div class="card-body">
-      <h2 class="primary">Produk Agrikulture </h2>
+      <h2 class="primary">Transaksi Agrikulture </h2>
      <hr>
-     <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
-      Tambah Produk Agrikulture
-    </button><br><br>
-    <a href="{{ route('superadmin_agrikulture') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Produk Agrikulture</button></a>
+    <br>
+    <a href="{{ route('superadmin_agrikulture') }}"><button type="button" class="btn btn-light btn-sm">Tabel Produk Agrikulture</button></a>
     <a href="{{ route('superadmin_market_agrikulture') }}"><button type="button" class="btn btn-light btn-sm">Tabel Market Agrikulture</button></a>
-    <a href="{{ route('superadmin_transaksi_agrikulture') }}"><button type="button" class="btn btn-light btn-sm">Transaksi Agrikulture</button></a>
+    <a href="{{ route('superadmin_transaksi_agrikulture') }}"><button type="button" class="btn btn-primary btn-sm">Transaksi Agrikulture</button></a>
     <br><br>
 
     @if (session('success'))
@@ -33,36 +31,41 @@ Kelola Produk Agrikultur
         <thead>
           <tr>
             <th>No</th>
-            <th>Nama Produk</th>
-            <th>Nama Toko</th>
-            <th>Jenis Produk</th>
-            <th>Harga Produk</th>
-            <th>Foto Produk</th>
-
-
+            <th>Nama Pemesan</th>
+            <th>Nominal</th>
+            <th>Catatan</th>
+            <th>Status Pemesanan</th>
+          
             <th>Opsi</th>
             <th style="display: none;">hidden</th>
           </tr>
         </thead>
         <tbody>
           @php $no=1 @endphp
-          @foreach($produk_agrikulture as $data)
+          @foreach($transaksi_agrikulture as $data)
           <tr>
             <td>{{$no++}}</td>
-            <td>{{$data->nama_produk}}</td>
-            <td>{{$data->nama_toko}}</td>
-            <td>{{$data->jenis_produk}}</td>
-            <td>Rp. <?=number_format($data->harga_produk, 0, ".", ".")?>,00</td>
-            <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('uploads/produk_agrikulture/'.$data->foto)}}"  data-toggle="modal" data-target="#myModal"></img></td>
-
+            <td>{{$data->nama}}</td>
+            <td>Rp. <?=number_format($data->nominal, 0, ".", ".")?>,00</td>
+            <td>{{$data->catatan}}</td>
+            @if($data->status_pemesanan == 'dikemas')
+            <td><div class="badge badge-warning">Sedang Dikemas</div></td>
+            @elseif($data->status_pemesanan == 'diantar')
+            <td><div class="badge badge-info">Sedang Diantar</div></td>
+            elseif($data->status_pemesanan == 'selesai')
+            <td><div class="badge badge-success">Pesanan Sampai</div></td>
+            @endif
             <td>
               <!-- <button class="btn btn-warning btn-sm icon-file menu-icon edit" title="Edit">Edit</button> -->
 
-              <a href="{{route('superadmin_produk_agrikulture_edit',$data->id)}}"><button class="btn btn-primary btn-sm">Edit</button></a>
-              <a href="#" data-toggle="modal" onclick="deleteData({{$data->id}})" data-target="#DeleteModal">
+              <a href="{{route('superadmin_transaksi_agrikulture_detail',$data->id)}}"><button class="btn btn-info btn-sm">Detail</button></a>
+
+              <!-- <a href="{{route('superadmin_produk_agrikulture_edit',$data->id)}}"><button class="btn btn-primary btn-sm">Edit</button></a> -->
+
+              <!-- <a href="#" data-toggle="modal" onclick="deleteData({{$data->id}})" data-target="#DeleteModal">
                 <button class="btn btn-danger btn-sm"  title="Hapus">Hapus</button>
 
-              </td>
+              </td> -->
 
 
 
@@ -97,16 +100,6 @@ Kelola Produk Agrikultur
 
         {{csrf_field()}}
 
-        <div class="form-group form-success">
-          <label >Pilh Market</label>
-          <select  name="id_market" class="form-control"  required="">
-           <option selected disabled> -- Pilih Market -- </option>
-           @foreach($market as $data)
-           <option value="{{$data->id}}" >{{$data->nama_toko}}</option>
-           @endforeach
-         </select>
-         <span class="form-bar"></span>
-       </div>
 
 
        <div class="form-group">
@@ -114,17 +107,7 @@ Kelola Produk Agrikultur
         <input type="text" class="form-control" id="nama_produk" name="nama_produk"  required=""></input>
       </div>
 
-      <div class="form-group form-success">
-        <label >Jenis Produk</label>
-        <select  name="jenis_produk" class="form-control"  required="">
-         <option selected disabled> -- Pilih jenis Produk -- </option>
-         @foreach($kat as $k)
-         <option  value="{{$k->jenis_produk}}" >{{$k->jenis_produk}}</option>
-          @endforeach
-       </select>
-       <span class="form-bar"></span>
-     </div>
-
+      
 
      <div class="form-group">
       <label for="harga_produk">Harga Produk</label>

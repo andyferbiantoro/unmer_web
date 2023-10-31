@@ -7,13 +7,13 @@
     
 </form>
 <ul class="navbar-nav navbar-right">
-    
+
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="{{asset ('assets/img/avatar/avatar-5.png')}}" class="rounded-circle mr-1">
-            <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->role}}</div>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right">
-           
+        <img alt="image" src="{{asset ('assets/img/avatar/avatar-5.png')}}" class="rounded-circle mr-1">
+        <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->role}}</div>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right">
+
           <!--   <a href="features-profile.html" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile
             </a>
@@ -24,9 +24,35 @@
                 <i class="fas fa-cog"></i> Settings
             </a> -->
             <div class="dropdown-divider"></div>
+            @if(Auth::user()->role == "superadmin")
             <a href="{{route('logout_superadmin')}}" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
+            @endif
+
+            @if(Auth::user()->role == "Admin Kasir")
+            <a href="{{route('admin_kasir_logout')}}" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            @endif
+
+            @if(Auth::user()->role == "Admin Penginapan")
+            <a href="{{route('admin_penginapan_logout')}}" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            @endif
+
+            @if(Auth::user()->role == "Admin Pendidikan")
+            <a href="{{route('admin_pendidikan_logout')}}" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            @endif
+
+            @if(Auth::user()->role == "Admin Event")
+            <a href="{{route('admin_event_logout')}}" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            @endif
         </div>
     </li>
 </ul>

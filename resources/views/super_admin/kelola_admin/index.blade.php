@@ -108,6 +108,11 @@ Kelola Admin
                   </div>
 
                   <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" class="form-control" id="password" name="password"  required=""></input>
+                  </div>
+
+                  <div class="form-group">
                     <label for="nid_unmer">Nid Unmer</label>
                     <input type="number" class="form-control" id="nid_unmer" name="nid_unmer"  required=""></input>
                   </div>
@@ -130,6 +135,10 @@ Kelola Admin
                   <div class="form-group">
                     <label for="tanggal_lahir">Tanggal Lahir</label>
                     <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir"  required=""></input>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="hidden" class="form-control" id="role" name="role"  value="Admin Penginapan" required=""></input>
                   </div>
 
                   <div class="form-group">

@@ -1,30 +1,154 @@
 @extends('layouts.app')
 
 @section('title')
-    Dashboard Super Admin
+Dashboard Super Admin
 @endsection
 
 
 @section('content')
-   
+
 <div class="row">
- <div class="col-lg-12">
-              <div class="card">
-                <!-- <div class="card-header">
-                  <h4>Halaman Dashboard Auditor</h4>
-                </div> -->
-                <div class="card-body">
-                   <div class="text-center" >
-               <h1>selamat datang superadmin</h1>
-                    <!-- <span class="avatar">
-                        <img src="../img/brilliant1.jpg" >
-                    </span><br> -->
-                </div>
-                 
-                 <!--  <button class="btn btn-success fas fa-plus fa-2a"></button> -->
-                </div>
-              </div>
-            </div>
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <div class="card card-statistic-2">
+      <div class="card-stats">
+        <div class="card-stats-title">Data Pengguna
+        </div>
+        <div class="card-stats-items">
+          <div class="card-stats-item">
+            <div class="card-stats-item-count">{{$belum_ver}}</div>
+            <div class="card-stats-item-label">Belum Verifikasi</div>
+          </div>
+          <div class="card-stats-item">
+            <div class="card-stats-item-count">{{$belum_ver}}</div>
+            <div class="card-stats-item-label">Menunggu Verifikasi</div>
+          </div>
+          <div class="card-stats-item">
+            <div class="card-stats-item-count">{{$sudah_ver}}</div>
+            <div class="card-stats-item-label">Sudah Verifikasi</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-icon shadow-primary bg-primary">
+        <i class="fas fa-users"></i>
+      </div>
+      <div class="card-wrap">
+        <div class="card-header">
+          <h4>Total Pengguna</h4>
+        </div>
+        <div class="card-body">
+          {{$total_pengguna}} Pengguna
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <div class="card card-statistic-2">
+      <div class="card-stats">
+        <div class="card-stats-title">Data Partner
+        </div>
+        <div class="card-stats-items">
+          <div class="card-stats-item">
+            <div class="card-stats-item-count">{{$belum_ver}}</div>
+            <div class="card-stats-item-label">Belum Verifikasi</div>
+          </div>
+          <div class="card-stats-item">
+            <div class="card-stats-item-count">{{$belum_ver}}</div>
+            <div class="card-stats-item-label">Shipping</div>
+          </div>
+          <div class="card-stats-item">
+            <div class="card-stats-item-count">{{$sudah_ver}}</div>
+            <div class="card-stats-item-label">Completed</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-icon shadow-primary bg-primary">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="card-wrap">
+        <div class="card-header">
+          <h4>Total Partner</h4>
+        </div>
+        <div class="card-body">
+          {{$total_pengguna}} Partner
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================================================================= -->
+
+<div class="row">
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <div class="card card-statistic-2">
+      <div class="card-stats">
+        <div class="card-stats-title">Data Mitra
+        </div>
+        <div class="card-stats-items">
+          <div class="card-stats-item">
+            <div class="card-stats-item-count">24</div>
+            <div class="card-stats-item-label">Belum Verifikasi</div>
+          </div>
+          <div class="card-stats-item">
+            <div class="card-stats-item-count">12</div>
+            <div class="card-stats-item-label">Menunggu Verifikasi</div>
+          </div>
+          <div class="card-stats-item">
+            <div class="card-stats-item-count">23</div>
+            <div class="card-stats-item-label">Sudah Verifikasi</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-icon shadow-primary bg-primary">
+        <i class="fas fa-handshake"></i>
+      </div>
+      <div class="card-wrap">
+        <div class="card-header">
+          <h4>Total Mitra</h4>
+        </div>
+        <div class="card-body">
+          {{$total_pengguna}} Mitra
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <div class="card card-statistic-2">
+      <div class="card-stats">
+        <div class="card-stats-title">Data Pesanan
+        </div>
+        <div class="card-stats-items">
+          <div class="card-stats-item">
+            <div class="card-stats-item-count">24</div>
+            <div class="card-stats-item-label">Belum Verifikasi</div>
+          </div>
+          <div class="card-stats-item">
+            <div class="card-stats-item-count">12</div>
+            <div class="card-stats-item-label">Shipping</div>
+          </div>
+          <div class="card-stats-item">
+            <div class="card-stats-item-count">23</div>
+            <div class="card-stats-item-label">Completed</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-icon shadow-primary bg-primary">
+        <i class="fas fa-shopping-cart"></i>
+      </div>
+      <div class="card-wrap">
+        <div class="card-header">
+          <h4>Total Pesanan</h4>
+        </div>
+        <div class="card-body">
+          {{$total_pengguna}} Pesanan
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 

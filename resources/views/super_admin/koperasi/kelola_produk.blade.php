@@ -17,7 +17,7 @@ Kelola Produk Koperasi
         <hr>
         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
           Tambah Produk Koperasi
-        </button><br><br>
+        </button><br>
 
       <!-- <a href="{{ route('superadmin_koperasi') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Produk Koperasi</button></a> -->
 
@@ -128,10 +128,7 @@ Kelola Produk Koperasi
        </div>
 
 
-       <div class="form-group">
-        <label for="kode_produk">Kode Produk</label>
-        <input type="text" class="form-control" id="kode_produk" name="kode_produk"  required=""></input>
-      </div>
+      
 
       <div class="form-group form-success">
         <label >Kategori Produk</label>
