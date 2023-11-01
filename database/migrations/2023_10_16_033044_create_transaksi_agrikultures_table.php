@@ -20,6 +20,9 @@ return new class extends Migration
             $table->integer('nominal');
             $table->string('jenis_pembayaran');
             $table->text('catatan');
+            $table->time('waktu_pengiriman');
+            $table->date('tanggal_pengiriman');
+            $table->string('alamat');
             $table->string('status_pemesanan');
             $table->string('status_pembayaran');
             $table->string('kode_transaksi');

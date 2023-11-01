@@ -28,7 +28,7 @@
             </ul>
           </li>
 
-           <li class="nav-item dropdown {{(request()->is('lapak')) ? 'active' : ''}}">
+          <li class="nav-item dropdown {{(request()->is('lapak')) ? 'active' : ''}}">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-mountain"></i>
             <span>Wisata & Event</span></a>
             <ul class="dropdown-menu">
@@ -40,17 +40,15 @@
 
           <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-graduation-cap"></i></i><span>Pendidikan</span></a></li>
 
-          <li class="{{(request()->is('superadmin_kelola_transaksi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_transaksi') }}"><i class="fas fa-money-bill"></i><span>Kelola Transaksi</span></a></li>
-
           <li class="{{(request()->is('superadmin_kelola_broadcast')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_broadcast') }}"><i class="fas fa-bullhorn"></i><span>Kelola Broadcast</span></a></li>
 
           <li class="{{(request()->is('superadmin_kelola_admin')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_admin') }}"><i class="fas fa-users"></i><span>Kelola Admin</span></a></li>
 
           <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-user"></i></i><span>Kelola User</span></a></li>
 
-
           <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-map-marker"></i></i><span>Lokasi User</span></a></li>
 
+          <li class="{{(request()->is('superadmin_kelola_topup')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_topup') }}"><i class="fas fa-money-bill"></i><span>Kelola Top Up</span></a></li>
           @endif 
 
           @if(Auth::user()->role == 'admin')

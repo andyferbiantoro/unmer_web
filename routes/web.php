@@ -72,14 +72,19 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::post('/produk_koperasi_update_warna/{id}', [SuperadminController::class, 'produk_koperasi_update_warna'])->name('produk_koperasi_update_warna');
 	Route::post('/produk_koperasi_delete/{id}', [SuperadminController::class, 'produk_koperasi_delete'])->name('produk_koperasi_delete');
 
+	//transaksi Koperasi
+	Route::get('/superadmin_transaksi_koperasi', [SuperadminController::class, 'superadmin_transaksi_koperasi'])->name('superadmin_transaksi_koperasi');
+	Route::get('/superadmin_transaksi_koperasi_detail{id}', [SuperadminController::class, 'superadmin_transaksi_koperasi_detail'])->name('superadmin_transaksi_koperasi_detail');
+
 
 	//routing untuk mengelola Kost
 	Route::get('/superadmin_kost', [SuperadminController::class, 'superadmin_kost'])->name('superadmin_kost');
 
 
 
-	//routing untuk mengelola transaksi
-	Route::get('/superadmin_kelola_transaksi', [SuperadminController::class, 'superadmin_kelola_transaksi'])->name('superadmin_kelola_transaksi');
+	//routing untuk mengelola Top Up
+	Route::get('/superadmin_kelola_topup', [SuperadminController::class, 'superadmin_kelola_topup'])->name('superadmin_kelola_topup');
+	Route::post('/superadmin_konfirmasi_topup/{id}', [SuperadminController::class, 'superadmin_konfirmasi_topup'])->name('superadmin_konfirmasi_topup');
 
 
 

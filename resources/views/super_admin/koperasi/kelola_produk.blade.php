@@ -14,12 +14,13 @@ Kelola Produk Koperasi
     <div class="card-body">
 
       <h2 class="primary">Produk Koperasi </h2>
-        <hr>
-        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
-          Tambah Produk Koperasi
-        </button><br>
+      <hr>
+      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
+        Tambah Produk Koperasi
+      </button><br><br>
 
-      <!-- <a href="{{ route('superadmin_koperasi') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Produk Koperasi</button></a> -->
+      <a href="{{ route('superadmin_koperasi') }}"><button type="button" class="btn btn-primary btn-sm"> Produk Koperasi</button></a>
+      <a href="{{ route('superadmin_transaksi_koperasi') }}"><button type="button" class="btn btn-light btn-sm"> Transaksi Koperasi</button></a>
 
       <br><br>
 
@@ -111,88 +112,88 @@ Kelola Produk Koperasi
        </div>
 
 
-        <div class="form-group">
-          <label for="nama_produk">Nama Produk</label>
-          <input type="text" class="form-control" id="nama_produk" name="nama_produk"  required=""></input>
-        </div>
-
-        <div class="form-group form-success">
-          <label >Pilh Partner</label>
-          <select  name="id_partner" class="form-control"  required="">
-           <option selected disabled> -- Pilih Partner -- </option>
-           @foreach($partner as $data)
-           <option value="{{$data->id}}" >{{$data->nama}}</option>
-           @endforeach
-         </select>
-         <span class="form-bar"></span>
-       </div>
-
-
-      
+       <div class="form-group">
+        <label for="nama_produk">Nama Produk</label>
+        <input type="text" class="form-control" id="nama_produk" name="nama_produk"  required=""></input>
+      </div>
 
       <div class="form-group form-success">
-        <label >Kategori Produk</label>
-        <select id="kategori_produk" name="kategori_produk" class="form-control"  required="" onchange="kategoriInputForm()" >
-         <option selected disabled> -- Pilih Kategori Produk -- </option>
-         @foreach($kat as $k)
-         <option value="{{$k->kategori_produk}}" >{{$k->kategori_produk}}</option>
+        <label >Pilh Partner</label>
+        <select  name="id_partner" class="form-control"  required="">
+         <option selected disabled> -- Pilih Partner -- </option>
+         @foreach($partner as $data)
+         <option value="{{$data->id}}" >{{$data->nama}}</option>
          @endforeach
        </select>
        <span class="form-bar"></span>
      </div>
 
-    
 
-      <div class="form-group">
-        <div class="row">
-          <div id="size_id" style="display: none" class="col-lg-6 col-sm-12 col-12" >
-            <label><strong>Size</strong></label><br>
-            @foreach($list_size as $list)
-            <label><input type="checkbox" name="size[]" value="{{$list->size}}"> {{$list->size}}</label><br>
-            @endforeach
-            
-          </div>
+     
 
-           <div id="warna_id" style="display: none" class="col-lg-6 col-sm-12 col-12">
-            <label><strong>Warna</strong></label><br>
-            @foreach($list_warna as $list)
-            <label><input type="checkbox" name="warna[]" value="{{$list->warna}}"> {{$list->warna}}</label><br>
-            @endforeach
-            
-          </div>
-        </div>
-
-
-      </div>  
-
-
-      
-
-      <div class="form-group">
-        <label for="harga">Harga</label>
-        <input type="number" class="form-control" id="harga" name="harga"  required=""></input>
-      </div>
-
-      <div class="form-group">
-        <label for="stok">Stok</label>
-        <input type="number" class="form-control" id="stok" name="stok"  required=""></input>
-      </div>
-
-      <div class="form-group">
-        <label for="foto">Foto</label>
-        <input type="file" class="form-control" id="foto" name="foto"  required=""></input>
-      </div>
-
-
-      
-
-
+     <div class="form-group form-success">
+      <label >Kategori Produk</label>
+      <select id="kategori_produk" name="kategori_produk" class="form-control"  required="" onchange="kategoriInputForm()" >
+       <option selected disabled> -- Pilih Kategori Produk -- </option>
+       @foreach($kat as $k)
+       <option value="{{$k->kategori_produk}}" >{{$k->kategori_produk}}</option>
+       @endforeach
+     </select>
+     <span class="form-bar"></span>
    </div>
-   <div class="modal-footer">
-    <button class="btn btn-primary" type="Submit">Tambahkan</button>
-    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
 
+   
+
+   <div class="form-group">
+    <div class="row">
+      <div id="size_id" style="display: none" class="col-lg-6 col-sm-12 col-12" >
+        <label><strong>Size</strong></label><br>
+        @foreach($list_size as $list)
+        <label><input type="checkbox" name="size[]" value="{{$list->size}}"> {{$list->size}}</label><br>
+        @endforeach
+        
+      </div>
+
+      <div id="warna_id" style="display: none" class="col-lg-6 col-sm-12 col-12">
+        <label><strong>Warna</strong></label><br>
+        @foreach($list_warna as $list)
+        <label><input type="checkbox" name="warna[]" value="{{$list->warna}}"> {{$list->warna}}</label><br>
+        @endforeach
+        
+      </div>
+    </div>
+
+
+  </div>  
+
+
+  
+
+  <div class="form-group">
+    <label for="harga">Harga</label>
+    <input type="number" class="form-control" id="harga" name="harga"  required=""></input>
   </div>
+
+  <div class="form-group">
+    <label for="stok">Stok</label>
+    <input type="number" class="form-control" id="stok" name="stok"  required=""></input>
+  </div>
+
+  <div class="form-group">
+    <label for="foto">Foto</label>
+    <input type="file" class="form-control" id="foto" name="foto"  required=""></input>
+  </div>
+
+
+  
+
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="Submit">Tambahkan</button>
+  <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+
+</div>
 </form>
 </div>
 </div>
@@ -299,64 +300,64 @@ Kelola Produk Koperasi
       </div>
     </div>
   </div>
-@endsection
+  @endsection
 
-@section('scripts')
-<script type="text/javascript">
-  function deleteData(id) {
-    var id = id;
-    var url = '{{route("produk_koperasi_delete", ":id") }}';
-    url = url.replace(':id', id);
-    $("#deleteForm").attr('action', url);
-  }
+  @section('scripts')
+  <script type="text/javascript">
+    function deleteData(id) {
+      var id = id;
+      var url = '{{route("produk_koperasi_delete", ":id") }}';
+      url = url.replace(':id', id);
+      $("#deleteForm").attr('action', url);
+    }
 
-  function formSubmit() {
-    $("#deleteForm").submit();
-  }
-</script>
+    function formSubmit() {
+      $("#deleteForm").submit();
+    }
+  </script>
 
 
-<script>
-  $(document).ready(function() {
-    var table = $('#dataTable').DataTable();
-    table.on('click', '.edit', function() {
-      $tr = $(this).closest('tr');
-      if ($($tr).hasClass('child')) {
-        $tr = $tr.prev('.parent');
-      }
-      var data = table.row($tr).data();
-      console.log(data);
-      $('#nama_update').val(data[1]);
-      $('#nik_update').val(data[2]);
-      $('#tempat_lahir_update').val(data[3]);
-      $('#tanggal_lahir_update').val(data[4]);
-      $('#status_update').val(data[5]);
-      $('#role_admin_update').val(data[6]);
+  <script>
+    $(document).ready(function() {
+      var table = $('#dataTable').DataTable();
+      table.on('click', '.edit', function() {
+        $tr = $(this).closest('tr');
+        if ($($tr).hasClass('child')) {
+          $tr = $tr.prev('.parent');
+        }
+        var data = table.row($tr).data();
+        console.log(data);
+        $('#nama_update').val(data[1]);
+        $('#nik_update').val(data[2]);
+        $('#tempat_lahir_update').val(data[3]);
+        $('#tanggal_lahir_update').val(data[4]);
+        $('#status_update').val(data[5]);
+        $('#role_admin_update').val(data[6]);
 
-      $('#updateInformasiform').attr('action','admin_update/'+ data[8]);
-      $('#updateInformasi').modal('show');
+        $('#updateInformasiform').attr('action','admin_update/'+ data[8]);
+        $('#updateInformasi').modal('show');
+      });
     });
-  });
-</script>
+  </script>
   
 
   <script>
         // Menggunakan JavaScript untuk menampilkan/menyembunyikan size dan warna berdasarkan pilihan dropdown
         document.getElementById("kategori_produk").addEventListener("change", function () {
-            var productType = this.value;
-            var sizeOptions = document.getElementById("size_id");
-            var warnaOptions = document.getElementById("warna_id");
+          var productType = this.value;
+          var sizeOptions = document.getElementById("size_id");
+          var warnaOptions = document.getElementById("warna_id");
 
-            if (productType === "Pakaian") {
-                sizeOptions.style.display = "block";
-                warnaOptions.style.display = "block";
-            } else {
-                sizeOptions.style.display = "none";
-                 warnaOptions.style.display = "none";
-            }
+          if (productType === "Pakaian") {
+            sizeOptions.style.display = "block";
+            warnaOptions.style.display = "block";
+          } else {
+            sizeOptions.style.display = "none";
+            warnaOptions.style.display = "none";
+          }
         });
-    </script>
+      </script>
 
-@endsection
+      @endsection
 
 

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('id_user');
             $table->string('metode_pembayaran');
             $table->integer('nominal');
-            $table->date('tanggal_topup');
             $table->string('bukti_transfer');
+            $table->string('status_topup');
             $table->timestamps();
         });
     }

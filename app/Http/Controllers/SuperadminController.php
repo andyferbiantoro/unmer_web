@@ -22,6 +22,7 @@ use App\Models\KategoriprodukAgrikulture;
 use App\Models\KategoriprodukKoperasi;
 use App\Models\Broadcast;
 use App\Models\DetailBroadcast;
+use App\Models\TransaksiTopUp;
 use File;
 use PDF;
 use DB;
@@ -380,6 +381,7 @@ class SuperadminController extends Controller
 
 
 	// ======================================================================================================================
+
 	//Transaksi di Superadmin
 	public function superadmin_transaksi_agrikulture()
 	{
@@ -417,9 +419,8 @@ class SuperadminController extends Controller
 		return view('super_admin.agrikulture.transaksi_agrikulture.detail_transaksi_agrikulture', compact('transaksi_agrikulture','detail_produk'));
 	}
 
+
 	// ================================================================================================================
-
-
 
 	public function superadmin_koperasi()
 	{
@@ -654,6 +655,45 @@ class SuperadminController extends Controller
 
 
 	// ====================================================================================================================
+
+
+	//Transaksi Koperasi di Superadmin
+	public function superadmin_transaksi_koperasi()
+	{
+		// $transaksi_agrikulture = TransaksiAgrikulture::orderby('id', 'DESC')->get();
+		$transaksi_koperasi = DB::table('transaksi_koperasis')
+		->join('customers', 'transaksi_koperasis.id_user', '=', 'customers.id_user')
+		->select('transaksi_koperasis.*', 'customers.nama')
+		->orderBy('transaksi_koperasis.id', 'DESC')
+		->get();
+
+
+		return view('super_admin.koperasi.transaksi_koperasi.index', compact('transaksi_koperasi'));
+	}
+
+
+	public function superadmin_transaksi_koperasi_detail($id)
+	{
+		// $transaksi_agrikulture = TransaksiAgrikulture::orderby('id', 'DESC')->get();
+		$transaksi_koperasi = DB::table('transaksi_koperasis')
+		->join('customers', 'transaksi_koperasis.id_user', '=', 'customers.id_user')
+		->select('transaksi_koperasis.*', 'customers.nama')
+		->orderBy('transaksi_koperasis.id', 'DESC')
+		->where('transaksi_koperasis.id', $id)
+		->get();
+ 
+
+		$detail_produk = DB::table('detail_transaksi_koperasis')
+		->join('produk_koperasis', 'detail_transaksi_koperasis.id_produk_koperasi', '=', 'produk_koperasis.id')
+		->select('detail_transaksi_koperasis.*', 'produk_koperasis.nama_produk', 'produk_koperasis.kode_produk', 'produk_koperasis.kategori_produk', 'produk_koperasis.harga')
+		->orderBy('detail_transaksi_koperasis.id', 'DESC')
+		->get();
+		
+		
+		return view('super_admin.koperasi.transaksi_koperasi.detail_transaksi_koperasi', compact('transaksi_koperasi','detail_produk'));
+	}
+
+	// ==============================================================================================================
 	
 
 	public function superadmin_kost()
@@ -680,19 +720,34 @@ class SuperadminController extends Controller
 	// ======================================================================================================================
 
 
-	public function superadmin_kelola_transaksi()
+	public function superadmin_kelola_topup()
 	{
-		$transaksi_agrikulture = TransaksiAgrikulture::orderby('id', 'DESC')->get();
-
-		// $transaksi_koperasi = TransaksiKoperasi::orderby('id', DESC)->get();
-		$transaksi_koperasi = DB::table('transaksi_koperasis')
-		->join('customers', 'transaksi_koperasis.id_user', '=', 'customers.id_user')
-		->join('produk_agrikultures', 'transaksi_koperasis.id_produk_koperasi', '=', 'produk_agrikultures.id')
-		->select('transaksi_koperasis.*', 'customers.nama', 'produk_agrikultures.nama_produk')
-		->orderBy('transaksi_koperasis.id', 'DESC')
+		// $transaksi_topup = TransaksiTopUp::orderby('id', 'DESC')->get();
+		$transaksi_topup = DB::table('transaksi_top_ups')
+		->join('customers', 'transaksi_top_ups.id_user', '=', 'customers.id_user')
+		->select('transaksi_top_ups.*', 'customers.nama')
+		->orderBy('transaksi_top_ups.id', 'DESC')
 		->get();
+	
+		return view('super_admin.kelola_topup.index', compact('transaksi_topup'));
+	}
 
-		return view('super_admin.kelola_transaksi.index', compact('transaksi_koperasi', 'transaksi_agrikulture'));
+	public function superadmin_konfirmasi_topup(Request $request, $id)
+	{
+
+
+		$data_update = TransaksiTopUp::where('id', $id)->first();
+
+		$input = [
+			'status_topup' => 'dikonfirmasi',
+			
+		];
+
+		$data_update->update($input);
+
+
+
+		return redirect()->back()->with('success', 'Produk Berhasil Diupdate');
 	}
 
 
