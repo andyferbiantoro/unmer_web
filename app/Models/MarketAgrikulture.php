@@ -10,4 +10,9 @@ class MarketAgrikulture extends Model
     use HasFactory;
     protected $table = 'market_agrikultures';
 	protected $guarded = [];
+
+    public function detail_market()
+    {
+        return $this->hasMany(DetailMarketAgrikulture::class,'id_market');
+    }
 }
