@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Nov 2023 pada 05.58
+-- Waktu pembuatan: 02 Nov 2023 pada 06.14
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -87,6 +87,7 @@ CREATE TABLE `customers` (
   `alamat` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `status_partner` varchar(100) NOT NULL DEFAULT 'non_partner',
+  `saldo` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -95,9 +96,9 @@ CREATE TABLE `customers` (
 -- Dumping data untuk tabel `customers`
 --
 
-INSERT INTO `customers` (`id`, `id_user`, `nama`, `nik`, `jenis_kelamin`, `alamat`, `status`, `status_partner`, `created_at`, `updated_at`) VALUES
-(1, 9, 'eggi maretino', '123456678', 'L', 'pesanggaran', '1', 'partner', NULL, NULL),
-(2, 10, 'Egga Maretiyo', '123142114123', 'L', 'Pesanggaran', '1', 'non_partner', NULL, NULL);
+INSERT INTO `customers` (`id`, `id_user`, `nama`, `nik`, `jenis_kelamin`, `alamat`, `status`, `status_partner`, `saldo`, `created_at`, `updated_at`) VALUES
+(1, 9, 'eggi maretino', '123456678', 'L', 'pesanggaran', '1', 'partner', 0, NULL, NULL),
+(2, 10, 'Egga Maretiyo', '123142114123', 'L', 'Pesanggaran', '1', 'non_partner', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
