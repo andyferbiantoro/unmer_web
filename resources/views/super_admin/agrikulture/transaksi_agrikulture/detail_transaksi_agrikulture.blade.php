@@ -80,7 +80,7 @@ Detail Transaksi Agrikultur
                   <th>No</th>
                   <th>Nama Produk</th>
                   <th>Kode Produk</th>
-                  <th>Jenis Produk</th>
+                  <th>Kategori Produk</th>
                   <th>Harga Produk</th>
                   <th>Jumlah Beli</th>
                   <th>Total</th>
@@ -93,7 +93,7 @@ Detail Transaksi Agrikultur
                     <td>{{$no++}}</td>
                     <td>{{$detail->nama_produk}}</td>
                     <td>{{$detail->kode_produk}}</td>
-                    <td>{{$detail->jenis_produk}}</td>
+                    <td>{{$detail->kategori_produk}}</td>
                     <td>Rp. <?=number_format($detail->harga_produk, 0, ".", ".")?>,00</td>
                     <td>{{$detail->kuantitas}} </td>
                     <td>Rp. <?=number_format($detail->harga_produk * $detail->kuantitas, 0, ".", ".")?>,00</td>

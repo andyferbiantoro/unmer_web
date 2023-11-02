@@ -35,7 +35,7 @@ Kelola Produk Agrikultur
             <th>No</th>
             <th>Nama Produk</th>
             <th>Nama Toko</th>
-            <th>Jenis Produk</th>
+            <th>Kategori Produk</th>
             <th>Harga Produk</th>
             <th>Foto Produk</th>
 
@@ -51,7 +51,7 @@ Kelola Produk Agrikultur
             <td>{{$no++}}</td>
             <td>{{$data->nama_produk}}</td>
             <td>{{$data->nama_toko}}</td>
-            <td>{{$data->jenis_produk}}</td>
+            <td>{{$data->kategori_produk}}</td>
             <td>Rp. <?=number_format($data->harga_produk, 0, ".", ".")?>,00</td>
             <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('uploads/produk_agrikulture/'.$data->foto)}}"  data-toggle="modal" data-target="#myModal"></img></td>
 

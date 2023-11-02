@@ -53,7 +53,7 @@ Kelola Market Agrikultur
 
                   <td>
                     <!-- <button class="btn btn-warning btn-sm icon-file menu-icon edit" title="Edit">Edit</button> -->
-                    <a href="{{route('superadmin_tampil_peta_market',$data->id)}}"><button class="btn btn-dark btn-sm">Lihat Peta Market</button></a>
+                    <a href="{{route('superadmin_tampil_peta_market',$data->id)}}"><button class="btn btn-dark btn-sm">Lokasi Market</button></a>
                     <a href="{{route('superadmin_market_agrikulture_edit',$data->id)}}"><button class="btn btn-primary btn-sm">Edit</button></a>
 
                     <a href="#" data-toggle="modal" onclick="deleteData({{$data->id}})" data-target="#DeleteModal">

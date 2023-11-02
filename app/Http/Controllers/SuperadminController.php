@@ -210,7 +210,7 @@ class SuperadminController extends Controller
 
 		$data_add->id_market = $request->input('id_market');
 		$data_add->nama_produk = $request->input('nama_produk');
-		$data_add->jenis_produk = $request->input('jenis_produk');
+		$data_add->kategori_produk = $request->input('kategori_produk');
 		$data_add->harga_produk = $request->input('harga_produk');
 		$data_add->kode_produk = $kode_produk;
 		$data_add->status = '1';
@@ -239,10 +239,11 @@ class SuperadminController extends Controller
 
 		$input = [
 			'nama_produk' => $request->nama_produk,
-			'jenis_produk' => $request->jenis_produk,
+			'kategori_produk' => $request->kategori_produk,
 			'harga_produk' => $request->harga_produk,
 
 		];
+		// return $input;
 		// return $input;
 		if ($file = $request->file('foto')) {
 			if ($data_update->foto) {
@@ -411,7 +412,7 @@ class SuperadminController extends Controller
 
 		$detail_produk = DB::table('detail_transaksi_agrikultures')
 		->join('produk_agrikultures', 'detail_transaksi_agrikultures.id_produk_agrikulture', '=', 'produk_agrikultures.id')
-		->select('detail_transaksi_agrikultures.*', 'produk_agrikultures.nama_produk', 'produk_agrikultures.kode_produk', 'produk_agrikultures.jenis_produk', 'produk_agrikultures.harga_produk')
+		->select('detail_transaksi_agrikultures.*', 'produk_agrikultures.nama_produk', 'produk_agrikultures.kode_produk', 'produk_agrikultures.kategori_produk', 'produk_agrikultures.harga_produk')
 		->orderBy('detail_transaksi_agrikultures.id', 'DESC')
 		->get();
 		

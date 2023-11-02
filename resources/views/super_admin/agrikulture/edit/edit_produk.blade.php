@@ -41,9 +41,9 @@ Edit Produk Agrikultur
 
                 <div class="form-group form-success">
                   <label >Jenis Produk</label>
-                  <select  name="jenis_produk" class="form-control"  required="">
+                  <select  name="kategori_produk" class="form-control" >
                     @foreach($kat as $k)
-                    <option value="{{$k->jenis_produk}}" {{$data->jenis_produk == $k->jenis_produk ? "selected" : "" }} >{{$k->jenis_produk}}</option>
+                    <option value="{{$k->kategori_produk}}" {{$data->kategori_produk == $k->kategori_produk ? "selected" : "" }} >{{$k->kategori_produk}}</option>
                     @endforeach
                   </select>
                   <span class="form-bar"></span>

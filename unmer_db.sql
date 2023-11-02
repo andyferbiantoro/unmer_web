@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 01 Nov 2023 pada 10.19
+-- Waktu pembuatan: 02 Nov 2023 pada 05.58
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -386,7 +386,7 @@ CREATE TABLE `kamar_kosts` (
 
 CREATE TABLE `kategori_produk_agrikultures` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `jenis_produk` varchar(255) NOT NULL,
+  `kategori_produk` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -395,7 +395,7 @@ CREATE TABLE `kategori_produk_agrikultures` (
 -- Dumping data untuk tabel `kategori_produk_agrikultures`
 --
 
-INSERT INTO `kategori_produk_agrikultures` (`id`, `jenis_produk`, `created_at`, `updated_at`) VALUES
+INSERT INTO `kategori_produk_agrikultures` (`id`, `kategori_produk`, `created_at`, `updated_at`) VALUES
 (1, 'Buah', NULL, NULL),
 (2, 'Sayur', NULL, NULL);
 
@@ -635,7 +635,7 @@ CREATE TABLE `produk_agrikultures` (
   `id_market` int(11) NOT NULL,
   `nama_produk` varchar(255) NOT NULL,
   `kode_produk` varchar(100) NOT NULL,
-  `jenis_produk` varchar(255) NOT NULL,
+  `kategori_produk` varchar(255) NOT NULL,
   `harga_produk` varchar(255) NOT NULL,
   `foto` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
@@ -647,10 +647,10 @@ CREATE TABLE `produk_agrikultures` (
 -- Dumping data untuk tabel `produk_agrikultures`
 --
 
-INSERT INTO `produk_agrikultures` (`id`, `id_market`, `nama_produk`, `kode_produk`, `jenis_produk`, `harga_produk`, `foto`, `status`, `created_at`, `updated_at`) VALUES
+INSERT INTO `produk_agrikultures` (`id`, `id_market`, `nama_produk`, `kode_produk`, `kategori_produk`, `harga_produk`, `foto`, `status`, `created_at`, `updated_at`) VALUES
 (8, 4, 'Wortel', '3221973871', 'Sayur', '10000', 'wortel.jpg', '1', '2023-10-27 18:56:40', '2023-10-28 05:00:05'),
 (9, 4, 'Timun', '2021612852', 'Sayur', '10000', 'timun.jpg', '1', '2023-10-29 20:45:09', '2023-10-29 20:45:09'),
-(10, 4, 'apel', '9448777343', 'Buah', '20000', 'apel.jpg', '1', '2023-10-29 20:45:24', '2023-10-29 20:45:24');
+(10, 4, 'Apel', '9448777343', 'Buah', '20000', 'apel.jpg', '1', '2023-10-29 20:45:24', '2023-11-01 21:53:25');
 
 -- --------------------------------------------------------
 
@@ -745,6 +745,7 @@ CREATE TABLE `transaksi_agrikultures` (
   `alamat` varchar(255) DEFAULT NULL,
   `status_pemesanan` varchar(255) NOT NULL,
   `status_pembayaran` varchar(255) NOT NULL,
+  `metode_pengiriman` varchar(30) NOT NULL,
   `kode_transaksi` varchar(100) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -754,8 +755,8 @@ CREATE TABLE `transaksi_agrikultures` (
 -- Dumping data untuk tabel `transaksi_agrikultures`
 --
 
-INSERT INTO `transaksi_agrikultures` (`id`, `id_market_agrikulture`, `id_user`, `nominal`, `catatan`, `waktu_pengiriman`, `tanggal_pengiriman`, `alamat`, `status_pemesanan`, `status_pembayaran`, `kode_transaksi`, `created_at`, `updated_at`) VALUES
-(1, 4, 9, 50000, 'dikemas yang rapi ya', NULL, NULL, NULL, 'dikemas', '1', '3287364718', NULL, NULL);
+INSERT INTO `transaksi_agrikultures` (`id`, `id_market_agrikulture`, `id_user`, `nominal`, `catatan`, `waktu_pengiriman`, `tanggal_pengiriman`, `alamat`, `status_pemesanan`, `status_pembayaran`, `metode_pengiriman`, `kode_transaksi`, `created_at`, `updated_at`) VALUES
+(1, 4, 9, 50000, 'dikemas yang rapi ya', NULL, NULL, NULL, 'dikemas', '1', '', '3287364718', NULL, NULL);
 
 -- --------------------------------------------------------
 
