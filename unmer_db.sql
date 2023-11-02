@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Nov 2023 pada 06.14
+-- Waktu pembuatan: 02 Nov 2023 pada 09.55
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -83,7 +83,7 @@ CREATE TABLE `customers` (
   `id_user` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL,
   `nik` varchar(255) DEFAULT NULL,
-  `jenis_kelamin` varchar(100) NOT NULL,
+  `jenis_kelamin` varchar(100) DEFAULT NULL,
   `alamat` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `status_partner` varchar(100) NOT NULL DEFAULT 'non_partner',
@@ -172,12 +172,22 @@ CREATE TABLE `detail_kamar_hotels` (
 
 CREATE TABLE `detail_market_agrikultures` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `id_market` int(11) NOT NULL,
-  `jam_pengiriman_awal` int(11) NOT NULL,
-  `jam_pengiriman_akhir` int(11) NOT NULL,
+  `waktu_pengiriman` varchar(50) NOT NULL,
+  `jam_pengiriman_awal` time NOT NULL,
+  `jam_pengiriman_akhir` time NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `detail_market_agrikultures`
+--
+
+INSERT INTO `detail_market_agrikultures` (`id`, `waktu_pengiriman`, `jam_pengiriman_awal`, `jam_pengiriman_akhir`, `created_at`, `updated_at`) VALUES
+(1, 'Pagi', '06:00:00', '09:00:00', NULL, NULL),
+(2, 'Siang', '11:00:00', '14:00:00', NULL, NULL),
+(3, 'Sore', '16:00:00', '18:00:00', NULL, NULL),
+(4, 'Malam', '20:00:00', '21:00:00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1192,7 +1202,7 @@ ALTER TABLE `detail_kamar_hotels`
 -- AUTO_INCREMENT untuk tabel `detail_market_agrikultures`
 --
 ALTER TABLE `detail_market_agrikultures`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_transaksi_agrikultures`
