@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminKasirController;
 use App\Http\Controllers\AdminPenginapanController;
 use App\Http\Controllers\AdminPendidikanController;
 use App\Http\Controllers\AdminEventController;
+use App\Http\Controllers\WebViewAndroidController;
+
 
 
 /*
@@ -28,6 +30,15 @@ Route::post('/proses_cek_otp', [AuthController::class, 'proses_cek_otp'])->name(
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/proses_login', [AuthController::class, 'proses_login'])->name('proses_login');
+
+//webveiw
+Route::get('/keuntungan_transaksi_view', [WebViewAndroidController::class, 'keuntungan_transaksi_view'])->name('keuntungan_transaksi_view');
+Route::get('/buku_panduan_view', [WebViewAndroidController::class, 'buku_panduan_view'])->name('buku_panduan_view');
+Route::get('/syarat_dan_ketentuan_view', [WebViewAndroidController::class, 'syarat_dan_ketentuan_view'])->name('syarat_dan_ketentuan_view');
+Route::get('/kebijakan_privasi_view', [WebViewAndroidController::class, 'kebijakan_privasi_view'])->name('kebijakan_privasi_view');
+
+
+
 
 
 Route::middleware(['auth', 'superadmin'])->group(function () {
@@ -144,6 +155,9 @@ Route::middleware(['auth', 'admin_event'])->group(function () {
 	Route::get('/admin_event_logout', [AuthController::class, 'admin_event_logout'])->name('admin_event_logout');
 
 });	
+
+
+
 
 
 
