@@ -17,9 +17,10 @@ Kelola Produk Agrikultur
      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
       Tambah Produk Agrikulture
     </button><br><br>
-    <a href="{{ route('superadmin_agrikulture') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Produk Agrikulture</button></a>
-    <a href="{{ route('superadmin_market_agrikulture') }}"><button type="button" class="btn btn-light btn-sm">Tabel Market Agrikulture</button></a>
-    <a href="{{ route('superadmin_transaksi_agrikulture') }}"><button type="button" class="btn btn-light btn-sm">Transaksi Agrikulture</button></a>
+    <a href="{{ route('superadmin_agrikulture') }}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-shopping-bag"></i> Produk Agrikulture</button></a>
+    <a href="{{ route('superadmin_market_agrikulture') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-store"></i> Market Agrikulture</button></a>
+    <a href="{{ route('superadmin_transaksi_agrikulture') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-money-bill"></i> Transaksi Agrikulture</button></a>
+   
     <br><br>
 
     @if (session('success'))
@@ -116,10 +117,10 @@ Kelola Produk Agrikultur
 
       <div class="form-group form-success">
         <label >Jenis Produk</label>
-        <select  name="jenis_produk" class="form-control"  required="">
-         <option selected disabled> -- Pilih jenis Produk -- </option>
+        <select  name="kategori_produk" class="form-control"  required="">
+         <option selected disabled> -- Pilih Kategori Produk -- </option>
          @foreach($kat as $k)
-         <option  value="{{$k->jenis_produk}}" >{{$k->jenis_produk}}</option>
+         <option  value="{{$k->kategori_produk}}" >{{$k->kategori_produk}}</option>
           @endforeach
        </select>
        <span class="form-bar"></span>

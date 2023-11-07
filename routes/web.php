@@ -53,7 +53,10 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::post('/admin_update/{id}', [SuperadminController::class, 'admin_update'])->name('admin_update');
 	Route::post('/admin_delete/{id}', [SuperadminController::class, 'admin_delete'])->name('admin_delete');
 
-	//routing untuk mengelola marketagrikulture
+
+	// =================================================AGRIKULUTRE-=========================================================
+
+	//routing untuk mengelola market agrikulture
 	Route::get('/superadmin_market_agrikulture', [SuperadminController::class, 'superadmin_market_agrikulture'])->name('superadmin_market_agrikulture');
 	Route::get('/superadmin_market_agrikulture_edit{id}', [SuperadminController::class, 'superadmin_market_agrikulture_edit'])->name('superadmin_market_agrikulture_edit');
 	Route::get('/superadmin_tampil_peta_market{id}', [SuperadminController::class, 'superadmin_tampil_peta_market'])->name('superadmin_tampil_peta_market');
@@ -72,6 +75,10 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::get('/superadmin_transaksi_agrikulture', [SuperadminController::class, 'superadmin_transaksi_agrikulture'])->name('superadmin_transaksi_agrikulture');
 	Route::get('/superadmin_transaksi_agrikulture_detail{id}', [SuperadminController::class, 'superadmin_transaksi_agrikulture_detail'])->name('superadmin_transaksi_agrikulture_detail');
 
+
+
+
+	// =================================================END AGRIKULTURE===========================================
 
 	//routing untuk mengelola koperasi
 	Route::get('/superadmin_koperasi', [SuperadminController::class, 'superadmin_koperasi'])->name('superadmin_koperasi');
@@ -117,6 +124,11 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 Route::middleware(['auth', 'admin_kasir'])->group(function () {
 	Route::get('/admin_kasir_dashboard', [AdminKasirController::class, 'admin_kasir_dashboard'])->name('admin_kasir_dashboard');
 
+	//Kasir agrikulture
+	Route::get('/admin_kasir_agrikulture', [AdminKasirController::class, 'admin_kasir_agrikulture'])->name('admin_kasir_agrikulture');
+	Route::post('/kasir_keranjang_add/{id}', [AdminKasirController::class, 'kasir_keranjang_add'])->name('kasir_keranjang_add');
+
+	Route::post('/kasir_transaksi_offline_add', [AdminKasirController::class, 'kasir_transaksi_offline_add'])->name('kasir_transaksi_offline_add');
 
 	Route::get('/admin_kasir_logout', [AuthController::class, 'admin_kasir_logout'])->name('admin_kasir_logout');
 });	
