@@ -28,7 +28,7 @@ class User extends Authenticatable
         'role',
         'status',
         'longitude',
-        'latitude',
+        'latitude','foto'
         
     ];
 
