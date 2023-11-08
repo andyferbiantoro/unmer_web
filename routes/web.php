@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminKasirController;
 use App\Http\Controllers\AdminPenginapanController;
 use App\Http\Controllers\AdminPendidikanController;
 use App\Http\Controllers\AdminEventController;
+use App\Http\Controllers\WebViewAndroidController;
+
 
 
 /*
@@ -29,6 +31,15 @@ Route::post('/proses_cek_otp', [AuthController::class, 'proses_cek_otp'])->name(
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/proses_login', [AuthController::class, 'proses_login'])->name('proses_login');
 
+//webveiw
+Route::get('/keuntungan_transaksi_view', [WebViewAndroidController::class, 'keuntungan_transaksi_view'])->name('keuntungan_transaksi_view');
+Route::get('/buku_panduan_view', [WebViewAndroidController::class, 'buku_panduan_view'])->name('buku_panduan_view');
+Route::get('/syarat_dan_ketentuan_view', [WebViewAndroidController::class, 'syarat_dan_ketentuan_view'])->name('syarat_dan_ketentuan_view');
+Route::get('/kebijakan_privasi_view', [WebViewAndroidController::class, 'kebijakan_privasi_view'])->name('kebijakan_privasi_view');
+
+
+
+
 
 Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::get('/superadmin_dashboard', [SuperadminController::class, 'superadmin_dashboard'])->name('superadmin_dashboard');
@@ -42,7 +53,10 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::post('/admin_update/{id}', [SuperadminController::class, 'admin_update'])->name('admin_update');
 	Route::post('/admin_delete/{id}', [SuperadminController::class, 'admin_delete'])->name('admin_delete');
 
-	//routing untuk mengelola marketagrikulture
+
+	// =================================================AGRIKULUTRE-=========================================================
+
+	//routing untuk mengelola market agrikulture
 	Route::get('/superadmin_market_agrikulture', [SuperadminController::class, 'superadmin_market_agrikulture'])->name('superadmin_market_agrikulture');
 	Route::get('/superadmin_market_agrikulture_edit{id}', [SuperadminController::class, 'superadmin_market_agrikulture_edit'])->name('superadmin_market_agrikulture_edit');
 	Route::get('/superadmin_tampil_peta_market{id}', [SuperadminController::class, 'superadmin_tampil_peta_market'])->name('superadmin_tampil_peta_market');
@@ -61,6 +75,10 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::get('/superadmin_transaksi_agrikulture', [SuperadminController::class, 'superadmin_transaksi_agrikulture'])->name('superadmin_transaksi_agrikulture');
 	Route::get('/superadmin_transaksi_agrikulture_detail{id}', [SuperadminController::class, 'superadmin_transaksi_agrikulture_detail'])->name('superadmin_transaksi_agrikulture_detail');
 
+
+
+
+	// =================================================END AGRIKULTURE===========================================
 
 	//routing untuk mengelola koperasi
 	Route::get('/superadmin_koperasi', [SuperadminController::class, 'superadmin_koperasi'])->name('superadmin_koperasi');
@@ -106,6 +124,15 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 Route::middleware(['auth', 'admin_kasir'])->group(function () {
 	Route::get('/admin_kasir_dashboard', [AdminKasirController::class, 'admin_kasir_dashboard'])->name('admin_kasir_dashboard');
 
+	//Kasir agrikulture
+	Route::get('/admin_kasir_agrikulture', [AdminKasirController::class, 'admin_kasir_agrikulture'])->name('admin_kasir_agrikulture');
+	Route::post('/kasir_keranjang_add/{id}', [AdminKasirController::class, 'kasir_keranjang_add'])->name('kasir_keranjang_add');
+	Route::post('/kasir_batalkan_produk/{id}', [AdminKasirController::class, 'kasir_batalkan_produk'])->name('kasir_batalkan_produk');
+	Route::post('/kasir_transaksi_offline_add', [AdminKasirController::class, 'kasir_transaksi_offline_add'])->name('kasir_transaksi_offline_add');
+
+	Route::get('/admin_kasir_transaksi_agrikulture_selesai', [AdminKasirController::class, 'admin_kasir_transaksi_agrikulture_selesai'])->name('admin_kasir_transaksi_agrikulture_selesai');
+
+	Route::get('/admin_kasir_cetak_invoice_agrikulture', [AdminKasirController::class, 'admin_kasir_cetak_invoice_agrikulture'])->name('admin_kasir_cetak_invoice_agrikulture');
 
 	Route::get('/admin_kasir_logout', [AuthController::class, 'admin_kasir_logout'])->name('admin_kasir_logout');
 });	
@@ -144,6 +171,9 @@ Route::middleware(['auth', 'admin_event'])->group(function () {
 	Route::get('/admin_event_logout', [AuthController::class, 'admin_event_logout'])->name('admin_event_logout');
 
 });	
+
+
+
 
 
 

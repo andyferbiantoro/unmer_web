@@ -40,7 +40,12 @@ class SuperadminController extends Controller
 		$belum_ver =Customer::where('status',0)->count();
 		$sudah_ver =Customer::where('status',1)->count();
 
-		return view('super_admin.index', compact('total_pengguna','belum_ver','sudah_ver'));
+		$total_partner = Customer::where('status_partner','partner')->count();
+		$total_partner_laki = Customer::where('status_partner','partner')->where('jenis_kelamin','L')->count();
+		$total_partner_perempuan = Customer::where('status_partner','partner')->where('jenis_kelamin','P')->count();
+		
+
+		return view('super_admin.index', compact('total_pengguna','belum_ver','sudah_ver','total_partner','total_partner_laki','total_partner_perempuan'));
 	}
 
 	public function register(Request $request)
@@ -268,7 +273,7 @@ class SuperadminController extends Controller
 	{
 
 		$data_agrikulture = ProdukAgrikulture::findOrFail($id);
-		File::delete('uploads/produk_agrikulture/' . $data_agrikulture->foto_pengumuman);
+		File::delete('uploads/produk_agrikulture/' . $data_agrikulture->foto);
 		$data_agrikulture->delete();
 
 		return redirect()->back()->with('success', 'Produk Agrikulture Berhasil Dihapus');
@@ -372,7 +377,14 @@ class SuperadminController extends Controller
 	}
 
 	public function market_delete($id)
+	
 	{
+		$produk_agrikulture = ProdukAgrikulture::where('id_market', $id)->get();
+		foreach ($produk_agrikulture as $key) {
+			File::delete('uploads/produk_agrikulture/' . $key->foto);
+			$key->delete();
+		}
+
 
 		$data_agrikulture = MarketAgrikulture::findOrFail($id);
 		$data_agrikulture->delete();
@@ -423,6 +435,11 @@ class SuperadminController extends Controller
 
 	// ================================================================================================================
 
+
+
+
+
+	// =============================================================================================================
 	public function superadmin_koperasi()
 	{
 		$produk_koperasi = DB::table('produk_koperasis')

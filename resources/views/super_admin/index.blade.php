@@ -50,16 +50,16 @@ Dashboard Super Admin
         </div>
         <div class="card-stats-items">
           <div class="card-stats-item">
-            <div class="card-stats-item-count">{{$belum_ver}}</div>
-            <div class="card-stats-item-label">Belum Verifikasi</div>
+            <div class="card-stats-item-count">{{$total_partner}}</div>
+            <div class="card-stats-item-label">Total Partner</div>
           </div>
           <div class="card-stats-item">
-            <div class="card-stats-item-count">{{$belum_ver}}</div>
-            <div class="card-stats-item-label">Shipping</div>
+            <div class="card-stats-item-count">{{$total_partner_laki}}</div>
+            <div class="card-stats-item-label">Laki-Laki</div>
           </div>
           <div class="card-stats-item">
-            <div class="card-stats-item-count">{{$sudah_ver}}</div>
-            <div class="card-stats-item-label">Completed</div>
+            <div class="card-stats-item-count">{{$total_partner_perempuan}}</div>
+            <div class="card-stats-item-label">Perempuan</div>
           </div>
         </div>
       </div>

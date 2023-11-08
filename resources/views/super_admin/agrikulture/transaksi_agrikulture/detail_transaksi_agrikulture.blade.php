@@ -47,9 +47,21 @@ Detail Transaksi Agrikultur
                   </tr> 
 
                   <tr>
+                    <th>Market</th>
+                    <th>:</th>
+                    <td>{{$data->nama_toko}}</td>
+                  </tr>
+
+                  <tr>
                     <th>Status Pemesanan</th>
                     <th>:</th>
-                    <td>{{$data->status_pemesanan}}</td>
+                    @if($data->status_pemesanan == 'dikemas')
+                    <td><div class="badge badge-warning">Sedang Dikemas</div></td>
+                    @elseif($data->status_pemesanan == 'diantar')
+                    <td><div class="badge badge-info">Sedang Diantar</div></td>
+                    @elseif($data->status_pemesanan == 'selesai')
+                    <td><div class="badge badge-success">Pesanan Sampai</div></td>
+                    @endif
                   </tr>  
 
                   <tr>
@@ -76,15 +88,15 @@ Detail Transaksi Agrikultur
               <h4>Produk Dipesan</h4><br>
               <table id="dataTable" class="table table-striped">
                 <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Nama Produk</th>
-                  <th>Kode Produk</th>
-                  <th>Kategori Produk</th>
-                  <th>Harga Produk</th>
-                  <th>Jumlah Beli</th>
-                  <th>Total</th>
-                </tr>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Produk</th>
+                    <th>Kode Produk</th>
+                    <th>Kategori Produk</th>
+                    <th>Harga Produk</th>
+                    <th>Jumlah Beli</th>
+                    <th>Total</th>
+                  </tr>
                 </thead>
                 <tbody>
                   @php $no=1 @endphp

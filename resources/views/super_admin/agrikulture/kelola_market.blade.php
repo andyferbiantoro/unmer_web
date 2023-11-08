@@ -17,9 +17,10 @@ Kelola Market Agrikultur
         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
           Tambah Market Agrikulture
         </button><br><br>
-        <a href="{{ route('superadmin_agrikulture') }}"><button type="button" class="btn btn-secondary btn-sm">Tabel Produk Agrikulture</button></a>
-        <a href="{{ route('superadmin_market_agrikulture') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Market Agrikulture</button></a>
-        <a href="{{ route('superadmin_transaksi_agrikulture') }}"><button type="button" class="btn btn-light btn-sm">Transaksi Agrikulture</button></a>
+        <a href="{{ route('superadmin_agrikulture') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-shopping-bag"></i> Produk Agrikulture</button></a>
+        <a href="{{ route('superadmin_market_agrikulture') }}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-store"></i> Market Agrikulture</button></a>
+        <a href="{{ route('superadmin_transaksi_agrikulture') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-money-bill"></i> Transaksi Agrikulture</button></a>
+        
         <br><br>
 
         @if (session('success'))
@@ -255,7 +256,7 @@ Kelola Market Agrikultur
   <script type="text/javascript">
     function deleteData(id) {
       var id = id;
-      var url = '{{route("admin_delete", ":id") }}';
+      var url = '{{route("market_delete", ":id") }}';
       url = url.replace(':id', id);
       $("#deleteForm").attr('action', url);
     }
