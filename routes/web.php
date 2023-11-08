@@ -127,8 +127,12 @@ Route::middleware(['auth', 'admin_kasir'])->group(function () {
 	//Kasir agrikulture
 	Route::get('/admin_kasir_agrikulture', [AdminKasirController::class, 'admin_kasir_agrikulture'])->name('admin_kasir_agrikulture');
 	Route::post('/kasir_keranjang_add/{id}', [AdminKasirController::class, 'kasir_keranjang_add'])->name('kasir_keranjang_add');
-
+	Route::post('/kasir_batalkan_produk/{id}', [AdminKasirController::class, 'kasir_batalkan_produk'])->name('kasir_batalkan_produk');
 	Route::post('/kasir_transaksi_offline_add', [AdminKasirController::class, 'kasir_transaksi_offline_add'])->name('kasir_transaksi_offline_add');
+
+	Route::get('/admin_kasir_transaksi_agrikulture_selesai', [AdminKasirController::class, 'admin_kasir_transaksi_agrikulture_selesai'])->name('admin_kasir_transaksi_agrikulture_selesai');
+
+	Route::get('/admin_kasir_cetak_invoice_agrikulture', [AdminKasirController::class, 'admin_kasir_cetak_invoice_agrikulture'])->name('admin_kasir_cetak_invoice_agrikulture');
 
 	Route::get('/admin_kasir_logout', [AuthController::class, 'admin_kasir_logout'])->name('admin_kasir_logout');
 });	

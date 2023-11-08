@@ -22,6 +22,11 @@ Kasir Agrikultur
         {{ session('success') }}
       </div>
       @endif
+       @if (session('error'))
+      <div class="alert alert-danger">
+        {{ session('error') }}
+      </div>
+      @endif
       <div class="text-center" >
 
         <div class="col-lg-10">
@@ -98,7 +103,7 @@ Kasir Agrikultur
       <div class="card-body">
         <div class="text-center" >
           <div class="table-responsive">
-            <table class="table table-striped" style="width:100%">
+            <table id="dataTable" class="table table-striped" style="width:100%">
               <thead>
                 <tr>
                   <th>No</th>
@@ -116,34 +121,37 @@ Kasir Agrikultur
                   <td>{{$data->nama_produk}}</td>
                   <td>{{$data->kuantitas}}</td>
                   <td>Rp. <?=number_format($data->total_harga, 0, ".", ".")?>,00</td>
-                  <td>opsi</td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
-          </div>
-        </div><hr>
-        <div class="table-responsive">
-          
-          <form method="post" action="{{route('kasir_transaksi_offline_add')}}" enctype="multipart/form-data">
+                  <td>
+                    <a href="#" data-toggle="modal" onclick="deleteData({{$data->id}})" data-target="#DeleteModal">
+                      <button class="btn btn-danger btn-sm"  title="Hapus">Batal</button>
+                    </td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div><hr>
+          <div class="table-responsive">
 
-            {{csrf_field()}}
-            <div class="row">
-              <div class="col-lg-6"></div>
-              <div class="col-lg-6">
+            <form method="post" action="{{route('kasir_transaksi_offline_add')}}" enctype="multipart/form-data">
 
-                
-                <!--  -->
-                
-                
-                <div class="form-group row">
-                  <label class="col-sm-4 col-form-label">Total Belanja</label>
-                  <div class="col-sm-8">
-                   <input type="number" class="form-control" id="nominal_barang" name="nominal_barang" readonly="" required="" value="{{$total_belanja}}"></input>
-                 </div>
-               </div> 
+              {{csrf_field()}}
+              <div class="row">
+                <div class="col-lg-6"></div>
+                <div class="col-lg-6">
 
-                <div class="form-group row">
+
+                  <!--  -->
+
+
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Total Belanja</label>
+                    <div class="col-sm-8">
+                     <input type="number" class="form-control" id="nominal_barang" name="nominal_barang" readonly="" required="" value="{{$total_belanja}}"></input>
+                   </div>
+                 </div> 
+
+                 <div class="form-group row">
                   <label class="col-sm-4 col-form-label">Nominal Bayar</label>
                   <div class="col-sm-8">
                    <input type="number" class="form-control" id="nominal_bayar" name="nominal_bayar"  required=""></input>
@@ -152,19 +160,19 @@ Kasir Agrikultur
 
                <button class="btn btn-dark" id="hitung" style="width: 100%" type="button" onclick="hitungKembalian()"><i class="fas fa-calculator"></i> Hitung Kambalian</button><br><br>
 
-                <div class="form-group row">
-                  <label class="col-sm-4 col-form-label">Kembalian</label>
-                  <div class="col-sm-8">
-                   <input type="number" class="form-control" id="nominal_kembalian" name="nominal_kembalian"  required=""></input>
-                 </div>
-               </div> 
+               <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Kembalian</label>
+                <div class="col-sm-8">
+                 <input type="number" class="form-control" id="nominal_kembalian" name="nominal_kembalian"  required=""></input>
+               </div>
+             </div> 
 
 
-               <button  class="btn btn-primary" id="proses_pembelian" style="width: 100%; display: none" type="Submit"><i class="fas fa-check"></i> Proses Pembelian</button><br><br>
-             </div>
+             <button  class="btn btn-primary" id="proses_pembelian" style="width: 100%; display: none" type="Submit"><i class="fas fa-check"></i> Proses Pembelian</button><br><br>
            </div>
-         </form>
-         
+         </div>
+       </form>
+
          <!-- <div class="row">
           <div class="col-lg-6"></div>
           <div class="col-lg-6">
@@ -184,33 +192,70 @@ Kasir Agrikultur
 
 
 
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Batalkan Produk?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" id="deleteForm" method="post">
+
+          {{ csrf_field() }}
+          {{ method_field('POST') }}
+          <p>Apakah anda yakin ingin batalkan produk ini ?</p> 
+          <button type="submit" name="" class="btn btn-danger float-right mr-2" data-dismiss="modal" onclick="formSubmit()">Batalkan</button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 
 @endsection
 
 @section('scripts')
 
-  <script>
-        function hitungKembalian() {
-            var belanjaan = document.getElementById("nominal_barang").value;
-            var bayar = document.getElementById("nominal_bayar").value;
-            var kembalian = bayar - belanjaan;
+<script type="text/javascript">
+    function deleteData(id) {
+      var id = id;
+      var url = '{{route("kasir_batalkan_produk", ":id") }}';
+      url = url.replace(':id', id);
+      $("#deleteForm").attr('action', url);
+    }
+
+    function formSubmit() {
+      $("#deleteForm").submit();
+    }
+  </script>
+
+<script>
+  function hitungKembalian() {
+    var belanjaan = document.getElementById("nominal_barang").value;
+    var bayar = document.getElementById("nominal_bayar").value;
+    var kembalian = bayar - belanjaan;
 
             // Pastikan kembalian tidak negatif
             if (kembalian >= 0) {
-                document.getElementById("nominal_kembalian").value = kembalian;
-                document.getElementById("hitung").style.display = "none";
-                document.getElementById("proses_pembelian").style.display = "block";
+              document.getElementById("nominal_kembalian").value = kembalian;
+              document.getElementById("hitung").style.display = "none";
+              document.getElementById("proses_pembelian").style.display = "block";
             } else {
-                alert("Nominal bayar tidak mencukupi.");
-                document.getElementById("bayar").value = "";
-                document.getElementById("kembalian").value = "";
+              alert("Nominal bayar tidak mencukupi.");
+              document.getElementById("bayar").value = "";
+              document.getElementById("kembalian").value = "";
             }
-        }
-    </script>
+          }
+        </script>
 
 
 
-  @endsection
+        @endsection
 
 
 

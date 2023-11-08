@@ -15,8 +15,8 @@ Detail Koperasi
 
       <a href="{{ route('superadmin_koperasi') }}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
       @foreach($produk_koperasi_detail as $dat)
-       <a href="{{route('produk_koperasi_edit',$dat->id)}}"><button type="button" class="btn btn-primary btn-sm">Edit Produk</button></a>
-       @endforeach
+      <a href="{{route('produk_koperasi_edit',$dat->id)}}"><button type="button" class="btn btn-primary btn-sm">Edit Produk</button></a>
+      @endforeach
       <br><br>
       <h2 class="primary">Detail Produk </h2><br>
 
@@ -30,7 +30,7 @@ Detail Koperasi
         <div class="form-group">
           <div class="row">
             <div class="col-lg-6 col-sm-12 col-12">
-          @foreach($produk_koperasi_detail as $data)
+              @foreach($produk_koperasi_detail as $data)
               <div class="table-responsive">
                 <table id="dataTable"  class="table table-hover">
 
@@ -80,49 +80,49 @@ Detail Koperasi
                 </table>
               </div>
               <hr>
-               @endforeach
-               @if($data->kategori_produk == 'Pakaian')
-               <div class="row">
-                  <div class="col-lg-4 col-sm-12 col-12">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tr>
-                              
-                              <th>Size</th>
-                            </tr>
+              @endforeach
+              @if($data->kategori_produk == 'Pakaian')
+              <div class="row">
+                <div class="col-lg-4 col-sm-12 col-12">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tr>
+                        
+                        <th>Size</th>
+                      </tr>
 
-                            
-                            @foreach($get_size as $size)
-                            <tr>
-                              
-                              <td>{{$size->size}}</td>
-                            </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                   
-
+                      
+                      @foreach($get_size as $size)
+                      <tr>
+                        
+                        <td>{{$size->size}}</td>
+                      </tr>
+                      @endforeach
+                    </table>
                   </div>
+                  
+
+                </div>
 
 
-                  <div class="col-lg-4 col-sm-12 col-12">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tr>
-                              <th>Warna</th>
-                            </tr>
+                <div class="col-lg-4 col-sm-12 col-12">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tr>
+                        <th>Warna</th>
+                      </tr>
 
-                            
-                            @foreach($get_warna as $warna)
-                            <tr>
-                              <td>{{$warna->warna}}</td>
-                            </tr>
-                            @endforeach
-                        </table>
-                    </div>
+                      
+                      @foreach($get_warna as $warna)
+                      <tr>
+                        <td>{{$warna->warna}}</td>
+                      </tr>
+                      @endforeach
+                    </table>
                   </div>
-               </div>
-               @endif
+                </div>
+              </div>
+              @endif
             </div>
 
             <div class="col-lg-6 col-sm-12 col-12">
@@ -138,7 +138,7 @@ Detail Koperasi
 
               </div>
             </div>
-           
+            
           </div>
         </div>
       </div>

@@ -37,6 +37,7 @@ class AdminKasirController extends Controller
 
 	public function admin_kasir_agrikulture(request $request)
 	{
+		//filter produk  menggunkana kode produk
 		$kode_produk = $request->kode_produk;
 
 		if ($kode_produk == null) {
@@ -45,7 +46,7 @@ class AdminKasirController extends Controller
 			$cari_produk = ProdukAgrikulture::where('kode_produk',$kode_produk)->get();
 		}
 
-		// $keranjang_offline = KeranjangOffline::where('id_user_admin_kasir',Auth::user()->id)->get();
+		//get data keranjang offline
 		$keranjang_offline = DB::table('keranjang_offlines')
 		->join('produk_agrikultures', 'keranjang_offlines.id_produk_agrikulture', '=', 'produk_agrikultures.id')
 		->select('keranjang_offlines.*', 'produk_agrikultures.nama_produk')
@@ -53,7 +54,7 @@ class AdminKasirController extends Controller
 		->where('keranjang_offlines.id_user_admin_kasir',Auth::user()->id)
 		->get();
 
-
+		//total belanja pada keranjang offline
 		$total_belanja = KeranjangOffline::where('id_user_admin_kasir',Auth::user()->id)->sum('total_harga');
 
 		
@@ -66,10 +67,10 @@ class AdminKasirController extends Controller
 	public function kasir_keranjang_add(Request $request, $id)
 	{
 
-		// return $id;
+		
 		$cek_keranjang = KeranjangOffline::where('id_produk_agrikulture',$id)->where('id_market',$request->input('id_market'))->first();
 
-
+		//proses add data pada keranjang offline, jika belum ada maka data diinputkan ke tabel
 		if ($cek_keranjang == null) {
 			$data_add = new KeranjangOffline();
 
@@ -81,7 +82,7 @@ class AdminKasirController extends Controller
 
 			$data_add->save();
 		}else{
-
+			//jika data sudah ada, maka hanya menambahkan kuantitas dan total harga
 			$data_update = KeranjangOffline::where('id_produk_agrikulture', $id)->first();	
 
 			$input = [
@@ -99,10 +100,10 @@ class AdminKasirController extends Controller
 
 	public function kasir_transaksi_offline_add(Request $request)
 	{
-
+		//add data ke tabel transaksi agrikulture offline
 		$get_keranjang_offline = KeranjangOffline::where('id_user_admin_kasir',Auth::user()->id)->get();
 		$id_market=KeranjangOffline::where('id_user_admin_kasir',Auth::user()->id)->first();
-		 	
+
 		$data = ([
 			'id_user_admin_kasir' => Auth::user()->id,
 			'id_market_agrikulture' => $id_market->id_market,
@@ -114,6 +115,7 @@ class AdminKasirController extends Controller
 
 		$lastid = TransaksiAgrikultureOffline::create($data)->id;
 
+		//get data dari keranjang offline dan dimasukkan ke tabel detail transaksi agrikulture
 		foreach ($get_keranjang_offline as $data) {
 
 			$detail_transaksi_offline = new DetailTransaksiAgrikulture();
@@ -126,13 +128,71 @@ class AdminKasirController extends Controller
 			$detail_transaksi_offline->save();
 		}
 		
+		//hapus data keranjang offline
 		$delete_keranjang = KeranjangOffline::where('id_user_admin_kasir',Auth::user()->id)->get();
 
 		foreach ($delete_keranjang as $key) {
 			$key->delete();
 		}
 
-		return redirect()->back()->with('success', 'Transaksi Berhasil');
+		
+
+		return redirect()->route('admin_kasir_transaksi_agrikulture_selesai')->with('success', 'Transaksi Berhasil');
+	}
+
+	public function kasir_batalkan_produk($id)
+	{
+		
+		$batalkan_produk = KeranjangOffline::findOrFail($id);
+		$batalkan_produk->delete();
+
+		return redirect()->back()->with('error', 'Produk Telah Dibatalkan');
+	}
+
+
+	public function admin_kasir_transaksi_agrikulture_selesai()
+	{
+
+		$transaksi_offline = TransaksiAgrikultureOffline::where('id_user_admin_kasir',Auth::user()->id)->orderBy('id', 'DESC')->first();
+
+		// $detail_transaksi = DetailTransaksiAgrikulture::where('id_transaksi_agrikulture',$transaksi_offline->id)->get();
+
+		$detail_transaksi = DB::table('detail_transaksi_agrikultures')
+		->join('transaksi_agrikulture_offlines', 'detail_transaksi_agrikultures.id_transaksi_agrikulture', '=', 'transaksi_agrikulture_offlines.id')
+		->join('produk_agrikultures', 'detail_transaksi_agrikultures.id_produk_agrikulture', '=', 'produk_agrikultures.id')
+		->select('detail_transaksi_agrikultures.*', 'produk_agrikultures.nama_produk','produk_agrikultures.harga_produk',)
+		->orderBy('detail_transaksi_agrikultures.id', 'DESC')
+		->where('id_transaksi_agrikulture',$transaksi_offline->id)
+		->get();
+
+		 // return $transaksi_offline;
+
+		return view('admin_kasir.agrikulture.kasir_agrikulture.transaksi_selesai',compact('transaksi_offline','detail_transaksi'));
+	}
+
+	public function admin_kasir_cetak_invoice_agrikulture()
+	{
+
+		$transaksi_offline = TransaksiAgrikultureOffline::where('id_user_admin_kasir',Auth::user()->id)->orderBy('id', 'DESC')->first();
+
+		// $detail_transaksi = DetailTransaksiAgrikulture::where('id_transaksi_agrikulture',$transaksi_offline->id)->get();
+
+		$detail_transaksi = DB::table('detail_transaksi_agrikultures')
+		->join('transaksi_agrikulture_offlines', 'detail_transaksi_agrikultures.id_transaksi_agrikulture', '=', 'transaksi_agrikulture_offlines.id')
+		->join('produk_agrikultures', 'detail_transaksi_agrikultures.id_produk_agrikulture', '=', 'produk_agrikultures.id')
+		->select('detail_transaksi_agrikultures.*', 'produk_agrikultures.nama_produk','produk_agrikultures.harga_produk',)
+		->orderBy('detail_transaksi_agrikultures.id', 'DESC')
+		->where('id_transaksi_agrikulture',$transaksi_offline->id)
+		->get();
+
+		 // return $transaksi_offline;
+
+		view()->share('transaksi_offline', $transaksi_offline);
+		view()->share('detail_transaksi', $detail_transaksi);
+
+		$pdf = PDF::loadview('admin_kasir.agrikulture.kasir_agrikulture.cetak_invoice_agrikulture', ['transaksi_offline' => $transaksi_offline],['detail_transaksi' => $detail_transaksi])->setPaper('A4','potrait')->setOptions(['defaultFont' => 'sans-serif']);
+
+		return $pdf->stream('Invoice_agrikulture.pdf');
 	}
 
 
