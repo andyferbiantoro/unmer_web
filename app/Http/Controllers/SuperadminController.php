@@ -425,7 +425,9 @@ class SuperadminController extends Controller
 		$detail_produk = DB::table('detail_transaksi_agrikultures')
 		->join('produk_agrikultures', 'detail_transaksi_agrikultures.id_produk_agrikulture', '=', 'produk_agrikultures.id')
 		->select('detail_transaksi_agrikultures.*', 'produk_agrikultures.nama_produk', 'produk_agrikultures.kode_produk', 'produk_agrikultures.kategori_produk', 'produk_agrikultures.harga_produk')
+		->join('transaksi_agrikultures', 'detail_transaksi_agrikultures.id_transaksi_agrikulture', '=', 'transaksi_agrikultures.id')
 		->orderBy('detail_transaksi_agrikultures.id', 'DESC')
+		->where('transaksi_agrikultures.id', $id)
 		->get();
 		
 		

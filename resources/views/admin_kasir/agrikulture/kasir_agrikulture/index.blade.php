@@ -140,10 +140,6 @@ Kasir Agrikultur
                 <div class="col-lg-6"></div>
                 <div class="col-lg-6">
 
-
-                  <!--  -->
-
-
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Total Belanja</label>
                     <div class="col-sm-8">
