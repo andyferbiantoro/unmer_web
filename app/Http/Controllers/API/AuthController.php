@@ -48,6 +48,7 @@ class AuthController extends Controller
 
 
             if ($data) {
+               
                 $users = User::create($data);
                 Customer::create([
                     'id_user' => $users->id,
@@ -147,6 +148,7 @@ class AuthController extends Controller
 
             $data = DB::table('customers')->leftJoin('users','customers.id_user','users.id')
             ->select('users.*','users.id as id_user','customers.*','customers.id as id_customer')->where('users.id',$cekotp->id)->first();
+            $data->foto= asset('uploads/profil/'.$data->foto);
             // return $data;
     
 
@@ -259,10 +261,13 @@ class AuthController extends Controller
                 'nik' => $request->nik,
                 'nama' => $request->nama,
             ]);
+            
+            $data = DB::table('customers')->leftJoin('users','customers.id_user','users.id')
+            ->select('users.*','users.id as id_user','customers.*','customers.id as id_customer')->where('users.id',$request->id)->first();
 
             return response()->json([
                 'code' => '200',
-                'user' => [$users, $customer]
+                'user' => $data
             ]);
         } else {
             return response()->json([
@@ -290,4 +295,54 @@ class AuthController extends Controller
             ]);
         }
     }
+
+public function updateUserProfile(Request $request)
+{
+  
+    if ($request->hasFile('foto')) {
+
+        $user = User::where('id', $request->id)->first();
+        // return $user;
+
+        $oldPhoto = $user->foto;
+        if (!empty($oldPhoto)) {
+            $oldPhotoPath = public_path('uploads/profil') . '/' . $oldPhoto;
+            if (file_exists($oldPhotoPath)) {
+                unlink($oldPhotoPath);
+            }
+        }
+      
+        $image = $request->file('foto');
+        $imageName = time().'.'.$image->getClientOriginalExtension();
+        $image->move(public_path('uploads/profil'), $imageName);
+
+        
+        User::where('id',$request->id)->update([
+            'foto'=>$imageName
+        ]);
+
+        $userlast=DB::table('customers')
+        ->leftjoin('users', 'users.id', 'customers.id_user')
+        ->select('customers.*', 'customers.id as id_customer', 'users.*', 'users.id as idnya_user')->where('users.id', $request->id)->first();
+
+        $userlast->foto= asset('uploads/profil/'.$userlast->foto);
+        return response()->json([
+            'code' => '200',
+            'foto'=>$userlast->foto,
+            'message' => 'Profil pengguna berhasil diperbarui'
+        ]);
+
+
+    }else{
+
+        return response()->json([
+            'code' => '500',
+            'message' => 'Profil pengguna gagal diperbarui'
+        ]);
+    }
+
+ 
+}
+
+
 }
