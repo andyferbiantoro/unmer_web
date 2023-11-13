@@ -14,14 +14,7 @@ Kelola Produk Agrikultur
     <div class="card-body">
       <h2 class="primary">Produk Agrikulture </h2>
      <hr>
-     <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
-      Tambah Produk Agrikulture
-    </button><br><br>
-    <a href="{{ route('superadmin_agrikulture') }}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-shopping-bag"></i> Produk Agrikulture</button></a>
-    <a href="{{ route('superadmin_market_agrikulture') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-store"></i> Market Agrikulture</button></a>
-    <a href="{{ route('superadmin_transaksi_agrikulture') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-money-bill"></i> Transaksi Agrikulture</button></a>
-   
-    <br><br>
+    
 
     @if (session('success'))
     <div class="alert alert-success">
@@ -35,9 +28,10 @@ Kelola Produk Agrikultur
           <tr>
             <th>No</th>
             <th>Nama Produk</th>
-            <th>Nama Toko</th>
             <th>Kategori Produk</th>
             <th>Harga Produk</th>
+            <th>Stok Produk</th>
+            <th>Terjual</th>
             <th>Foto Produk</th>
             <th>Opsi</th>
             <th style="display: none;">hidden</th>
@@ -49,18 +43,19 @@ Kelola Produk Agrikultur
           <tr>
             <td>{{$no++}}</td>
             <td>{{$data->nama_produk}}</td>
-            <td>{{$data->nama_toko}}</td>
             <td>{{$data->kategori_produk}}</td>
             <td>Rp. <?=number_format($data->harga_produk, 0, ".", ".")?>,00</td>
+            <td>{{$data->stok}}</td>
+            <td>{{$data->sold}}</td>
             <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('uploads/produk_agrikulture/'.$data->foto)}}"  data-toggle="modal" data-target="#myModal"></img></td>
 
             <td>
               <!-- <button class="btn btn-warning btn-sm icon-file menu-icon edit" title="Edit">Edit</button> -->
 
-              <a href="{{route('superadmin_produk_agrikulture_edit',$data->id)}}"><button class="btn btn-primary btn-sm">Edit</button></a>
+              <!-- <a href="{{route('superadmin_produk_agrikulture_edit',$data->id)}}"><button class="btn btn-primary btn-sm">Edit</button></a>
               <a href="#" data-toggle="modal" onclick="deleteData({{$data->id}})" data-target="#DeleteModal">
-                <button class="btn btn-danger btn-sm"  title="Hapus">Hapus</button>
-
+                <button class="btn btn-danger btn-sm"  title="Hapus">Hapus</button> -->
+                <button class="btn btn-warning btn-sm edit" title="Ubah Stok"><i class="fas fa-pen"></i> Ubah Stok</button>
               </td>
 
 
@@ -84,71 +79,36 @@ Kelola Produk Agrikultur
 
 
 
-<!-- Modal Tambah -->
-<div class="modal fade" id="ModalTambah" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="myLargeModalLabel">Tambah Data Produk</h5>
+<!-- Modal Update -->
+      <div id="updateInformasi" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+         <!--Modal content-->
+         <form action="" id="updateInformasiform" method="post" enctype="multipart/form-data">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Anda yakin ingin mengubah stok produk ini ?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {{ csrf_field() }}
+              {{ method_field('POST') }}
+
+              <div class="form-group">
+                <label for="stok">Stok produk</label>
+                <input type="number" class="form-control" id="stok_update" name="stok" required="" ></input>
+            </div>
+
+            </div> 
+            <div class="modal-footer">
+              <button type="submit"  class="btn btn-primary float-right mr-2" >Ubah Stok</button>
+              <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Batal</button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="modal-body">
-       <form method="post" action="{{route('produk_agrikulture_add')}}" enctype="multipart/form-data">
-
-        {{csrf_field()}}
-
-        <div class="form-group form-success">
-          <label >Pilh Market</label>
-          <select  name="id_market" class="form-control"  required="">
-           <option selected disabled> -- Pilih Market -- </option>
-           @foreach($market as $data)
-           <option value="{{$data->id}}" >{{$data->nama_toko}}</option>
-           @endforeach
-         </select>
-         <span class="form-bar"></span>
-       </div>
-
-
-       <div class="form-group">
-        <label for="nama_produk">Nama Produk</label>
-        <input type="text" class="form-control" id="nama_produk" name="nama_produk"  required=""></input>
-      </div>
-
-      <div class="form-group form-success">
-        <label >Jenis Produk</label>
-        <select  name="kategori_produk" class="form-control"  required="">
-         <option selected disabled> -- Pilih Kategori Produk -- </option>
-         @foreach($kat as $k)
-         <option  value="{{$k->kategori_produk}}" >{{$k->kategori_produk}}</option>
-          @endforeach
-       </select>
-       <span class="form-bar"></span>
-     </div>
-
-
-     <div class="form-group">
-      <label for="harga_produk">Harga Produk</label>
-      <input type="number" class="form-control" id="harga_produk" name="harga_produk"  required=""></input>
     </div>
-
-    <div class="form-group">
-      <label for="foto">Foto Produk</label>
-      <input type="file" class="form-control" id="foto" name="foto"  required=""></input>
-    </div>
-    
-
-
-
-
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" type="Submit">Tambahkan</button>
-    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-
-  </div>
-</form>
-</div>
-</div>
-</div>
 
 
 
@@ -219,14 +179,8 @@ Kelola Produk Agrikultur
         }
         var data = table.row($tr).data();
         console.log(data);
-        $('#nama_update').val(data[1]);
-        $('#nik_update').val(data[2]);
-        $('#tempat_lahir_update').val(data[3]);
-        $('#tanggal_lahir_update').val(data[4]);
-        $('#status_update').val(data[5]);
-        $('#role_admin_update').val(data[6]);
-        
-        $('#updateInformasiform').attr('action','admin_update/'+ data[8]);
+        $('#stok_update').val(data[4]);
+        $('#updateInformasiform').attr('action','admin_kasir_ubah_stok_agrikulture/'+ data[8]);
         $('#updateInformasi').modal('show');
       });
     });

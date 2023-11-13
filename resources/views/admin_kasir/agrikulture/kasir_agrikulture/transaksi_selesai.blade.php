@@ -11,12 +11,12 @@ Detail Transaksi Offline
  <div class="col-lg-12">
   <div class="card">
 
-    <div class="card-body" id="invoice" >
-     <div class="text-center" >
-      <h1>Transaksi </h1><br>
+    <div class="card-body">
+     <div class="text-center"  id="printPDF" >
 
+      <h1>Transaksi </h1><br>
       <h5>Tanggal Transaksi : {{date("j F Y", strtotime($transaksi_offline->created_at))}}</h5><br>
-      <div class="table-responsive">
+      <div>
         <table  class="table table-striped" style="width:100%">
           <thead>
             <tr>
@@ -39,44 +39,45 @@ Detail Transaksi Offline
             </tr>
             @endforeach
           </tbody>
-        </table>
+        </table><hr>
+        <div class="row">
+          <div class="col-lg-6"></div>
+          <div class="col-lg-6">
+
+            <table class="table table-hover">
+             <tr>
+              <th>Total Belanjaan</th>
+              <th>:</th>
+              <td>Rp. <?=number_format($transaksi_offline->nominal_barang, 0, ".", ".")?>,00</td>
+            </tr>   
+
+            <tr>
+              <th>Nominal Bayar</th>
+              <th>:</th>
+              <td>Rp. <?=number_format($transaksi_offline->nominal_bayar, 0, ".", ".")?>,00</td>
+            </tr> 
+
+            <tr>
+              <th>Kembalian</th>
+              <th>:</th>
+              <td>Rp. <?=number_format($transaksi_offline->nominal_kembalian, 0, ".", ".")?>,00</td>
+            </tr>  
+          </table>
+        </div>
       </div>
-
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-lg-6"></div>
-      <div class="col-lg-6">
-
-        <table class="table table-hover">
-         <tr>
-          <th>Total Belanjaan</th>
-          <th>:</th>
-          <td>Rp. <?=number_format($transaksi_offline->nominal_barang, 0, ".", ".")?>,00</td>
-        </tr>   
-
-        <tr>
-          <th>Nominal Bayar</th>
-          <th>:</th>
-          <td>Rp. <?=number_format($transaksi_offline->nominal_bayar, 0, ".", ".")?>,00</td>
-        </tr> 
-
-        <tr>
-          <th>Kembalian</th>
-          <th>:</th>
-          <td>Rp. <?=number_format($transaksi_offline->nominal_kembalian, 0, ".", ".")?>,00</td>
-        </tr>  
-      </table>
-      <div class="text-right">
-
-        <!-- <button id="printButton" type="button" class="btn btn-warning "><i class="fas fa-print"></i> Cetak Invoicedd</button> -->
-        <button id="printButton">Cetak PDF</button>
-
-      </div>
-
     </div>
 
   </div>
+  <hr>
+  <!-- button cetak pdf -->
+  <div class="row">
+    <div class="col-lg-6"></div>
+    <div class="col-lg-6">
+      <div class="text-right">
+      <button class="btn btn-warning" onclick="print('printPDF')"><i class="fas fa-print"></i> Cetak Invoice</button>
+      </div>
+   </div>
+ </div>
 
 </div>
 </div>
@@ -86,19 +87,28 @@ Detail Transaksi Offline
 
 @endsection
 @section('scripts')
-<script>
-  document.getElementById('printButton').addEventListener('click', function () {
-    var doc = new jsPDF();
+<script type="text/javascript">
+  function print(elem) {
+    var mywindow = window.open('', 'PRINT', 'height=1000,width=1200');
 
-    // Mengambil seluruh konten halaman invoice dengan ID 'invoice'
-    var invoiceContent = document.getElementById('invoice').innerHTML;
+    mywindow.document.write('<html><head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">');
+    mywindow.document.write('</head><body >');
+    mywindow.document.write('<h1 class="text-center">' + 'Invoice Agrikulture' + '</h1>');
+    mywindow.document.write('<br><br>');
+    mywindow.document.write(document.getElementById(elem).innerHTML);
+    mywindow.document.write('</body></html>');
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
 
-    doc.fromHTML(invoiceContent, 15, 15);
+    mywindow.print();
+    // mywindow.close();
 
-    // Simpan PDF dengan nama tertentu atau sesuaikan sesuai kebutuhan Anda.
-    doc.save('invoice.pdf');
-  });
+    return true;
+
+  }
 </script>
+
+
 @endsection
 
 

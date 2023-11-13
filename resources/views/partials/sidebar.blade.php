@@ -54,10 +54,25 @@
             @if(Auth::user()->role == 'Admin Kasir')
             <br>
 
-             <li class="{{(request()->is('admin_kasir_dashboard')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_dashboard') }}"><i class="fas fa-home"></i><span>Beranda</span></a></li>
+            <li class="{{(request()->is('admin_kasir_dashboard')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_dashboard') }}"><i class="fas fa-home"></i><span>Beranda</span></a></li>
 
-            <li class="{{(request()->is('admin_kasir_agrikulture')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_agrikulture') }}"><i class="fas fa-shopping-cart"></i></i><span>Kasir</span></a></li>
+            @if((request()->is('admin_kasir_agrikulture')))
+            <li class="nav-item dropdown {{(request()->is('admin_kasir_agrikulture')) ? 'active' : ''}}">
+            @elseif((request()->is('admin_kelola_agrikulture')))
+            <li class="nav-item dropdown {{(request()->is('admin_kelola_agrikulture')) ? 'active' : ''}}">
+            @else
+            <li class="nav-item dropdown">
+            @endif
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-mountain"></i>
+              <span>Agrikulture</span></a>
+              <ul class="dropdown-menu">
+                <li class="{{(request()->is('admin_kelola_agrikulture')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kelola_agrikulture') }}"><i class="fas fa-shopping-basket"></i></i><span>Produk</span></a></li>
 
+                <li class="{{(request()->is('admin_kasir_agrikulture')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_agrikulture') }}"><i class="fas fa-shopping-cart"></i></i><span>Kasir</span></a></li>
+              </ul>
+            </li>
+
+            <li class="{{(request()->is('admin_kelola_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kelola_koperasi') }}"><i class="fas fa-shopping-bag"></i></i><span>Koperasi</span></a></li>
             @endif 
           </ul>
 

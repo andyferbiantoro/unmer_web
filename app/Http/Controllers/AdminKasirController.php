@@ -102,7 +102,7 @@ class AdminKasirController extends Controller
 	{
 		//add data ke tabel transaksi agrikulture offline
 		$get_keranjang_offline = KeranjangOffline::where('id_user_admin_kasir',Auth::user()->id)->get();
-		$id_market=KeranjangOffline::where('id_user_admin_kasir',Auth::user()->id)->first();
+		$id_market = KeranjangOffline::where('id_user_admin_kasir',Auth::user()->id)->first();
 
 		$data = ([
 			'id_user_admin_kasir' => Auth::user()->id,
@@ -120,14 +120,29 @@ class AdminKasirController extends Controller
 
 			$detail_transaksi_offline = new DetailTransaksiAgrikulture();
 
-			$detail_transaksi_offline->id_transaksi_agrikulture = $lastid;
+			$detail_transaksi_offline->id_transaksi_agrikulture_offline = $lastid;
 			$detail_transaksi_offline->id_produk_agrikulture = $data->id_produk_agrikulture;
 			$detail_transaksi_offline->kuantitas = $data->kuantitas;
 			$detail_transaksi_offline->total_harga = $data->total_harga;
 
 			$detail_transaksi_offline->save();
 		}
+
+
+		//ubah stok dan sold produk
+		foreach ($get_keranjang_offline as $key ) {
+			
+			$update_stok = ProdukAgrikulture::where('id', $key->id_produk_agrikulture)->first();	
+
+			$input = [
+				'stok' => $update_stok->stok - $key->kuantitas ,
+				'sold' => $update_stok->sold + $key->kuantitas ,
+			];
+
+			$update_stok->update($input);
+		}
 		
+
 		//hapus data keranjang offline
 		$delete_keranjang = KeranjangOffline::where('id_user_admin_kasir',Auth::user()->id)->get();
 
@@ -135,7 +150,7 @@ class AdminKasirController extends Controller
 			$key->delete();
 		}
 
-		
+
 
 		return redirect()->route('admin_kasir_transaksi_agrikulture_selesai')->with('success', 'Transaksi Berhasil');
 	}
@@ -170,30 +185,36 @@ class AdminKasirController extends Controller
 		return view('admin_kasir.agrikulture.kasir_agrikulture.transaksi_selesai',compact('transaksi_offline','detail_transaksi'));
 	}
 
-	public function admin_kasir_cetak_invoice_agrikulture()
+
+	public function admin_kelola_agrikulture()
 	{
-
-		$transaksi_offline = TransaksiAgrikultureOffline::where('id_user_admin_kasir',Auth::user()->id)->orderBy('id', 'DESC')->first();
-
-		// $detail_transaksi = DetailTransaksiAgrikulture::where('id_transaksi_agrikulture',$transaksi_offline->id)->get();
-
-		$detail_transaksi = DB::table('detail_transaksi_agrikultures')
-		->join('transaksi_agrikulture_offlines', 'detail_transaksi_agrikultures.id_transaksi_agrikulture', '=', 'transaksi_agrikulture_offlines.id')
-		->join('produk_agrikultures', 'detail_transaksi_agrikultures.id_produk_agrikulture', '=', 'produk_agrikultures.id')
-		->select('detail_transaksi_agrikultures.*', 'produk_agrikultures.nama_produk','produk_agrikultures.harga_produk',)
-		->orderBy('detail_transaksi_agrikultures.id', 'DESC')
-		->where('id_transaksi_agrikulture',$transaksi_offline->id)
+		$produk_agrikulture = DB::table('produk_agrikultures')
+		->join('market_agrikultures', 'produk_agrikultures.id_market', '=', 'market_agrikultures.id')
+		->select('produk_agrikultures.*', 'market_agrikultures.nama_toko')
+		->orderBy('produk_agrikultures.id', 'DESC')
 		->get();
 
-		 // return $transaksi_offline;
-
-		view()->share('transaksi_offline', $transaksi_offline);
-		view()->share('detail_transaksi', $detail_transaksi);
-
-		$pdf = PDF::loadview('admin_kasir.agrikulture.kasir_agrikulture.cetak_invoice_agrikulture', ['transaksi_offline' => $transaksi_offline],['detail_transaksi' => $detail_transaksi])->setPaper('A4','potrait')->setOptions(['defaultFont' => 'sans-serif']);
-
-		return $pdf->stream('Invoice_agrikulture.pdf');
+		$market = MarketAgrikulture::all();
+		//return $produk_agrikulture;
+		$kat = KategoriprodukAgrikulture::all();
+		return view('admin_kasir.agrikulture.produk_agrikulture.index', compact('produk_agrikulture', 'market','kat'));
 	}
+
+
+	public function admin_kasir_ubah_stok_agrikulture(Request $request, $id)
+	{
+
+		$data_update = ProdukAgrikulture::where('id',$id)->first();	
+
+		$input = [
+			'stok' => $request->stok,
+		];
+
+		$data_update->update($input);
+
+		return redirect()->back()->with('success', 'Stok Produk Berhasil Diperbarui');
+	}
+
 
 
 }
