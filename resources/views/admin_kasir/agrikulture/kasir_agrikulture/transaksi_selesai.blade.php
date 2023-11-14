@@ -35,7 +35,7 @@ Detail Transaksi Offline
               <td>{{$data->nama_produk}}</td>
               <td>Rp. <?=number_format($data->harga_produk, 0, ".", ".")?>,00</td>
               <td>{{$data->kuantitas}}</td>
-              <td>Rp. <?=number_format($data->total_harga, 0, ".", ".")?>,00</td>
+              <td>Rp. <?=number_format($data->total, 0, ".", ".")?>,00</td>
             </tr>
             @endforeach
           </tbody>

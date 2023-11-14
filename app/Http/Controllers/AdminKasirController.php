@@ -123,7 +123,7 @@ class AdminKasirController extends Controller
 			$detail_transaksi_offline->id_transaksi_agrikulture_offline = $lastid;
 			$detail_transaksi_offline->id_produk_agrikulture = $data->id_produk_agrikulture;
 			$detail_transaksi_offline->kuantitas = $data->kuantitas;
-			$detail_transaksi_offline->total_harga = $data->total_harga;
+			$detail_transaksi_offline->total = $data->total_harga;
 
 			$detail_transaksi_offline->save();
 		}
@@ -173,14 +173,15 @@ class AdminKasirController extends Controller
 		// $detail_transaksi = DetailTransaksiAgrikulture::where('id_transaksi_agrikulture',$transaksi_offline->id)->get();
 
 		$detail_transaksi = DB::table('detail_transaksi_agrikultures')
-		->join('transaksi_agrikulture_offlines', 'detail_transaksi_agrikultures.id_transaksi_agrikulture', '=', 'transaksi_agrikulture_offlines.id')
+		->join('transaksi_agrikulture_offlines', 'detail_transaksi_agrikultures.id_transaksi_agrikulture_offline', '=', 'transaksi_agrikulture_offlines.id')
 		->join('produk_agrikultures', 'detail_transaksi_agrikultures.id_produk_agrikulture', '=', 'produk_agrikultures.id')
 		->select('detail_transaksi_agrikultures.*', 'produk_agrikultures.nama_produk','produk_agrikultures.harga_produk',)
+		->where('detail_transaksi_agrikultures.id_transaksi_agrikulture_offline',$transaksi_offline->id)
 		->orderBy('detail_transaksi_agrikultures.id', 'DESC')
-		->where('id_transaksi_agrikulture',$transaksi_offline->id)
 		->get();
 
 		 // return $transaksi_offline;
+		  // return $detail_transaksi;
 
 		return view('admin_kasir.agrikulture.kasir_agrikulture.transaksi_selesai',compact('transaksi_offline','detail_transaksi'));
 	}
@@ -216,5 +217,65 @@ class AdminKasirController extends Controller
 	}
 
 
+
+	public function admin_kasir_lihat_pesanan_agrikulture()
+	{	
+
+		$pesanan_diantar = DB::table('transaksi_agrikultures')
+		->join('customers', 'transaksi_agrikultures.id_user', '=', 'customers.id_user')
+		->select('transaksi_agrikultures.*', 'customers.nama')
+		->orderBy('transaksi_agrikultures.id', 'DESC')
+		->where('transaksi_agrikultures.metode_pengiriman','diantar')
+		->get();
+
+		$pesanan_diambil = DB::table('transaksi_agrikultures')
+		->join('customers', 'transaksi_agrikultures.id_user', '=', 'customers.id_user')
+		->select('transaksi_agrikultures.*', 'customers.nama')
+		->orderBy('transaksi_agrikultures.id', 'DESC')
+		->where('transaksi_agrikultures.metode_pengiriman','diambil')
+		->get();
+		
+		return view('admin_kasir.agrikulture.lihat_pesanan.index', compact('pesanan_diantar','pesanan_diambil'));
+	}
+
+
+	public function admin_detail_pesanan_agrikulture($id)
+	{
+		// $transaksi_agrikulture = TransaksiAgrikulture::orderby('id', 'DESC')->get();
+		$transaksi_agrikulture = DB::table('transaksi_agrikultures')
+		->join('customers', 'transaksi_agrikultures.id_user', '=', 'customers.id_user')
+		->join('market_agrikultures', 'transaksi_agrikultures.id_market_agrikulture', '=', 'market_agrikultures.id')
+		->select('transaksi_agrikultures.*', 'customers.nama','market_agrikultures.nama_toko')
+		->orderBy('transaksi_agrikultures.id', 'DESC')
+		->where('transaksi_agrikultures.id', $id)
+		->get();
+ 
+
+		$detail_produk = DB::table('detail_transaksi_agrikultures')
+		->join('produk_agrikultures', 'detail_transaksi_agrikultures.id_produk_agrikulture', '=', 'produk_agrikultures.id')
+		->select('detail_transaksi_agrikultures.*', 'produk_agrikultures.nama_produk', 'produk_agrikultures.kode_produk', 'produk_agrikultures.kategori_produk', 'produk_agrikultures.harga_produk')
+		->join('transaksi_agrikultures', 'detail_transaksi_agrikultures.id_transaksi_agrikulture', '=', 'transaksi_agrikultures.id')
+		->orderBy('detail_transaksi_agrikultures.id', 'DESC')
+		->where('transaksi_agrikultures.id', $id)
+		->get();
+		
+		
+		return view('admin_kasir.agrikulture.lihat_pesanan.detail_pesanan_agrikulture', compact('transaksi_agrikulture','detail_produk'));
+	}
+
+	public function admin_lokasi_pembeli($id)
+
+	{
+		// $tampil_peta =MarketAgrikulture::where('id', $id)->get();
+		$lokasi_pembeli = DB::table('transaksi_agrikultures')
+		->join('users', 'transaksi_agrikultures.id_user', '=', 'users.id')
+		->join('customers', 'transaksi_agrikultures.id_user', '=', 'customers.id_user')
+		->select('transaksi_agrikultures.*', 'users.longitude', 'users.latitude','customers.nama')
+		->orderBy('transaksi_agrikultures.id', 'DESC')
+		->where('transaksi_agrikultures.id', $id)
+		->get();
+		// return $tampil_peta;
+		return view('admin_kasir.agrikulture.lokasi_pembeli.index', compact('lokasi_pembeli'));
+	}
 
 }

@@ -136,6 +136,15 @@ Route::middleware(['auth', 'admin_kasir'])->group(function () {
 	Route::get('/admin_kelola_agrikulture', [AdminKasirController::class, 'admin_kelola_agrikulture'])->name('admin_kelola_agrikulture');
 	Route::post('/admin_kasir_ubah_stok_agrikulture/{id}', [AdminKasirController::class, 'admin_kasir_ubah_stok_agrikulture'])->name('admin_kasir_ubah_stok_agrikulture');
 
+	//lihat pesanan
+	Route::get('/admin_kasir_lihat_pesanan_agrikulture', [AdminKasirController::class, 'admin_kasir_lihat_pesanan_agrikulture'])->name('admin_kasir_lihat_pesanan_agrikulture');
+	Route::get('/admin_detail_pesanan_agrikulture{id}', [AdminKasirController::class, 'admin_detail_pesanan_agrikulture'])->name('admin_detail_pesanan_agrikulture');
+
+
+	//lihat Pembeli
+	Route::get('/admin_lokasi_pembeli{id}', [AdminKasirController::class, 'admin_lokasi_pembeli'])->name('admin_lokasi_pembeli');
+
+
 	// Kelola Produk Koperasi
 	Route::get('/admin_kelola_koperasi', [AdminKasirController::class, 'admin_kelola_koperasi'])->name('admin_kelola_koperasi');
 

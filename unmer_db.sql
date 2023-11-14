@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Nov 2023 pada 05.07
+-- Waktu pembuatan: 14 Nov 2023 pada 07.32
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -49,6 +49,31 @@ INSERT INTO `admins` (`id`, `id_user`, `nama`, `nik`, `tempat_lahir`, `tanggal_l
 (11, 15, 'Suherman', '35100114029900092', 'BWI', '2023-10-09', 'Aktif', 'Admin Event', '2023-10-26 03:50:17', '2023-10-26 03:50:17'),
 (12, 16, 'Andy Ferbiantoro', '3510011402990001', 'BWI', '2023-10-16', 'Aktif', 'Admin Penginapan', '2023-10-26 06:40:21', '2023-10-26 06:40:21'),
 (13, 18, 'Dono Pradono', '3510011402990003', 'Banyuwangi', '2023-11-07', 'Aktif', 'Admin Kasir', '2023-11-06 19:25:53', '2023-11-06 19:25:53');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `banks`
+--
+
+CREATE TABLE `banks` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `bank` varchar(255) NOT NULL,
+  `rekening` varchar(255) NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `banks`
+--
+
+INSERT INTO `banks` (`id`, `bank`, `rekening`, `logo`, `created_at`, `updated_at`) VALUES
+(1, 'BCA', '1234-1001-2021', 'bca.png', NULL, NULL),
+(2, 'BRI', '1234-1002-2022', 'bri.png', NULL, NULL),
+(3, 'BNI', '1234-1003-2023', 'bni.png', NULL, NULL),
+(4, 'MANDIRI', '1234-1004-2024', 'mandiri.png', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -201,7 +226,7 @@ CREATE TABLE `detail_transaksi_agrikultures` (
   `id_transaksi_agrikulture_offline` int(11) DEFAULT NULL,
   `id_produk_agrikulture` int(11) NOT NULL,
   `kuantitas` int(11) NOT NULL,
-  `total_harga` int(11) NOT NULL,
+  `total` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -210,9 +235,13 @@ CREATE TABLE `detail_transaksi_agrikultures` (
 -- Dumping data untuk tabel `detail_transaksi_agrikultures`
 --
 
-INSERT INTO `detail_transaksi_agrikultures` (`id`, `id_transaksi_agrikulture`, `id_transaksi_agrikulture_offline`, `id_produk_agrikulture`, `kuantitas`, `total_harga`, `created_at`, `updated_at`) VALUES
-(26, NULL, 18, 8, 2, 20000, '2023-11-10 20:58:32', '2023-11-10 20:58:32'),
-(27, NULL, 18, 10, 1, 20000, '2023-11-10 20:58:32', '2023-11-10 20:58:32');
+INSERT INTO `detail_transaksi_agrikultures` (`id`, `id_transaksi_agrikulture`, `id_transaksi_agrikulture_offline`, `id_produk_agrikulture`, `kuantitas`, `total`, `created_at`, `updated_at`) VALUES
+(26, 1, NULL, 8, 2, 20000, '2023-11-10 20:58:32', '2023-11-10 20:58:32'),
+(27, NULL, 18, 10, 1, 20000, '2023-11-10 20:58:32', '2023-11-10 20:58:32'),
+(28, NULL, 19, 8, 2, 20000, '2023-11-11 23:31:43', '2023-11-11 23:31:43'),
+(29, NULL, 19, 10, 1, 20000, '2023-11-11 23:31:43', '2023-11-11 23:31:43'),
+(30, NULL, 1, 8, 2, 20000, '2023-11-13 23:28:45', '2023-11-13 23:28:45'),
+(31, NULL, 1, 9, 1, 10000, '2023-11-13 23:28:45', '2023-11-13 23:28:45');
 
 -- --------------------------------------------------------
 
@@ -623,7 +652,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (38, '2023_10_22_071256_create_keranjangs_table', 10),
 (39, '2023_11_01_091209_create_keranjangs_table', 11),
 (40, '2023_11_07_032909_create_keranjang_offlines_table', 12),
-(41, '2023_11_07_075001_create_transaksi_agrikuluture_offlines_table', 13);
+(41, '2023_11_07_075001_create_transaksi_agrikuluture_offlines_table', 13),
+(42, '2023_11_07_075001_create_transaksi_agrikulture_offlines_table', 14),
+(43, '2023_11_14_061952_create_banks_table', 14);
 
 -- --------------------------------------------------------
 
@@ -681,9 +712,9 @@ CREATE TABLE `produk_agrikultures` (
 --
 
 INSERT INTO `produk_agrikultures` (`id`, `id_market`, `nama_produk`, `kode_produk`, `kategori_produk`, `harga_produk`, `foto`, `status`, `stok`, `sold`, `created_at`, `updated_at`) VALUES
-(8, 4, 'Wortel', '3221973871', 'Sayur', '10000', 'wortel.jpg', '1', 9, 4, '2023-10-27 18:56:40', '2023-11-10 20:58:32'),
-(9, 4, 'Timun', '2021612852', 'Sayur', '10000', 'timun.jpg', '1', 15, 1, '2023-10-29 20:45:09', '2023-11-09 01:29:56'),
-(10, 4, 'Apel', '9448777343', 'Buah', '20000', 'apel.jpg', '1', 19, 4, '2023-10-29 20:45:24', '2023-11-10 20:58:32');
+(8, 4, 'Wortel', '3221973871', 'Sayur', '10000', 'wortel.jpg', '1', 5, 8, '2023-10-27 18:56:40', '2023-11-13 23:28:45'),
+(9, 4, 'Timun', '2021612852', 'Sayur', '10000', 'timun.jpg', '1', 14, 2, '2023-10-29 20:45:09', '2023-11-13 23:28:45'),
+(10, 4, 'Apel', '9448777343', 'Buah', '20000', 'apel.jpg', '1', 18, 5, '2023-10-29 20:45:24', '2023-11-11 23:31:44');
 
 -- --------------------------------------------------------
 
@@ -769,9 +800,9 @@ INSERT INTO `sizes` (`id`, `id_produk_koperasi`, `size`, `created_at`, `updated_
 
 CREATE TABLE `transaksi_agrikultures` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `id_market_agrikulture` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `nominal` int(11) NOT NULL,
+  `id_market_agrikulture` int(11) DEFAULT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  `nominal` int(11) DEFAULT NULL,
   `catatan` text DEFAULT NULL,
   `waktu_pengiriman` time DEFAULT NULL,
   `tanggal_pengiriman` date DEFAULT NULL,
@@ -789,7 +820,7 @@ CREATE TABLE `transaksi_agrikultures` (
 --
 
 INSERT INTO `transaksi_agrikultures` (`id`, `id_market_agrikulture`, `id_user`, `nominal`, `catatan`, `waktu_pengiriman`, `tanggal_pengiriman`, `alamat`, `status_pemesanan`, `status_pembayaran`, `metode_pengiriman`, `kode_transaksi`, `created_at`, `updated_at`) VALUES
-(1, 4, 9, 50000, 'dikemas yang rapi ya', NULL, NULL, NULL, 'selesai', '1', '', '3287364718', NULL, NULL);
+(1, 4, 9, 50000, 'dikemas yang rapi ya', NULL, NULL, NULL, 'selesai', '1', 'diantar', '3287364718', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -799,8 +830,8 @@ INSERT INTO `transaksi_agrikultures` (`id`, `id_market_agrikulture`, `id_user`, 
 
 CREATE TABLE `transaksi_agrikulture_offlines` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `id_user_admin_kasir` int(11) DEFAULT NULL,
-  `id_market_agrikulture` int(11) DEFAULT NULL,
+  `id_user_admin_kasir` int(11) NOT NULL,
+  `id_market_agrikulture` int(11) NOT NULL,
   `nominal_barang` int(11) NOT NULL,
   `nominal_bayar` int(11) NOT NULL,
   `nominal_kembalian` int(11) NOT NULL,
@@ -813,7 +844,7 @@ CREATE TABLE `transaksi_agrikulture_offlines` (
 --
 
 INSERT INTO `transaksi_agrikulture_offlines` (`id`, `id_user_admin_kasir`, `id_market_agrikulture`, `nominal_barang`, `nominal_bayar`, `nominal_kembalian`, `created_at`, `updated_at`) VALUES
-(18, 18, 4, 40000, 50000, 10000, '2023-11-10 20:58:32', '2023-11-10 20:58:32');
+(1, 18, 4, 30000, 50000, 20000, '2023-11-13 23:28:45', '2023-11-13 23:28:45');
 
 -- --------------------------------------------------------
 
@@ -895,8 +926,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `email`, `email_verified_at`, `password`, `pin`, `nid_unmer`, `no_telp`, `otp`, `role`, `status`, `longitude`, `latitude`, `remember_token`, `created_at`, `updated_at`) VALUES
 (2, 'andyfebri742@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', NULL, '000000', NULL, NULL, 'superadmin', '1', NULL, NULL, NULL, '2023-10-17 04:44:12', '2023-10-25 02:13:41'),
-(9, 'eggi@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', '111111', NULL, '085334770518', NULL, 'customer', '1', NULL, NULL, NULL, NULL, NULL),
-(10, 'egga_maretiyo@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', '222222', NULL, '231323123', NULL, 'customer', '1', NULL, NULL, NULL, NULL, NULL),
+(9, 'eggi@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', '111111', NULL, '085334770518', NULL, 'customer', '1', '113.88209684501402', '-8.383711103129833', NULL, NULL, NULL),
+(10, 'egga_maretiyo@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', '222222', NULL, '231323123', NULL, 'customer', '1', '113.88209684501402', '-8.383711103129833', NULL, NULL, NULL),
 (15, 'suherman@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', NULL, '444444', '085245677312', NULL, 'Admin Event', '1', NULL, NULL, NULL, '2023-10-26 03:50:17', '2023-10-26 03:50:17'),
 (16, 'andyfebri999@gmail.com', NULL, '$2y$10$C/47JCf363WhPfYyEnT9IuC6ciPoi2e8VXRPlOjiCwvoGqbNGrX2u', NULL, '111111', '085245677312', NULL, 'Admin Penginapan', '1', NULL, NULL, NULL, '2023-10-26 06:40:21', '2023-10-26 06:40:21'),
 (18, 'dono@gmail.com', NULL, '$2y$10$sVBM2ZbgrxBmk7/G.Gs93.0rmKvuiJF5UardcloVxUJ1VD/bWr2e2', NULL, '333333', '085245677312', NULL, 'Admin Kasir', '1', NULL, NULL, NULL, '2023-11-06 19:25:53', '2023-11-06 19:25:53');
@@ -963,6 +994,12 @@ CREATE TABLE `wisatas` (
 -- Indeks untuk tabel `admins`
 --
 ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `banks`
+--
+ALTER TABLE `banks`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1220,6 +1257,12 @@ ALTER TABLE `admins`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
+-- AUTO_INCREMENT untuk tabel `banks`
+--
+ALTER TABLE `banks`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT untuk tabel `broadcasts`
 --
 ALTER TABLE `broadcasts`
@@ -1265,7 +1308,7 @@ ALTER TABLE `detail_market_agrikultures`
 -- AUTO_INCREMENT untuk tabel `detail_transaksi_agrikultures`
 --
 ALTER TABLE `detail_transaksi_agrikultures`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_transaksi_koperasis`
@@ -1349,7 +1392,7 @@ ALTER TABLE `keranjangs`
 -- AUTO_INCREMENT untuk tabel `keranjang_offlines`
 --
 ALTER TABLE `keranjang_offlines`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT untuk tabel `kosts`
@@ -1379,7 +1422,7 @@ ALTER TABLE `market_agrikultures`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
@@ -1421,7 +1464,7 @@ ALTER TABLE `transaksi_agrikultures`
 -- AUTO_INCREMENT untuk tabel `transaksi_agrikulture_offlines`
 --
 ALTER TABLE `transaksi_agrikulture_offlines`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaksi_koperasis`

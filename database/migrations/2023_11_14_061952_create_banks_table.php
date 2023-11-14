@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transaksi_agrikulture_offlines', function (Blueprint $table) {
+        Schema::create('banks', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_user_admin_kasir');
-            $table->integer('id_market_agrikulture');
-            $table->integer('nominal_barang');
-            $table->integer('nominal_bayar');
-            $table->integer('nominal_kembalian');
+            $table->string('bank');
+            $table->string('rekening');
+            $table->string('logo');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaksi_agrikuluture_offlines');
+        Schema::dropIfExists('banks');
     }
 };
