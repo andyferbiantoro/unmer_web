@@ -10,4 +10,9 @@ class ProdukKoperasi extends Model
     use HasFactory;
     protected $table = 'produk_koperasis';
 	protected $guarded = [];
+
+    public function size()
+    {
+        return $this->hasMany(Size::class,'id_produk_koperasi');
+    }
 }
