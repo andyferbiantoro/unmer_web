@@ -21,7 +21,7 @@ Kelola Produk Agrikultur
     <a href="{{ route('superadmin_market_agrikulture') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-store"></i> Market Agrikulture</button></a>
     <a href="{{ route('superadmin_transaksi_agrikulture') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-money-bill"></i> Transaksi Agrikulture</button></a>
    
-    <br><br>
+    <br><br><hr>
 
     @if (session('success'))
     <div class="alert alert-success">
@@ -29,15 +29,44 @@ Kelola Produk Agrikultur
     </div>
     @endif
     <div class="text-center" >
+      <div class="col-12">
+          <form action="{{route('superadmin_agrikulture')}}" method="GET">
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <div class="form-group form-success">
+                    <select  name="kategori_produk" class="form-control"  required="">
+                     <option selected disabled> -- Pilih Kategori Produk -- </option>
+                     @foreach($kat as $k)
+                     <option  value="{{$k->kategori_produk}}" >{{$k->kategori_produk}}</option>
+                     @endforeach
+                   </select>
+                   <span class="form-bar"></span>
+                 </div>
+                 <!--  <input type="text" class="form-control" name="from" placeholder="Cari tanggal .." value="{{ old('from') }}"> -->
+                </div>
+              </div>
+
+            <div class="col-lg-2">
+              <div class="form-row">
+
+                <input type="submit" class="btn btn-info" value="Filter Kategori">
+              </div>
+            </div>
+          </div> 
+        </form>
+
+      </div>
      <div class="table-responsive">
       <table id="dataTable" class="table table-striped" style="width:100%">
         <thead>
           <tr>
             <th>No</th>
-            <th>Nama Produk</th>
             <th>Nama Toko</th>
             <th>Kategori Produk</th>
+            <th>Nama Produk</th>
             <th>Harga Produk</th>
+            <th>Stok Produk</th>
             <th>Foto Produk</th>
             <th>Opsi</th>
             <th style="display: none;">hidden</th>
@@ -48,10 +77,11 @@ Kelola Produk Agrikultur
           @foreach($produk_agrikulture as $data)
           <tr>
             <td>{{$no++}}</td>
-            <td>{{$data->nama_produk}}</td>
             <td>{{$data->nama_toko}}</td>
             <td>{{$data->kategori_produk}}</td>
+            <td>{{$data->nama_produk}}</td>
             <td>Rp. <?=number_format($data->harga_produk, 0, ".", ".")?>,00</td>
+            <td>{{$data->stok}}</td>
             <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('uploads/produk_agrikulture/'.$data->foto)}}"  data-toggle="modal" data-target="#myModal"></img></td>
 
             <td>
@@ -128,6 +158,11 @@ Kelola Produk Agrikultur
      <div class="form-group">
       <label for="harga_produk">Harga Produk</label>
       <input type="number" class="form-control" id="harga_produk" name="harga_produk"  required=""></input>
+    </div>
+
+    <div class="form-group">
+      <label for="stok">Stok Produk</label>
+      <input type="number" class="form-control" id="stok" name="stok"  required=""></input>
     </div>
 
     <div class="form-group">

@@ -180,13 +180,27 @@ class SuperadminController extends Controller
 	// ==================================================================================================================
 
 
-	public function superadmin_agrikulture()
+	public function superadmin_agrikulture(Request $request)
 	{
-		$produk_agrikulture = DB::table('produk_agrikultures')
-		->join('market_agrikultures', 'produk_agrikultures.id_market', '=', 'market_agrikultures.id')
-		->select('produk_agrikultures.*', 'market_agrikultures.nama_toko')
-		->orderBy('produk_agrikultures.id', 'DESC')
-		->get();
+
+		$kategori_produk = $request->kategori_produk;
+
+		if ($kategori_produk == null) {
+			$produk_agrikulture = DB::table('produk_agrikultures')
+			->join('market_agrikultures', 'produk_agrikultures.id_market', '=', 'market_agrikultures.id')
+			->select('produk_agrikultures.*', 'market_agrikultures.nama_toko')
+			->orderBy('produk_agrikultures.id', 'DESC')
+			->get();
+			# code...
+		}else{
+			$produk_agrikulture = DB::table('produk_agrikultures')
+			->join('market_agrikultures', 'produk_agrikultures.id_market', '=', 'market_agrikultures.id')
+			->select('produk_agrikultures.*', 'market_agrikultures.nama_toko')
+			->orderBy('produk_agrikultures.id', 'DESC')
+			->where('produk_agrikultures.kategori_produk',$kategori_produk)
+			->get();
+		}
+
 
 		$market = MarketAgrikulture::all();
 		//return $produk_agrikulture;
@@ -219,6 +233,7 @@ class SuperadminController extends Controller
 		$data_add->kategori_produk = $request->input('kategori_produk');
 		$data_add->harga_produk = $request->input('harga_produk');
 		$data_add->kode_produk = $kode_produk;
+		$data_add->stok = $request->input('stok');;
 		$data_add->status = '1';
 
 		if ($request->hasFile('foto')) {
@@ -247,6 +262,7 @@ class SuperadminController extends Controller
 			'nama_produk' => $request->nama_produk,
 			'kategori_produk' => $request->kategori_produk,
 			'harga_produk' => $request->harga_produk,
+			'stok' => $request->stok,
 
 		];
 		// return $input;
@@ -421,7 +437,7 @@ class SuperadminController extends Controller
 		->orderBy('transaksi_agrikultures.id', 'DESC')
 		->where('transaksi_agrikultures.id', $id)
 		->get();
- 
+
 
 		$detail_produk = DB::table('detail_transaksi_agrikultures')
 		->join('produk_agrikultures', 'detail_transaksi_agrikultures.id_produk_agrikulture', '=', 'produk_agrikultures.id')
@@ -757,7 +773,7 @@ class SuperadminController extends Controller
 		->orderBy('transaksi_koperasis.id', 'DESC')
 		->where('transaksi_koperasis.id', $id)
 		->get();
- 
+
 
 		$detail_produk = DB::table('detail_transaksi_koperasis')
 		->join('produk_koperasis', 'detail_transaksi_koperasis.id_produk_koperasi', '=', 'produk_koperasis.id')
@@ -804,7 +820,7 @@ class SuperadminController extends Controller
 		->select('transaksi_top_ups.*', 'customers.nama')
 		->orderBy('transaksi_top_ups.id', 'DESC')
 		->get();
-	
+
 		return view('super_admin.kelola_topup.index', compact('transaksi_topup'));
 	}
 

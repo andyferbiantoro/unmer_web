@@ -55,6 +55,11 @@ Edit Produk Agrikultur
                 <input type="number" class="form-control" id="harga_produk" name="harga_produk" value="{{$data->harga_produk}}"  required=""></input>
               </div>
 
+              <div class="form-group">
+                <label for="stok">Stok Produk</label>
+                <input type="number" class="form-control" id="stok" name="stok" value="{{$data->stok}}"  required=""></input>
+              </div>
+
                <div class="form-group">
                 <label for="latitude_lap">Foto Produk</label>
                 <div class="input-group">
