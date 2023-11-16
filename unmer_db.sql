@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Nov 2023 pada 10.04
+-- Waktu pembuatan: 16 Nov 2023 pada 12.13
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -725,8 +725,8 @@ CREATE TABLE `produk_agrikultures` (
   `harga_produk` varchar(255) NOT NULL,
   `foto` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
-  `stok` int(11) NOT NULL,
-  `sold` int(11) NOT NULL,
+  `stok` int(11) DEFAULT NULL,
+  `sold` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -737,8 +737,9 @@ CREATE TABLE `produk_agrikultures` (
 
 INSERT INTO `produk_agrikultures` (`id`, `id_market`, `nama_produk`, `kode_produk`, `kategori_produk`, `harga_produk`, `foto`, `status`, `stok`, `sold`, `created_at`, `updated_at`) VALUES
 (8, 4, 'Wortel', '3221973871', 'Sayur', '10000', 'wortel.jpg', '1', 5, 8, '2023-10-27 18:56:40', '2023-11-13 23:28:45'),
-(9, 4, 'Timun', '2021612852', 'Sayur', '10000', 'timun.jpg', '1', 14, 2, '2023-10-29 20:45:09', '2023-11-13 23:28:45'),
-(10, 4, 'Apel', '9448777343', 'Buah', '20000', 'apel.jpg', '1', 18, 5, '2023-10-29 20:45:24', '2023-11-11 23:31:44');
+(10, 4, 'Apel', '9448777343', 'Buah', '20000', 'apel.jpg', '1', 18, 5, '2023-10-29 20:45:24', '2023-11-11 23:31:44'),
+(15, 4, 'kol', '9316462568', 'Sayur', '15000', 'kol.jpg', '1', 19, NULL, '2023-11-16 10:27:27', '2023-11-16 10:53:54'),
+(16, 4, 'Timun Renes', '2669266588', 'Sayur', '5000', 'timun.jpg', '1', 10, NULL, '2023-11-16 11:11:14', '2023-11-16 11:11:14');
 
 -- --------------------------------------------------------
 
@@ -1470,7 +1471,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT untuk tabel `produk_agrikultures`
 --
 ALTER TABLE `produk_agrikultures`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk_koperasis`
