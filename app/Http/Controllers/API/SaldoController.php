@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+Use App\Models\Notif;
 
 class SaldoController extends Controller
 {
@@ -44,6 +45,7 @@ class SaldoController extends Controller
         $req['kode_transaksi']=strtoupper(Str::random(6));
         $req['id_user']=$request->id_user;
         $req['total_bayar']=2000+$nominal;
+        $req['timer_transfer']=1;
         // $req['tanggal_topup']=date('Y-m-d');
         // return $req;
        $saldo = TransaksiTopUp::create($req);
@@ -73,7 +75,7 @@ class SaldoController extends Controller
         $image->move(public_path('uploads/bukti_transfer_topup'), $imageName);
 
         
-        $bukti = TransaksiTopUp::where('id_user',$request->id_user)->update([
+        $bukti = TransaksiTopUp::where('id_user',$request->id_user)->where('status_topup','pending')->orderBy('id','desc')->first()->update([
             'bukti_transfer'=>$imageName,
             'status_topup'=>'menunggu_konfirmasi'
 
@@ -84,6 +86,30 @@ class SaldoController extends Controller
             return response()->json([
                 'code' => '200',
                 'message' => 'Berhasil mengirim Bukti Transfer. Menunggu Konfirmasi Admin'
+            ]);
+        } else {
+            return response()->json([
+                'code' => '500',
+                'message' => 'Gagal'
+            ]);
+        }
+
+
+        
+    }
+    public function batal_topup(Request $request){
+
+        $bukti = TransaksiTopUp::where('id_user',$request->id_user)->orderBy('id','desc')->first()->update([
+       
+            'status_topup'=>'batal'
+
+        ]);
+          
+        if($bukti){
+            
+            return response()->json([
+                'code' => '200',
+                'message' => 'Transaksi Dibatalkan Oleh Sistem'
             ]);
         } else {
             return response()->json([
@@ -196,6 +222,15 @@ class SaldoController extends Controller
                 'data' => []
             ]);
         }
+
+    }
+
+    public function pesan_notifikasi(){
+        $notif = new Notif;
+        $token_device = '';
+        $notif->sendNotifSaldo($token_device, "Saldo anda berhasil ditambah", "Notifikasi Saldo" );
+           
+
 
     }
 }
