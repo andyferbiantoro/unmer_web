@@ -12,7 +12,21 @@
         <li class="{{(request()->is('superadmin_dashboard')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_dashboard') }}"><i class="fas fa-home"></i><span>Beranda</span></a></li>
 
 
-        <li class="{{(request()->is('superadmin_agrikulture')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_agrikulture') }}"><i class="fas fa-leaf"></i><span>Agrikulture</span></a></li>
+        @if((request()->is('superadmin_agrikulture')))
+        <li class="nav-item dropdown {{(request()->is('superadmin_agrikulture')) ? 'active' : ''}}">
+        @elseif((request()->is('superadmin_biaya_layanan_agrikulture')))
+        <li class="nav-item dropdown {{(request()->is('superadmin_biaya_layanan_agrikulture')) ? 'active' : ''}}">
+        @else
+        <li class="nav-item dropdown">
+        @endif
+          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-leaf"></i>
+            <span>Agrikulture</span></a>
+            <ul class="dropdown-menu">
+              <li class="{{(request()->is('superadmin_agrikulture')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_agrikulture') }}"><i class="fas fa-leaf"></i></i><span>Kelola Agrikulture</span></a></li>
+
+              <li class="{{(request()->is('superadmin_biaya_layanan_agrikulture')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_biaya_layanan_agrikulture') }}"><i class="fas fa-money-bill-wave"></i></i><span>Biaya Layanan</span></a></li>
+            </ul>
+          </li>
 
         <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-shopping-bag"></i></i><span>Koperasi</span></a></li>
 
@@ -50,6 +64,14 @@
 
             <li class="{{(request()->is('superadmin_kelola_topup')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_topup') }}"><i class="fas fa-money-bill"></i><span>Kelola Top Up</span></a></li>
             @endif 
+
+
+
+
+
+
+
+
 
             @if(Auth::user()->role == 'Admin Kasir')
             <br>

@@ -23,6 +23,7 @@ use App\Models\KategoriprodukKoperasi;
 use App\Models\Broadcast;
 use App\Models\DetailBroadcast;
 use App\Models\TransaksiTopUp;
+use App\Models\BiayaLayanan;
 use File;
 use PDF;
 use DB;
@@ -435,6 +436,61 @@ class SuperadminController extends Controller
 	}
 
 
+	//Biaya Layanan Agrikulture
+	public function superadmin_biaya_layanan_agrikulture()
+	{
+		$layanan_agrikulture = BiayaLayanan::where('kategori_layanan','agrikulture')->get();
+		$cek_layanan_agrikulture = BiayaLayanan::where('kategori_layanan','agrikulture')->count();
+		// return $cek_layanan_agrikulture;
+		return view('super_admin.agrikulture.biaya_layanan.index',compact('layanan_agrikulture','cek_layanan_agrikulture'));
+	}
+
+
+	public function biaya_layanan_agrikulture_add(Request $request)
+	{
+
+		$data_add = new BiayaLayanan();
+
+		$data_add->biaya_layanan = $request->input('biaya_layanan');
+		$data_add->ongkir = $request->input('ongkir');
+		$data_add->kategori_layanan = 'agrikulture';
+
+
+		$data_add->save();
+
+		return redirect()->back()->with('success', 'Biaya Layanan Berhasil Ditambahkan');
+	}
+
+
+	public function biaya_layanan_agrikulture_update(Request $request, $id)
+	{
+
+
+		$data_update = BiayaLayanan::where('id', $id)->first();
+
+		$input = [
+			'biaya_layanan' => $request->biaya_layanan,
+			'ongkir' => $request->ongkir,
+			
+		];
+		
+		$data_update->update($input);
+
+
+		return redirect()->back()->with('success', 'Biaya Layanan Berhasil Diupdate');
+	}
+
+
+	public function biaya_layanan_agrikulture_delete($id)
+	
+	{
+		
+		$biaya_layanan_delete = BiayaLayanan::findOrFail($id);
+		$biaya_layanan_delete->delete();
+
+		return redirect()->back()->with('success', 'Biaya Layanan Berhasil Dihapus');
+	}
+
 	// ================================================================================================================
 
 
@@ -759,8 +815,7 @@ class SuperadminController extends Controller
 		$data_update = TransaksiTopUp::where('id', $id)->first();
 
 		$input = [
-			'status_topup' => 'dikonfirmasi',
-			
+			'status_topup' => 'dikonfirmasi',	
 		];
 
 		$data_update->update($input);

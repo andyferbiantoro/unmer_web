@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Nov 2023 pada 07.32
+-- Waktu pembuatan: 16 Nov 2023 pada 10.04
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -74,6 +74,28 @@ INSERT INTO `banks` (`id`, `bank`, `rekening`, `logo`, `created_at`, `updated_at
 (2, 'BRI', '1234-1002-2022', 'bri.png', NULL, NULL),
 (3, 'BNI', '1234-1003-2023', 'bni.png', NULL, NULL),
 (4, 'MANDIRI', '1234-1004-2024', 'mandiri.png', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `biaya_layanans`
+--
+
+CREATE TABLE `biaya_layanans` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `biaya_layanan` int(11) DEFAULT NULL,
+  `ongkir` int(11) DEFAULT NULL,
+  `kategori_layanan` varchar(50) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `biaya_layanans`
+--
+
+INSERT INTO `biaya_layanans` (`id`, `biaya_layanan`, `ongkir`, `kategori_layanan`, `created_at`, `updated_at`) VALUES
+(8, 6000, 4000, 'agrikulture', '2023-11-16 09:00:18', '2023-11-16 09:01:25');
 
 -- --------------------------------------------------------
 
@@ -654,7 +676,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (40, '2023_11_07_032909_create_keranjang_offlines_table', 12),
 (41, '2023_11_07_075001_create_transaksi_agrikuluture_offlines_table', 13),
 (42, '2023_11_07_075001_create_transaksi_agrikulture_offlines_table', 14),
-(43, '2023_11_14_061952_create_banks_table', 14);
+(43, '2023_11_14_061952_create_banks_table', 14),
+(44, '2023_11_12_114200_create_banks_table', 15),
+(45, '2023_11_16_145448_create_biaya_layanans_table', 15);
 
 -- --------------------------------------------------------
 
@@ -1003,6 +1027,12 @@ ALTER TABLE `banks`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `biaya_layanans`
+--
+ALTER TABLE `biaya_layanans`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `broadcasts`
 --
 ALTER TABLE `broadcasts`
@@ -1263,6 +1293,12 @@ ALTER TABLE `banks`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT untuk tabel `biaya_layanans`
+--
+ALTER TABLE `biaya_layanans`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT untuk tabel `broadcasts`
 --
 ALTER TABLE `broadcasts`
@@ -1422,7 +1458,7 @@ ALTER TABLE `market_agrikultures`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`

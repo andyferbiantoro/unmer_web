@@ -75,7 +75,11 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::get('/superadmin_transaksi_agrikulture', [SuperadminController::class, 'superadmin_transaksi_agrikulture'])->name('superadmin_transaksi_agrikulture');
 	Route::get('/superadmin_transaksi_agrikulture_detail{id}', [SuperadminController::class, 'superadmin_transaksi_agrikulture_detail'])->name('superadmin_transaksi_agrikulture_detail');
 
-
+	//biaya layanan Agrikulture
+	Route::get('/superadmin_biaya_layanan_agrikulture', [SuperadminController::class, 'superadmin_biaya_layanan_agrikulture'])->name('superadmin_biaya_layanan_agrikulture');
+	Route::post('/biaya_layanan_agrikulture_add', [SuperadminController::class, 'biaya_layanan_agrikulture_add'])->name('biaya_layanan_agrikulture_add');
+	Route::post('/biaya_layanan_agrikulture_update/{id}', [SuperadminController::class, 'biaya_layanan_agrikulture_update'])->name('biaya_layanan_agrikulture_update');
+	Route::post('/biaya_layanan_agrikulture_delete/{id}', [SuperadminController::class, 'biaya_layanan_agrikulture_delete'])->name('biaya_layanan_agrikulture_delete');
 
 
 	// =================================================END AGRIKULTURE===========================================
