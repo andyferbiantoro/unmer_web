@@ -9,7 +9,7 @@ use App\Models\DetailTransaksiAgrikulture;
 use App\Models\KategoriProdukAgrikulture;
 use App\Models\Keranjang;
 use App\Models\MarketAgrikulture;
-use App\Models\produkAgrikulture;
+use App\Models\ProdukAgrikulture;
 use App\Models\TransaksiAgrikulture;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -49,7 +49,7 @@ class AgrikulturController extends Controller
     public function list_produk_market($id_market)
     {
 
-        $produk = produkAgrikulture::where('id_market', $id_market)->orderBy('id', 'desc')->get();
+        $produk = ProdukAgrikulture::where('id_market', $id_market)->orderBy('id', 'desc')->get();
         // $produk = DB::table('produk_agrikultures')
         // ->leftjoin('kategori_produk_agrikultures','produk_agrikultures.id_kategori_produk','kategori_produk_agrikultures.id')
         // ->select('kategori_produk_agrikultures.*','produk_agrikultures.*')
@@ -165,7 +165,7 @@ class AgrikulturController extends Controller
 
         $id_prduc = json_decode($request->id_product);
         $kuantitas = json_decode($request->kuantitas);
-        $harga_produk = produkAgrikulture::whereIn('id', $id_prduc)->get();
+        $harga_produk = ProdukAgrikulture::whereIn('id', $id_prduc)->get();
         $total=0;
         foreach($harga_produk as $n=>$p){
             $qty = $kuantitas[$n];
@@ -249,7 +249,7 @@ class AgrikulturController extends Controller
         // Keranjang::where('id_user', $id_user)->orderBy('id', 'desc')->get();
         // return $keranjang;
         // foreach ($keranjang as $k) {
-        //     $market = produkAgrikulture::where('id', $k->id_produk_agrikulture)->orderBy('id', 'desc')->get();
+        //     $market = ProdukAgrikulture::where('id', $k->id_produk_agrikulture)->orderBy('id', 'desc')->get();
         //     return $market;
         // }
 
