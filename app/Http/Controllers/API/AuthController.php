@@ -249,14 +249,13 @@ class AuthController extends Controller
     {
         $users =  User::where('id', $request->id)->first();
         $customer = Customer::where('id_user', $users->id)->first();
-        $data = $request->except(['no_telp']);
+        $data = $request->except(['no_telp','id']);
+        $datac = $request->except(['alamat','nama','nik','email','id']);
 
 
 
         if ($users && $customer) {
-            $users->update([
-                'no_telp' => $request->no_telp,
-            ]);
+            $users->update($datac);
             $customer->update($data);
             
             $data = DB::table('customers')->leftJoin('users','customers.id_user','users.id')
