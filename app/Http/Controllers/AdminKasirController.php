@@ -13,8 +13,8 @@ use App\Models\Warna;
 use App\Models\ListSize;
 use App\Models\ListWarna;
 use App\Models\Customer;
-use App\Models\KategoriprodukAgrikulture;
-use App\Models\KategoriprodukKoperasi;
+use App\Models\KategoriProdukAgrikulture;
+use App\Models\KategoriProdukKoperasi;
 use App\Models\KeranjangOffline;
 use App\Models\TransaksiAgrikultureOffline;
 use App\Models\DetailTransaksiAgrikulture;
@@ -197,7 +197,7 @@ class AdminKasirController extends Controller
 
 		$market = MarketAgrikulture::all();
 		//return $produk_agrikulture;
-		$kat = KategoriprodukAgrikulture::all();
+		$kat = KategoriProdukAgrikulture::all();
 		return view('admin_kasir.agrikulture.produk_agrikulture.index', compact('produk_agrikulture', 'market','kat'));
 	}
 

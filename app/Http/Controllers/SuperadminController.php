@@ -18,8 +18,8 @@ use App\Models\Warna;
 use App\Models\ListSize;
 use App\Models\ListWarna;
 use App\Models\Customer;
-use App\Models\KategoriprodukAgrikulture;
-use App\Models\KategoriprodukKoperasi;
+use App\Models\KategoriProdukAgrikulture;
+use App\Models\KategoriProdukKoperasi;
 use App\Models\Broadcast;
 use App\Models\DetailBroadcast;
 use App\Models\TransaksiTopUp;
@@ -204,7 +204,7 @@ class SuperadminController extends Controller
 
 		$market = MarketAgrikulture::all();
 		//return $produk_agrikulture;
-		$kat = KategoriprodukAgrikulture::all();
+		$kat = KategoriProdukAgrikulture::all();
 		return view('super_admin.agrikulture.kelola_produk', compact('produk_agrikulture', 'market','kat'));
 	}
 
@@ -218,7 +218,7 @@ class SuperadminController extends Controller
 		->get();
 
 		$market = MarketAgrikulture::all();
-		$kat = KategoriprodukAgrikulture::all();
+		$kat = KategoriProdukAgrikulture::all();
 		return view('super_admin.agrikulture.edit.edit_produk', compact('produk_agrikulture', 'market','kat'));
 	}
 
@@ -524,7 +524,7 @@ class SuperadminController extends Controller
 
 		$admin = Admin::where('role_admin', 'Admin Kasir')->get();
 		$partner = Customer::where('status_partner', 'partner')->get();
-		$kat = KategoriprodukKoperasi::all();
+		$kat = KategoriProdukKoperasi::all();
 
 		$list_size =ListSize::all();
 		$list_warna =ListWarna::all();
@@ -566,7 +566,7 @@ class SuperadminController extends Controller
 		
 		$admin = Admin::where('role_admin', 'Admin Kasir')->get();
 		$partner = Customer::where('status_partner', 'partner')->get();
-		$kat = KategoriprodukKoperasi::all();
+		$kat = KategoriProdukKoperasi::all();
 		$list_size =ListSize::all();
 		$list_warna =ListWarna::all();
 
@@ -798,7 +798,7 @@ class SuperadminController extends Controller
 
 		$admin = Admin::where('role_admin', 'Admin Kasir')->get();
 		$partner = Customer::where('status_partner', 'partner')->get();
-		$kat = KategoriprodukKoperasi::all();
+		$kat = KategoriProdukKoperasi::all();
 
 		$list_size =ListSize::all();
 		$list_warna =ListWarna::all();

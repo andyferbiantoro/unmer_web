@@ -13,7 +13,7 @@ Lokasi Pembeli
 
       <div class="card-body">
 
-        <a href="{{ route('admin_kasir_lihat_pesanan_agrikulture') }}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
+        <a href="{{ route('admin_kasir_lihat_pesanan_agrikulture_diantar') }}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
 
         <br><br>
         <h2 class="primary">Lokasi Pembeli </h2><br>
