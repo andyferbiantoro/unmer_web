@@ -22,33 +22,7 @@ Kelola Produk Agrikultur
     </div>
     @endif
     <div class="text-center" >
-      <div class="col-12">
-          <form action="{{route('laporan_index')}}" method="GET">
-            <div class="row">
-              <div class="col-lg-2">
-                <div class="form-row">
-                  <label>Dari Tanggal</label>
-                  <input type="date" class="form-control" name="from" placeholder="Cari tanggal .." value="{{ old('from') }}">
-                </div>
-              </div>
-
-              <div class="col-lg-2">
-               <div class="form-row">
-                <label>Sampai Tanggal</label>
-                <input type="date" class="form-control" name="to" placeholder="Cari tanggal .." value="{{ old('to') }}">
-              </div>
-            </div><br><br>
-
-            <div class="col-lg-2">
-              <div class="form-row">
-
-                <input type="submit" class="btn btn-primary" value="Filter  Tanggal">
-              </div>
-            </div>
-          </div> 
-        </form><br>
-
-      </div>
+      
      <div class="table-responsive">
       <table id="dataTable" class="table table-striped" style="width:100%">
         <thead>
@@ -73,7 +47,11 @@ Kelola Produk Agrikultur
             <td>{{$data->kategori_produk}}</td>
             <td>Rp. <?=number_format($data->harga_produk, 0, ".", ".")?>,00</td>
             <td>{{$data->stok}}</td>
+            @if($data->sold == null)
+            <td>Belum Terjual</td>
+            @else
             <td>{{$data->sold}}</td>
+            @endif
             <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('uploads/produk_agrikulture/'.$data->foto)}}"  data-toggle="modal" data-target="#myModal"></img></td>
 
             <td>

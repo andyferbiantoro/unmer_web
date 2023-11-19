@@ -141,8 +141,13 @@ Route::middleware(['auth', 'admin_kasir'])->group(function () {
 	Route::post('/admin_kasir_ubah_stok_agrikulture/{id}', [AdminKasirController::class, 'admin_kasir_ubah_stok_agrikulture'])->name('admin_kasir_ubah_stok_agrikulture');
 
 	//lihat pesanan
-	Route::get('/admin_kasir_lihat_pesanan_agrikulture', [AdminKasirController::class, 'admin_kasir_lihat_pesanan_agrikulture'])->name('admin_kasir_lihat_pesanan_agrikulture');
+	Route::get('/admin_kasir_lihat_pesanan_agrikulture_diantar', [AdminKasirController::class, 'admin_kasir_lihat_pesanan_agrikulture_diantar'])->name('admin_kasir_lihat_pesanan_agrikulture_diantar');
+	Route::get('/admin_kasir_lihat_pesanan_agrikulture_diambil', [AdminKasirController::class, 'admin_kasir_lihat_pesanan_agrikulture_diambil'])->name('admin_kasir_lihat_pesanan_agrikulture_diambil');
+	Route::get('/admin_kasir_lihat_pesanan_agrikulture_offline', [AdminKasirController::class, 'admin_kasir_lihat_pesanan_agrikulture_offline'])->name('admin_kasir_lihat_pesanan_agrikulture_offline');
+
 	Route::get('/admin_detail_pesanan_agrikulture{id}', [AdminKasirController::class, 'admin_detail_pesanan_agrikulture'])->name('admin_detail_pesanan_agrikulture');
+
+	Route::get('/detail_pesanan_offline{id}', [AdminKasirController::class, 'detail_pesanan_offline'])->name('detail_pesanan_offline');
 
 
 	//lihat Pembeli

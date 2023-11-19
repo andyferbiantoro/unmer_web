@@ -218,7 +218,7 @@ class AdminKasirController extends Controller
 
 
 
-	public function admin_kasir_lihat_pesanan_agrikulture()
+	public function admin_kasir_lihat_pesanan_agrikulture_diantar()
 	{	
 
 		$pesanan_diantar = DB::table('transaksi_agrikultures')
@@ -228,6 +228,15 @@ class AdminKasirController extends Controller
 		->where('transaksi_agrikultures.metode_pengiriman','diantar')
 		->get();
 
+		
+		
+		return view('admin_kasir.agrikulture.lihat_pesanan.pesanan_diantar', compact('pesanan_diantar'));
+	}
+
+
+	public function admin_kasir_lihat_pesanan_agrikulture_diambil()
+	{	
+
 		$pesanan_diambil = DB::table('transaksi_agrikultures')
 		->join('customers', 'transaksi_agrikultures.id_user', '=', 'customers.id_user')
 		->select('transaksi_agrikultures.*', 'customers.nama')
@@ -235,7 +244,38 @@ class AdminKasirController extends Controller
 		->where('transaksi_agrikultures.metode_pengiriman','diambil')
 		->get();
 		
-		return view('admin_kasir.agrikulture.lihat_pesanan.index', compact('pesanan_diantar','pesanan_diambil'));
+		return view('admin_kasir.agrikulture.lihat_pesanan.pesanan_diambil', compact('pesanan_diambil'));
+	}
+
+
+	public function admin_kasir_lihat_pesanan_agrikulture_offline()
+	{	
+
+		$pesanan_offline = TransaksiAgrikultureOffline::where('id_user_admin_kasir',Auth::user()->id )->orderBy('id', 'DESC')->get();
+		
+		return view('admin_kasir.agrikulture.lihat_pesanan.pesanan_offline', compact('pesanan_offline'));
+	}
+
+
+	public function detail_pesanan_offline($id)
+	{
+
+		$transaksi_offline = TransaksiAgrikultureOffline::where('id', $id)->orderBy('id', 'DESC')->first();
+
+		// $detail_transaksi = DetailTransaksiAgrikulture::where('id_transaksi_agrikulture',$transaksi_offline->id)->get();
+
+		$detail_transaksi = DB::table('detail_transaksi_agrikultures')
+		->join('transaksi_agrikulture_offlines', 'detail_transaksi_agrikultures.id_transaksi_agrikulture_offline', '=', 'transaksi_agrikulture_offlines.id')
+		->join('produk_agrikultures', 'detail_transaksi_agrikultures.id_produk_agrikulture', '=', 'produk_agrikultures.id')
+		->select('detail_transaksi_agrikultures.*', 'produk_agrikultures.nama_produk','produk_agrikultures.harga_produk',)
+		->where('detail_transaksi_agrikultures.id_transaksi_agrikulture_offline',$transaksi_offline->id)
+		->orderBy('detail_transaksi_agrikultures.id', 'DESC')
+		->get();
+
+		 // return $transaksi_offline;
+		  //return $detail_transaksi;
+
+		return view('admin_kasir.agrikulture.lihat_pesanan.detail_offline',compact('transaksi_offline','detail_transaksi'));
 	}
 
 
@@ -262,6 +302,9 @@ class AdminKasirController extends Controller
 		
 		return view('admin_kasir.agrikulture.lihat_pesanan.detail_pesanan_agrikulture', compact('transaksi_agrikulture','detail_produk'));
 	}
+
+
+
 
 	public function admin_lokasi_pembeli($id)
 

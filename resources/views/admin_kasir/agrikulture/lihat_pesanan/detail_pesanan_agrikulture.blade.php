@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Detail Transaksi Agrikultur
+Detail Pesanan Agrikultur
 @endsection
 
 
@@ -13,7 +13,7 @@ Detail Transaksi Agrikultur
 
     <div class="card-body">
 
-      <a href="{{ route('admin_kasir_lihat_pesanan_agrikulture') }}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
+      <a href="{{ route('admin_kasir_lihat_pesanan_agrikulture_diantar') }}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
 
       <br><br>
       @foreach($transaksi_agrikulture as $kode)

@@ -14,13 +14,13 @@ Kelola Transaksi Agrikultur
     <div class="card-body">
       <h2 class="primary">Transaksi Agrikulture </h2>
       <hr>
-      <br>
+     
       <a href="{{ route('superadmin_agrikulture') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-shopping-bag"></i> Produk Agrikulture</button></a>
       <a href="{{ route('superadmin_market_agrikulture') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-store"></i> Market Agrikulture</button></a>
       <a href="{{ route('superadmin_transaksi_agrikulture') }}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-money-bill"></i> Transaksi Agrikulture</button></a>
 
       
-      <br><br>
+     <hr>
 
       @if (session('success'))
       <div class="alert alert-success">

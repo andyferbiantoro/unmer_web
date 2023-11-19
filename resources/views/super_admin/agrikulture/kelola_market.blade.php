@@ -14,15 +14,15 @@ Kelola Market Agrikultur
       <div class="card-body">
         <h2 class="primary">Market Agrikulture </h2>
         <hr>
-        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
-          Tambah Market Agrikulture
-        </button><br><br>
+       
         <a href="{{ route('superadmin_agrikulture') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-shopping-bag"></i> Produk Agrikulture</button></a>
         <a href="{{ route('superadmin_market_agrikulture') }}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-store"></i> Market Agrikulture</button></a>
         <a href="{{ route('superadmin_transaksi_agrikulture') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-money-bill"></i> Transaksi Agrikulture</button></a>
         
-        <br><br>
-
+       <hr>
+        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
+          Tambah Market Agrikulture
+        </button><br><br>
         @if (session('success'))
         <div class="alert alert-success">
           {{ session('success') }}
