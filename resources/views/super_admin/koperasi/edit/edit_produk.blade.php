@@ -145,7 +145,7 @@ Edit Produk Agrikultur
               <div class="form-group">
                 <label for="latitude_lap">Foto Produk</label>
                 <div></div><span ><img  style="width: 100%; height: 400px; border-radius: 3px;" 
-                  src="{{asset('uploads/produk_koperasi/'.$data->foto)}}"></span>
+                  src="{{asset('public/uploads/produk_koperasi/'.$data->foto)}}"></span>
                 </div>
               </form>
 

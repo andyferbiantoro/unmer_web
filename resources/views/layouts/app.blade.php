@@ -22,9 +22,9 @@
 
     @yield('css')
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
-    <link rel="shortcut icon" href="{{ asset('assets/img/stisla.svg') }}">
+    <link rel="stylesheet" href="{{ asset('public/assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/assets/css/components.css') }}">
+    <link rel="shortcut icon" href="{{ asset('public/assets/img/stisla.svg') }}">
 
 </head>
 
@@ -59,9 +59,9 @@
   <!-- Page Specific JS File -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
-  <script src="{{ asset('assets/js/stisla.js') }}"></script>
-  <script src="{{ asset('assets/js/scripts.js') }}"></script>
-  <script src="{{ asset('assets/js/custom.js') }}"></script>
+  <script src="{{ asset('public/assets/js/stisla.js') }}"></script>
+  <script src="{{ asset('public/assets/js/scripts.js') }}"></script>
+  <script src="{{ asset('public/assets/js/custom.js') }}"></script>
 
   <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>

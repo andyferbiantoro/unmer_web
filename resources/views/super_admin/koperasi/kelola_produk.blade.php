@@ -55,7 +55,7 @@ Kelola Produk Koperasi
               <td>{{$data->kode_produk}}</td>
               <td>{{$data->kategori_produk}}</td>
               <td>Rp. <?=number_format($data->harga, 0, ".", ".")?>,00</td>
-              <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('uploads/produk_koperasi/'.$data->foto)}}"  data-toggle="modal" data-target="#myModal"></img></td>
+              <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('public/uploads/produk_koperasi/'.$data->foto)}}"  data-toggle="modal" data-target="#myModal"></img></td>
               <td>
 
                 <a href="{{route('produk_koperasi_detail',$data->id)}}"><button class="btn btn-info btn-sm">Detail</button></a>

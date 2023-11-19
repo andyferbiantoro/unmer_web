@@ -1,7 +1,7 @@
 <aside id="sidebar-wrapper">
   <div class="sidebar-brand">
     <div class="login-brand">
-      <img src="assets/img/Unmer_Branding_Biru.png" alt="logo" width="100" >
+      <img src="public/assets/img/Unmer_Branding_Biru.png" alt="logo" width="100" >
     </div>
   </div><br>
    <!--  <div class="sidebar-brand sidebar-brand-sm">

@@ -52,7 +52,7 @@ Kelola Produk Agrikultur
             @else
             <td>{{$data->sold}}</td>
             @endif
-            <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('uploads/produk_agrikulture/'.$data->foto)}}"  data-toggle="modal" data-target="#myModal"></img></td>
+            <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('/public/uploads/produk_agrikulture/'.$data->foto)}}"  data-toggle="modal" data-target="#myModal"></img></td>
 
             <td>
               <!-- <button class="btn btn-warning btn-sm icon-file menu-icon edit" title="Edit">Edit</button> -->
