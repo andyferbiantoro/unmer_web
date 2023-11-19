@@ -261,6 +261,7 @@ class AuthController extends Controller
             
             $data = DB::table('customers')->leftJoin('users','customers.id_user','users.id')
             ->select('users.*','users.id as id_user','customers.*','customers.id as id_customer')->where('users.id',$request->id)->first();
+            $data->foto= asset('uploads/profil/'.$data->foto);
 
             return response()->json([
                 'code' => '200',
