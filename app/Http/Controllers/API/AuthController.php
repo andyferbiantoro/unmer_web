@@ -249,8 +249,8 @@ class AuthController extends Controller
     {
         $users =  User::where('id', $request->id)->first();
         $customer = Customer::where('id_user', $users->id)->first();
-        $data = $request->except(['no_telp','id']);
-        $datac = $request->except(['alamat','nama','nik','email','id']);
+        $data = $request->except(['no_telp','id','email']);
+        $datac = $request->except(['alamat','nama','nik','id']);
 
 
 
