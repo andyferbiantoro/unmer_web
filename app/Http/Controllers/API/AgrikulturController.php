@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Nette\Utils\Json;
+use Termwind\Components\Raw;
 
 class AgrikulturController extends Controller
 {
@@ -239,7 +240,7 @@ class AgrikulturController extends Controller
         $keranjang = DB::table('keranjangs')
             ->leftJoin('produk_agrikultures', 'keranjangs.id_produk_agrikulture', 'produk_agrikultures.id')
             ->leftJoin('market_agrikultures', 'produk_agrikultures.id_market', 'market_agrikultures.id')
-            ->select('produk_agrikultures.*', 'market_agrikultures.*', 'keranjangs.id_produk_agrikulture as id')
+            ->select('produk_agrikultures.*', 'market_agrikultures.*', DB::Raw('CAST(keranjangs.id_produk_agrikulture AS UNSIGNED) as id'))
             ->where('id_user', $request->id_user)->where('id_market', $request->id_market)->get();
 
         foreach ($keranjang as $k) {

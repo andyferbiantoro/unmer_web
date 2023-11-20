@@ -249,21 +249,18 @@ class AuthController extends Controller
     {
         $users =  User::where('id', $request->id)->first();
         $customer = Customer::where('id_user', $users->id)->first();
+        $data = $request->except(['no_telp','id','email']);
+        $datac = $request->except(['alamat','nama','nik','id']);
 
 
 
         if ($users && $customer) {
-            $users->update([
-                'no_telp' => $request->no_telp,
-            ]);
-            $customer->update([
-                'alamat' => $request->alamat,
-                'nik' => $request->nik,
-                'nama' => $request->nama,
-            ]);
+            $users->update($datac);
+            $customer->update($data);
             
             $data = DB::table('customers')->leftJoin('users','customers.id_user','users.id')
             ->select('users.*','users.id as id_user','customers.*','customers.id as id_customer')->where('users.id',$request->id)->first();
+            $data->foto= asset('uploads/profil/'.$data->foto);
 
             return response()->json([
                 'code' => '200',
