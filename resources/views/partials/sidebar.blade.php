@@ -28,8 +28,22 @@
             </ul>
           </li>
 
-        <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-shopping-bag"></i></i><span>Koperasi</span></a></li>
 
+        @if((request()->is('superadmin_koperasi')))
+        <li class="nav-item dropdown {{(request()->is('superadmin_koperasi')) ? 'active' : ''}}">
+        @elseif((request()->is('superadmin_biaya_layanan_koperasi')))
+        <li class="nav-item dropdown {{(request()->is('superadmin_biaya_layanan_koperasi')) ? 'active' : ''}}">
+        @else
+        <li class="nav-item dropdown">
+        @endif
+          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-shopping-bag"></i>
+            <span>Koperasi</span></a>
+            <ul class="dropdown-menu">
+              <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-shopping-bag"></i></i><span>Kelola Koperasi</span></a></li>
+
+              <li class="{{(request()->is('superadmin_biaya_layanan_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_biaya_layanan_koperasi') }}"><i class="fas fa-money-bill-wave"></i></i><span>Biaya Layanan</span></a></li>
+            </ul>
+          </li>
 
 
         <li class="nav-item dropdown {{(request()->is('lapak')) ? 'active' : ''}}">
@@ -100,10 +114,34 @@
 
                 <li class="{{(request()->is('admin_kasir_agrikulture')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_agrikulture') }}"><i class="fas fa-cart-plus"></i></i><span>Kasir</span></a></li>
 
-                <li class="{{(request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_lihat_pesanan_agrikulture_diantar') }}"><i class="fas fa-shopping-cart"></i></i><span>Lihat Pesanan</span></a></li>
+                <li class="{{(request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_lihat_pesanan_agrikulture_diantar') }}"><i class="fas fa-shopping-cart"></i></i><span>Lihat Pesanan</span></a></li> 
+              </ul>
+            </li>
 
-                
-                
+
+            @if((request()->is('admin_kasir_koperasi')))
+            <li class="nav-item dropdown {{(request()->is('admin_kasir_koperasi')) ? 'active' : ''}}">
+            @elseif((request()->is('admin_kelola_agrikulture')))
+            <li class="nav-item dropdown {{(request()->is('admin_kelola_agrikulture')) ? 'active' : ''}}">
+             @elseif((request()->is('admin_kasir_lihat_pesanan_agrikulture')))
+            <li class="nav-item dropdown {{(request()->is('admin_kasir_lihat_pesanan_agrikulture')) ? 'active' : ''}}">
+            @elseif((request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')))
+            <li class="nav-item dropdown {{(request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')) ? 'active' : ''}}">
+            @elseif((request()->is('admin_kasir_lihat_pesanan_agrikulture_diambil')))
+            <li class="nav-item dropdown {{(request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')) ? 'active' : ''}}">
+            @elseif((request()->is('admin_kasir_lihat_pesanan_agrikulture_offline')))
+            <li class="nav-item dropdown {{(request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')) ? 'active' : ''}}">
+            @else
+            <li class="nav-item dropdown">
+            @endif
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-shopping-bag"></i>
+              <span>Koperasi</span></a>
+              <ul class="dropdown-menu">
+                <li class="{{(request()->is('admin_kelola_agrikulture')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kelola_agrikulture') }}"><i class="fas fa-shopping-basket"></i></i><span>Produk</span></a></li>
+
+                <li class="{{(request()->is('admin_kasir_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_koperasi') }}"><i class="fas fa-cart-plus"></i></i><span>Kasir</span></a></li>
+
+                <li class="{{(request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_lihat_pesanan_agrikulture_diantar') }}"><i class="fas fa-shopping-cart"></i></i><span>Lihat Pesanan</span></a></li> 
               </ul>
             </li>
 

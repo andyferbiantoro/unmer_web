@@ -16,8 +16,12 @@ use App\Models\Customer;
 use App\Models\KategoriProdukAgrikulture;
 use App\Models\KategoriProdukKoperasi;
 use App\Models\KeranjangOffline;
+use App\Models\KeranjangKoperasiOffline;
 use App\Models\TransaksiAgrikultureOffline;
 use App\Models\DetailTransaksiAgrikulture;
+use App\Models\DetailTransaksiKoperasi;
+use App\Models\TransaksiKoperasiOffline;
+use App\Models\Size;
 use File;
 use PDF;
 use DB;
@@ -154,6 +158,8 @@ class AdminKasirController extends Controller
 
 		return redirect()->route('admin_kasir_transaksi_agrikulture_selesai')->with('success', 'Transaksi Berhasil');
 	}
+
+
 
 	public function kasir_batalkan_produk($id)
 	{
@@ -321,4 +327,182 @@ class AdminKasirController extends Controller
 		return view('admin_kasir.agrikulture.lokasi_pembeli.index', compact('lokasi_pembeli'));
 	}
 
+
+// ========================================== KOPERASI ===================================================
+
+
+	public function admin_kasir_koperasi(request $request)
+	{
+		//filter produk  menggunkana kode produk
+		$kode_produk = $request->kode_produk;
+
+		if ($kode_produk == null) {
+			$cari_produk = ProdukKoperasi::where('id','0')->get();
+			
+
+			$size_produk = Size::where('id_produk_koperasi', '0')->get(); 
+			$warna_produk = Warna::where('id_produk_koperasi', '0')->get();
+
+		}else{
+			$cari_produk = ProdukKoperasi::where('kode_produk',$kode_produk)->get();
+			$get_id_produk = ProdukKoperasi::where('kode_produk',$kode_produk)->first();
+
+			$size_produk = Size::where('id_produk_koperasi', $get_id_produk->id)->get(); 
+			$warna_produk = Warna::where('id_produk_koperasi', $get_id_produk->id)->get();
+
+		}
+
+		//get data keranjang offline
+		$keranjang_koperasi_offline = DB::table('keranjang_koperasi_offlines')
+		->join('produk_koperasis', 'keranjang_koperasi_offlines.id_produk_koperasi', '=', 'produk_koperasis.id')
+		->select('keranjang_koperasi_offlines.*', 'produk_koperasis.nama_produk','produk_koperasis.kategori_produk')
+		->orderBy('keranjang_koperasi_offlines.id', 'DESC')
+		->where('keranjang_koperasi_offlines.id_user_admin_kasir',Auth::user()->id)
+		->get();
+
+		//total belanja pada keranjang offline
+		$total_belanja = KeranjangKoperasiOffline::where('id_user_admin_kasir',Auth::user()->id)->sum('total_harga');
+		// return $keranjang_offline;
+		
+
+		// return $get_id_market;
+		return view('admin_kasir.koperasi.kasir_koperasi.index', compact('cari_produk','keranjang_koperasi_offline','total_belanja','size_produk','warna_produk'));
+	}
+
+
+	public function kasir_keranjang_koperasi_add(Request $request, $id)
+	{
+
+		
+		$cek_keranjang = KeranjangKoperasiOffline::where('id_produk_koperasi',$id)->where('size',$request->input('size'))->where('warna',$request->input('warna'))->first();
+
+		//proses add data pada keranjang offline, jika belum ada maka data diinputkan ke tabel
+		if ($cek_keranjang == null) {
+			$data_add = new KeranjangKoperasiOffline();
+
+			$data_add->id_user_admin_kasir = Auth::user()->id;
+			$data_add->id_produk_koperasi = $id;
+			$data_add->kuantitas = '1';
+			$data_add->total_harga = $request->input('total_harga');
+			$data_add->size = $request->input('size');
+			$data_add->warna = $request->input('warna');
+
+			$data_add->save();
+		}else{
+			//jika data sudah ada, maka hanya menambahkan kuantitas dan total harga
+			$data_update = KeranjangKoperasiOffline::where('id_produk_koperasi', $id)->first();	
+
+			$input = [
+				'kuantitas' => $data_update->kuantitas + '1' ,
+				'total_harga' =>  $data_update->total_harga + $request->total_harga,
+			];
+
+			$data_update->update($input);
+		}
+
+	// return $cek_keranjang;
+
+		return redirect()->back()->with('success', 'Produk Berhasil Ditambahkan');
+	}
+
+
+	public function kasir_batalkan_produk_koperasi($id)
+	{
+		
+		$batalkan_produk = KeranjangKoperasiOffline::findOrFail($id);
+		$batalkan_produk->delete();
+
+		return redirect()->back()->with('error', 'Produk Telah Dibatalkan');
+	}
+
+
+
+	public function kasir_transaksi_offline_koperasi_add(Request $request)
+	{
+		//add data ke tabel transaksi agrikulture offline
+		$get_keranjang_offline = KeranjangKoperasiOffline::where('id_user_admin_kasir',Auth::user()->id)->get();
+		
+		$id_partner = DB::table('keranjang_koperasi_offlines')
+		->join('produk_koperasis', 'keranjang_koperasi_offlines.id_produk_koperasi', '=', 'produk_koperasis.id')
+		->select('keranjang_koperasi_offlines.*', 'produk_koperasis.id_partner')
+		->orderBy('keranjang_koperasi_offlines.id', 'DESC')
+		->where('keranjang_koperasi_offlines.id_user_admin_kasir',Auth::user()->id)
+		->first();
+
+		// $id_partner = KeranjangKoperasiOffline::where('id_user_admin_kasir',Auth::user()->id)->first();
+
+		$data = ([
+			'id_user_admin_kasir' => Auth::user()->id,
+			'id_partner' => $id_partner->id_partner,
+			'nominal_barang' => $request['nominal_barang'],
+			'nominal_bayar' => $request['nominal_bayar'],
+			'nominal_kembalian' => $request['nominal_kembalian'],
+			
+		]);
+
+		// return $data;
+		$lastid = TransaksiKoperasiOffline::create($data)->id;
+
+		//get data dari keranjang offline dan dimasukkan ke tabel detail transaksi agrikulture
+		foreach ($get_keranjang_offline as $data) {
+
+			$detail_transaksi_offline = new DetailTransaksiKoperasi();
+
+			$detail_transaksi_offline->id_transaksi_koperasi_offline = $lastid;
+			$detail_transaksi_offline->id_produk_koperasi = $data->id_produk_koperasi;
+			$detail_transaksi_offline->kuantitas = $data->kuantitas;
+			$detail_transaksi_offline->total_harga = $data->total_harga;
+			$detail_transaksi_offline->size = $data->size;
+			$detail_transaksi_offline->warna = $data->warna;
+			$detail_transaksi_offline->save();
+		}
+
+
+		//ubah stok dan sold produk
+		foreach ($get_keranjang_offline as $value ) {
+			
+			$update_stok = ProdukKoperasi::where('id', $value->id_produk_koperasi)->first();	
+
+			$input = [
+				'stok' => $update_stok->stok - $value->kuantitas ,
+				'sold' => $update_stok->sold + $value->kuantitas ,
+			];
+
+			$update_stok->update($input);
+		}
+		
+
+		//hapus data keranjang offline
+		$delete_keranjang = KeranjangKoperasiOffline::where('id_user_admin_kasir',Auth::user()->id)->get();
+
+		foreach ($delete_keranjang as $key) {
+			$key->delete();
+		}
+
+		// return $detail_transaksi_offline;
+
+		return redirect()->route('admin_kasir_transaksi_koperasi_selesai')->with('success', 'Transaksi Berhasil');
+	}
+
+
+	public function admin_kasir_transaksi_koperasi_selesai()
+	{
+
+		$transaksi_offline = TransaksiKoperasiOffline::where('id_user_admin_kasir',Auth::user()->id)->orderBy('id', 'DESC')->first();
+
+		// $detail_transaksi = DetailTransaksiAgrikulture::where('id_transaksi_agrikulture',$transaksi_offline->id)->get();
+
+		$detail_transaksi = DB::table('detail_transaksi_koperasis')
+		->join('transaksi_koperasi_offlines', 'detail_transaksi_koperasis.id_transaksi_koperasi_offline', '=', 'transaksi_koperasi_offlines.id')
+		->join('produk_koperasis', 'detail_transaksi_koperasis.id_produk_koperasi', '=', 'produk_koperasis.id')
+		->select('detail_transaksi_koperasis.*', 'produk_koperasis.nama_produk','produk_koperasis.harga',)
+		->where('detail_transaksi_koperasis.id_transaksi_koperasi_offline',$transaksi_offline->id)
+		->orderBy('detail_transaksi_koperasis.id', 'DESC')
+		->get();
+
+		 // return $transaksi_offline;
+		  // return $detail_transaksi;
+
+		return view('admin_kasir.koperasi.kasir_koperasi.transaksi_selesai',compact('transaksi_offline','detail_transaksi'));
+	}
 }

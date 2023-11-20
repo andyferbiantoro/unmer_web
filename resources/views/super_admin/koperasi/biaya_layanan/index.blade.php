@@ -12,9 +12,9 @@ Kelola Biaya Layanan
   <div class="card">
 
     <div class="card-body">
-      <h2 class="primary">Biaya Layanan Agrikulture </h2>
+      <h2 class="primary">Biaya Layanan Koperasi </h2>
       <hr>
-      @if($cek_layanan_agrikulture <= 0)
+      @if($cek_layanan_koperasi <= 0)
       <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
         Tambah Biaya Layanan
       </button><br><br>
@@ -42,7 +42,7 @@ Kelola Biaya Layanan
           </thead>
           <tbody>
             @php $no=1 @endphp
-            @foreach($layanan_agrikulture as $data)
+            @foreach($layanan_koperasi as $data)
             <tr>
               <td>{{$no++}}</td>
               <td>Rp. <?=number_format($data->biaya_layanan, 0, ".", ".")?>,00</td>
@@ -86,7 +86,7 @@ Kelola Biaya Layanan
         <h5 class="modal-title" id="myLargeModalLabel">Tambah Data Biaya</h5>
       </div>
       <div class="modal-body">
-       <form method="post" action="{{route('biaya_layanan_agrikulture_add')}}" enctype="multipart/form-data">
+       <form method="post" action="{{route('biaya_layanan_koperasi_add')}}" enctype="multipart/form-data">
 
         {{csrf_field()}}
 
@@ -158,7 +158,7 @@ Kelola Biaya Layanan
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Hapus Biaya Layanan Agrikulture?</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Hapus Biaya Layanan Koperasi?</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -196,7 +196,7 @@ Kelola Biaya Layanan
   <script type="text/javascript">
     function deleteData(id) {
       var id = id;
-      var url = '{{route("biaya_layanan_agrikulture_delete", ":id") }}';
+      var url = '{{route("biaya_layanan_koperasi_delete", ":id") }}';
       url = url.replace(':id', id);
       $("#deleteForm").attr('action', url);
     }
@@ -219,7 +219,7 @@ Kelola Biaya Layanan
         console.log(data);
         $('#biaya_layanan_update').val(data[4]);
         $('#ongkir_update').val(data[5]);        
-        $('#updateInformasiform').attr('action','biaya_layanan_agrikulture_update/'+ data[6]);
+        $('#updateInformasiform').attr('action','biaya_layanan_koperasi_update/'+ data[6]);
         $('#updateInformasi').modal('show');
       });
     });

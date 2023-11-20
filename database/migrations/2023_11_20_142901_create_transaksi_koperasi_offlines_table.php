@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('detail_transaksi_koperasis', function (Blueprint $table) {
+        Schema::create('transaksi_koperasi_offlines', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_transaksi_koperasi');
-            $table->integer('id_transaksi_koperasi_offline');
-            $table->integer('id_produk_koperasi');
-            $table->integer('kuantitas');
+            $table->integer('id_user_admin_kasir');
+            $table->integer('id_partner');
+            $table->integer('nominal_barang');
+            $table->integer('nominal_bayar');
+            $table->integer('nominal_kembalian');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_transaksi_koperasis');
+        Schema::dropIfExists('transaksi_koperasi_offlines');
     }
 };

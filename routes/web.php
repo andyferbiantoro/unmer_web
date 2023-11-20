@@ -40,7 +40,7 @@ Route::get('/kebijakan_privasi_view', [WebViewAndroidController::class, 'kebijak
 
 
 
-
+//ROUTE SUPERADMIN
 Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::get('/superadmin_dashboard', [SuperadminController::class, 'superadmin_dashboard'])->name('superadmin_dashboard');
 
@@ -99,6 +99,14 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::get('/superadmin_transaksi_koperasi_detail{id}', [SuperadminController::class, 'superadmin_transaksi_koperasi_detail'])->name('superadmin_transaksi_koperasi_detail');
 
 
+	//biaya layanan Koperasi
+	Route::get('/superadmin_biaya_layanan_koperasi', [SuperadminController::class, 'superadmin_biaya_layanan_koperasi'])->name('superadmin_biaya_layanan_koperasi');
+	Route::post('/biaya_layanan_koperasi_add', [SuperadminController::class, 'biaya_layanan_koperasi_add'])->name('biaya_layanan_koperasi_add');
+	Route::post('/biaya_layanan_koperasi_update/{id}', [SuperadminController::class, 'biaya_layanan_koperasi_update'])->name('biaya_layanan_koperasi_update');
+	Route::post('/biaya_layanan_koperasi_delete/{id}', [SuperadminController::class, 'biaya_layanan_koperasi_delete'])->name('biaya_layanan_koperasi_delete');
+
+
+
 	//routing untuk mengelola Kost
 	Route::get('/superadmin_kost', [SuperadminController::class, 'superadmin_kost'])->name('superadmin_kost');
 
@@ -153,6 +161,15 @@ Route::middleware(['auth', 'admin_kasir'])->group(function () {
 	//lihat Pembeli
 	Route::get('/admin_lokasi_pembeli{id}', [AdminKasirController::class, 'admin_lokasi_pembeli'])->name('admin_lokasi_pembeli');
 
+
+
+	//KOperasi
+	//Kasir Koperasi
+	Route::get('/admin_kasir_koperasi', [AdminKasirController::class, 'admin_kasir_koperasi'])->name('admin_kasir_koperasi');
+	Route::post('/kasir_keranjang_koperasi_add/{id}', [AdminKasirController::class, 'kasir_keranjang_koperasi_add'])->name('kasir_keranjang_koperasi_add');
+	Route::post('/kasir_batalkan_produk_koperasi/{id}', [AdminKasirController::class, 'kasir_batalkan_produk_koperasi'])->name('kasir_batalkan_produk_koperasi');
+	Route::post('/kasir_transaksi_offline_koperasi_add', [AdminKasirController::class, 'kasir_transaksi_offline_koperasi_add'])->name('kasir_transaksi_offline_koperasi_add');
+	Route::get('/admin_kasir_transaksi_koperasi_selesai', [AdminKasirController::class, 'admin_kasir_transaksi_koperasi_selesai'])->name('admin_kasir_transaksi_koperasi_selesai');
 
 	// Kelola Produk Koperasi
 	Route::get('/admin_kelola_koperasi', [AdminKasirController::class, 'admin_kelola_koperasi'])->name('admin_kelola_koperasi');

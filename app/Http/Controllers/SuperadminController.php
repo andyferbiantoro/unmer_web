@@ -584,7 +584,7 @@ class SuperadminController extends Controller
 	public function produk_koperasi_add(Request $request)
 	{
 
-		$kode_produk = mt_rand(1000000000, 9999999999);
+		$kode_produk = mt_rand(10000, 99999);
 		$data = ([
 			'id_admin' => $request['id_admin'],
 			'id_partner' => $request['id_partner'],
@@ -745,6 +745,61 @@ class SuperadminController extends Controller
 		return redirect()->back()->with('success', 'Produk Berhasil Dihapus');
 	}
 
+
+	//Biaya Layanan Koperasi
+	public function superadmin_biaya_layanan_koperasi()
+	{
+		$layanan_koperasi = BiayaLayanan::where('kategori_layanan','koperasi')->get();
+		$cek_layanan_koperasi = BiayaLayanan::where('kategori_layanan','koperasi')->count();
+		// return $cek_layanan_koperasi;
+		return view('super_admin.koperasi.biaya_layanan.index',compact('layanan_koperasi','cek_layanan_koperasi'));
+	}
+
+
+	public function biaya_layanan_koperasi_add(Request $request)
+	{
+
+		$data_add = new BiayaLayanan();
+
+		$data_add->biaya_layanan = $request->input('biaya_layanan');
+		$data_add->ongkir = $request->input('ongkir');
+		$data_add->kategori_layanan = 'koperasi';
+
+
+		$data_add->save();
+
+		return redirect()->back()->with('success', 'Biaya Layanan Berhasil Ditambahkan');
+	}
+
+
+	public function biaya_layanan_koperasi_update(Request $request, $id)
+	{
+
+
+		$data_update = BiayaLayanan::where('id', $id)->first();
+
+		$input = [
+			'biaya_layanan' => $request->biaya_layanan,
+			'ongkir' => $request->ongkir,
+			
+		];
+		
+		$data_update->update($input);
+
+
+		return redirect()->back()->with('success', 'Biaya Layanan Berhasil Diupdate');
+	}
+
+
+	public function biaya_layanan_koperasi_delete($id)
+	
+	{
+		
+		$biaya_layanan_delete = BiayaLayanan::findOrFail($id);
+		$biaya_layanan_delete->delete();
+
+		return redirect()->back()->with('success', 'Biaya Layanan Berhasil Dihapus');
+	}
 
 	// ====================================================================================================================
 
