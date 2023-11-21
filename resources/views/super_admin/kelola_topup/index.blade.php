@@ -45,7 +45,7 @@ Kelola Transaksi
             <td>{{$no++}}</td>
             <td>{{$data->nama}}</td>
             <td>{{$data->metode_pembayaran}}</td>
-            <td>{{$data->nominal}}</td>
+            <td>Rp. <?=number_format($data->nominal, 0, ".", ".")?>,00 </td>
             <td>{{date("j F Y", strtotime($data->created_at))}}</td>
             <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('public/uploads/bukti_transfer_topup/'.$data->bukti_transfer)}}"  data-toggle="modal" data-target="#myModal"></img></td>
             <td>
