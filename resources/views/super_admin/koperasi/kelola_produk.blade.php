@@ -14,15 +14,15 @@ Kelola Produk Koperasi
     <div class="card-body">
 
       <h2 class="primary">Produk Koperasi </h2>
-      <hr>
-      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
-        Tambah Produk Koperasi
-      </button><br><br>
+    <br>
 
       <a href="{{ route('superadmin_koperasi') }}"><button type="button" class="btn btn-primary btn-sm"> Produk Koperasi</button></a>
       <a href="{{ route('superadmin_transaksi_koperasi') }}"><button type="button" class="btn btn-light btn-sm"> Transaksi Koperasi</button></a>
 
-      <br><br>
+      <br><hr>
+      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
+        Tambah Produk Koperasi
+      </button><br><br>
 
       @if (session('success'))
       <div class="alert alert-success">
@@ -151,7 +151,6 @@ Kelola Produk Koperasi
         @foreach($list_size as $list)
         <label><input type="checkbox" name="size[]" value="{{$list->size}}"> {{$list->size}}</label><br>
         @endforeach
-        
       </div>
 
       <div id="warna_id" style="display: none" class="col-lg-6 col-sm-12 col-12">
@@ -162,8 +161,6 @@ Kelola Produk Koperasi
         
       </div>
     </div>
-
-
   </div>  
 
 

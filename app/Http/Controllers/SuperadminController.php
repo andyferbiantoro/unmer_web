@@ -607,8 +607,9 @@ class SuperadminController extends Controller
 		// return $data;
 		$lastid = ProdukKoperasi::create($data)->id;
 
-
-
+		$cek_kategori = ProdukKoperasi::where('id',$lastid)->first();
+		if ($cek_kategori->kategori_produk == 'Pakaian') {
+			# code...
 		// return $array;
 		$data_size = $request->input('size');
 		// return $data_size;
@@ -632,6 +633,7 @@ class SuperadminController extends Controller
 			$simpan_warna->warna = $data;
 
 			$simpan_warna->save();
+		}
 		}
 
 		return redirect()->back()->with('success', 'Produk Koperasi Berhasil Ditambahkan');

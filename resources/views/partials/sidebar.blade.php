@@ -121,8 +121,8 @@
 
             @if((request()->is('admin_kasir_koperasi')))
             <li class="nav-item dropdown {{(request()->is('admin_kasir_koperasi')) ? 'active' : ''}}">
-            @elseif((request()->is('admin_kelola_agrikulture')))
-            <li class="nav-item dropdown {{(request()->is('admin_kelola_agrikulture')) ? 'active' : ''}}">
+            @elseif((request()->is('admin_kelola_koperasi')))
+            <li class="nav-item dropdown {{(request()->is('admin_kelola_koperasi')) ? 'active' : ''}}">
              @elseif((request()->is('admin_kasir_lihat_pesanan_agrikulture')))
             <li class="nav-item dropdown {{(request()->is('admin_kasir_lihat_pesanan_agrikulture')) ? 'active' : ''}}">
             @elseif((request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')))
@@ -137,7 +137,7 @@
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-shopping-bag"></i>
               <span>Koperasi</span></a>
               <ul class="dropdown-menu">
-                <li class="{{(request()->is('admin_kelola_agrikulture')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kelola_agrikulture') }}"><i class="fas fa-shopping-basket"></i></i><span>Produk</span></a></li>
+                <li class="{{(request()->is('admin_kelola_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kelola_koperasi') }}"><i class="fas fa-shopping-basket"></i></i><span>Produk</span></a></li>
 
                 <li class="{{(request()->is('admin_kasir_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_koperasi') }}"><i class="fas fa-cart-plus"></i></i><span>Kasir</span></a></li>
 

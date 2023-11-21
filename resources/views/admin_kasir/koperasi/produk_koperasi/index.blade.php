@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Kelola Produk Agrikultur
+Kelola Produk Koperasi
 @endsection
 
 
@@ -12,70 +12,71 @@ Kelola Produk Agrikultur
   <div class="card">
 
     <div class="card-body">
-      <h2 class="primary">Produk Agrikulture </h2>
-     <hr>
-    
 
-    @if (session('success'))
-    <div class="alert alert-success">
-      {{ session('success') }}
-    </div>
-    @endif
-    <div class="text-center" >
-      
-     <div class="table-responsive">
-      <table id="dataTable" class="table table-striped" style="width:100%">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama Produk</th>
-            <th>Kategori Produk</th>
-            <th>Harga Produk</th>
-            <th>Stok Produk</th>
-            <th>Terjual</th>
-            <th>Foto Produk</th>
-            <th>Opsi</th>
-            <th style="display: none;">hidden</th>
-          </tr>
-        </thead>
-        <tbody>
-          @php $no=1 @endphp
-          @foreach($produk_agrikulture as $data)
-          <tr>
-            <td>{{$no++}}</td>
-            <td>{{$data->nama_produk}}</td>
-            <td>{{$data->kategori_produk}}</td>
-            <td>Rp. <?=number_format($data->harga_produk, 0, ".", ".")?>,00</td>
-            <td>{{$data->stok}}</td>
-            @if($data->sold == null)
-            <td>Belum Terjual</td>
-            @else
-            <td>{{$data->sold}}</td>
-            @endif
-            <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('/public/uploads/produk_agrikulture/'.$data->foto)}}"  data-toggle="modal" data-target="#myModal"></img></td>
+      <h2 class="primary">Produk Koperasi </h2>
+      <hr>
+     <!--  <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
+        Tambah Produk Koperasi
+      </button><br><br> -->
 
-            <td>
-              <!-- <button class="btn btn-warning btn-sm icon-file menu-icon edit" title="Edit">Edit</button> -->
-
-              <!-- <a href="{{route('superadmin_produk_agrikulture_edit',$data->id)}}"><button class="btn btn-primary btn-sm">Edit</button></a>
-              <a href="#" data-toggle="modal" onclick="deleteData({{$data->id}})" data-target="#DeleteModal">
-                <button class="btn btn-danger btn-sm"  title="Hapus">Hapus</button> -->
-                <button class="btn btn-warning btn-sm edit" title="Ubah Stok"><i class="fas fa-pen"></i> Ubah Stok</button>
-              </td>
-
-
-
-              <td style="display: none;">{{$data->id}}</td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
+      @if (session('success'))
+      <div class="alert alert-success">
+        {{ session('success') }}
       </div>
-    </div>
+      @endif
+      <div class="text-center" >
+       <div class="table-responsive">
+        <table id="dataTable" class="table table-striped" style="width:100%">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Produk</th>
+              <th>Kode Produk</th>
+              <th>Kategori Produk</th>
+              <th>Harga</th>
+              <th>Stok</th>
+              <th>Terjual</th>
+              <th>Foto</th>
+              <th>Opsi</th>
+              <th style="display: none;">hidden</th>
+            </tr>
+          </thead>
+          <tbody>
+            @php $no=1 @endphp
+            @foreach($produk_koperasi as $data)
+            <tr>
+              <td>{{$no++}}</td>
+              <td>{{$data->nama_produk}}</td>
+              <td>{{$data->kode_produk}}</td>
+              <td>{{$data->kategori_produk}}</td>
+              <td>Rp. <?=number_format($data->harga, 0, ".", ".")?>,00</td>
+              <td>{{$data->stok}}</td>
+              <td>{{$data->sold}}</td>
+              <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('public/uploads/produk_koperasi/'.$data->foto)}}"  data-toggle="modal" data-target="#myModal"></img></td>
+              <td>
 
-    <!--  <button class="btn btn-success fas fa-plus fa-2a"></button> -->
+                <a href="{{route('admin_kelola_detail_koperasi',$data->id)}}"><button class="btn btn-info btn-sm">Detail</button></a>
+                <!-- <a href="{{route('produk_koperasi_edit',$data->id)}}"><button class="btn btn-primary btn-sm">Edit</button></a> -->
+                <button class="btn btn-warning btn-sm edit" title="Ubah Stok"><i class="fas fa-pen"></i> Ubah Stok</button>
+
+               <!--  <a href="#" data-toggle="modal" onclick="deleteData({{$data->id}})" data-target="#DeleteModal">
+                  <button class="btn btn-danger btn-sm"  title="Hapus">Hapus</button> -->
+
+                </td>
+
+
+
+                <td style="display: none;">{{$data->id}}</td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!--  <button class="btn btn-success fas fa-plus fa-2a"></button> -->
+    </div>
   </div>
-</div>
 </div>
 </div>
 
@@ -118,14 +119,12 @@ Kelola Produk Agrikultur
 
 
 
-
-
 <!-- Modal -->
 <div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Hapus Produk Agrikulture?</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Hapus Produk ?</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -144,6 +143,7 @@ Kelola Produk Agrikultur
 </div>
 
 
+
 <!-- show Foto -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -156,14 +156,13 @@ Kelola Produk Agrikultur
       </div>
     </div>
   </div>
-
   @endsection
 
   @section('scripts')
   <script type="text/javascript">
     function deleteData(id) {
       var id = id;
-      var url = '{{route("produk_agrikulture_delete", ":id") }}';
+      var url = '{{route("produk_koperasi_delete", ":id") }}';
       url = url.replace(':id', id);
       $("#deleteForm").attr('action', url);
     }
@@ -173,8 +172,7 @@ Kelola Produk Agrikultur
     }
   </script>
 
-
-  <script>
+   <script>
     $(document).ready(function() {
       var table = $('#dataTable').DataTable();
       table.on('click', '.edit', function() {
@@ -184,13 +182,31 @@ Kelola Produk Agrikultur
         }
         var data = table.row($tr).data();
         console.log(data);
-        $('#stok_update').val(data[4]);
-        $('#updateInformasiform').attr('action','admin_kasir_ubah_stok_agrikulture/'+ data[8]);
+        $('#stok_update').val(data[5]);
+        $('#updateInformasiform').attr('action','admin_kasir_ubah_stok_koperasi/'+ data[8]);
         $('#updateInformasi').modal('show');
       });
     });
   </script>
+  
 
-  @endsection
+  <script>
+        // Menggunakan JavaScript untuk menampilkan/menyembunyikan size dan warna berdasarkan pilihan dropdown
+        document.getElementById("kategori_produk").addEventListener("change", function () {
+          var productType = this.value;
+          var sizeOptions = document.getElementById("size_id");
+          var warnaOptions = document.getElementById("warna_id");
+
+          if (productType === "Pakaian") {
+            sizeOptions.style.display = "block";
+            warnaOptions.style.display = "block";
+          } else {
+            sizeOptions.style.display = "none";
+            warnaOptions.style.display = "none";
+          }
+        });
+      </script>
+
+      @endsection
 
 

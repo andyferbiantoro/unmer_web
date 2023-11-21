@@ -170,9 +170,11 @@ Route::middleware(['auth', 'admin_kasir'])->group(function () {
 	Route::post('/kasir_batalkan_produk_koperasi/{id}', [AdminKasirController::class, 'kasir_batalkan_produk_koperasi'])->name('kasir_batalkan_produk_koperasi');
 	Route::post('/kasir_transaksi_offline_koperasi_add', [AdminKasirController::class, 'kasir_transaksi_offline_koperasi_add'])->name('kasir_transaksi_offline_koperasi_add');
 	Route::get('/admin_kasir_transaksi_koperasi_selesai', [AdminKasirController::class, 'admin_kasir_transaksi_koperasi_selesai'])->name('admin_kasir_transaksi_koperasi_selesai');
+	Route::post('/admin_kasir_ubah_stok_koperasi/{id}', [AdminKasirController::class, 'admin_kasir_ubah_stok_koperasi'])->name('admin_kasir_ubah_stok_koperasi');
 
 	// Kelola Produk Koperasi
 	Route::get('/admin_kelola_koperasi', [AdminKasirController::class, 'admin_kelola_koperasi'])->name('admin_kelola_koperasi');
+	Route::get('/admin_kelola_detail_koperasi{id}', [AdminKasirController::class, 'admin_kelola_detail_koperasi'])->name('admin_kelola_detail_koperasi');
 
 	//logout admin s
 	Route::get('/admin_kasir_logout', [AuthController::class, 'admin_kasir_logout'])->name('admin_kasir_logout');

@@ -83,6 +83,7 @@ Kasir Koperasi
        </div>
      </div>
 
+     @if($data->kategori_produk == 'Pakaian')
      <div class="form-group row">
         <label for="size" class="col-sm-4 col-form-label">Size Produk</label>
         <div class="col-sm-8">
@@ -106,7 +107,7 @@ Kasir Koperasi
        </select>
        </div>
      </div>
-
+     @endif
     
 
 

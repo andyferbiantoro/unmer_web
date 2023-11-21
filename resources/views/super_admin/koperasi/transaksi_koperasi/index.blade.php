@@ -13,7 +13,7 @@ Kelola Transaksi Koperasi
 
     <div class="card-body">
       <h2 class="primary">Transaksi Koperasi </h2>
-      <hr>
+     
       <br>
       <a href="{{ route('superadmin_koperasi') }}"><button type="button" class="btn btn-light btn-sm"> Produk Koperasi</button></a>
       <a href="{{ route('superadmin_transaksi_koperasi') }}"><button type="button" class="btn btn-primary btn-sm"> Transaksi Koperasi</button></a>

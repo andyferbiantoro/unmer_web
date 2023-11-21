@@ -47,7 +47,7 @@ Kelola Transaksi
             <td>{{$data->metode_pembayaran}}</td>
             <td>{{$data->nominal}}</td>
             <td>{{date("j F Y", strtotime($data->created_at))}}</td>
-            <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('uploads/bukti_transfer_topup/'.$data->bukti_transfer)}}"  data-toggle="modal" data-target="#myModal"></img></td>
+            <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('public/uploads/bukti_transfer_topup/'.$data->bukti_transfer)}}"  data-toggle="modal" data-target="#myModal"></img></td>
             <td>
               @if($data->status_topup == 'pending')
               <a href="#" data-toggle="modal" onclick="deleteData({{$data->id}})" data-target="#DeleteModal"><button class="btn btn-primary btn-sm"  title="Hapus">Konfirmasi</button>

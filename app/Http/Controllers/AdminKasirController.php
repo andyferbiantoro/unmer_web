@@ -495,7 +495,7 @@ class AdminKasirController extends Controller
 		$detail_transaksi = DB::table('detail_transaksi_koperasis')
 		->join('transaksi_koperasi_offlines', 'detail_transaksi_koperasis.id_transaksi_koperasi_offline', '=', 'transaksi_koperasi_offlines.id')
 		->join('produk_koperasis', 'detail_transaksi_koperasis.id_produk_koperasi', '=', 'produk_koperasis.id')
-		->select('detail_transaksi_koperasis.*', 'produk_koperasis.nama_produk','produk_koperasis.harga',)
+		->select('detail_transaksi_koperasis.*', 'produk_koperasis.nama_produk','produk_koperasis.harga','produk_koperasis.kategori_produk')
 		->where('detail_transaksi_koperasis.id_transaksi_koperasi_offline',$transaksi_offline->id)
 		->orderBy('detail_transaksi_koperasis.id', 'DESC')
 		->get();
@@ -504,5 +504,60 @@ class AdminKasirController extends Controller
 		  // return $detail_transaksi;
 
 		return view('admin_kasir.koperasi.kasir_koperasi.transaksi_selesai',compact('transaksi_offline','detail_transaksi'));
+	}
+
+
+	public function admin_kelola_koperasi()
+	{
+		$produk_koperasi = DB::table('produk_koperasis')
+		->join('admins', 'produk_koperasis.id_admin', '=', 'admins.id')
+		->select('produk_koperasis.*', 'admins.nama')
+		->orderBy('produk_koperasis.id', 'DESC')
+		->get();
+
+		$admin = Admin::where('role_admin', 'Admin Kasir')->get();
+		$partner = Customer::where('status_partner', 'partner')->get();
+		$kat = KategoriProdukKoperasi::all();
+
+		$list_size =ListSize::all();
+		$list_warna =ListWarna::all();
+
+		return view('admin_kasir.koperasi.produk_koperasi.index', compact('produk_koperasi', 'admin','partner','kat','list_size','list_warna'));
+	}
+
+
+	public function admin_kelola_detaiL_koperasi($id)
+	{
+		$produk_koperasi_detail = DB::table('produk_koperasis')
+		->join('customers', 'produk_koperasis.id_partner', '=', 'customers.id')
+		->select('produk_koperasis.*', 'customers.nama')
+		->where('produk_koperasis.id',$id)
+		->orderBy('produk_koperasis.id', 'DESC')
+		->get();
+			// return $produk_koperasi_detail;
+
+		$get_produk =ProdukKoperasi::where('id', $id)->first();
+		$get_size = Size::where('id_produk_koperasi', $get_produk->id)->get();
+		$get_warna = Warna::where('id_produk_koperasi', $get_produk->id)->get();
+		
+		
+		$partner = Customer::where('status_partner', 'partner')->get();
+
+		return view('admin_kasir.koperasi.produk_koperasi.detail', compact('produk_koperasi_detail', 'get_size','get_warna','partner'));
+	}
+
+
+	public function admin_kasir_ubah_stok_koperasi(Request $request, $id)
+	{
+
+		$data_update = ProdukKoperasi::where('id',$id)->first();	
+
+		$input = [
+			'stok' => $request->stok,
+		];
+
+		$data_update->update($input);
+
+		return redirect()->back()->with('success', 'Stok Produk Berhasil Diperbarui');
 	}
 }

@@ -35,8 +35,13 @@ Detail Transaksi Offline
             <tr>
               <td>{{$no++}}</td>
               <td>{{$data->nama_produk}}</td>
+              @if($data->kategori_produk == 'Pakaian')
               <td>{{$data->size}}</td>
               <td>{{$data->warna}}</td>
+              @else
+              <td>-</td>
+              <td>-</td>
+              @endif
               <td>Rp. <?=number_format($data->harga, 0, ".", ".")?>,00</td>
               <td>{{$data->kuantitas}}</td>
               <td>Rp. <?=number_format($data->total_harga, 0, ".", ".")?>,00</td>
@@ -78,10 +83,10 @@ Detail Transaksi Offline
     <div class="col-lg-6"></div>
     <div class="col-lg-6">
       <div class="text-right">
-      <button class="btn btn-warning" onclick="print('printPDF')"><i class="fas fa-print"></i> Cetak Invoice</button>
+        <button class="btn btn-warning" onclick="print('printPDF')"><i class="fas fa-print"></i> Cetak Invoice</button>
       </div>
-   </div>
- </div>
+    </div>
+  </div>
 
 </div>
 </div>
