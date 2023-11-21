@@ -47,7 +47,11 @@ Kelola Transaksi
             <td>{{$data->metode_pembayaran}}</td>
             <td>Rp. <?=number_format($data->nominal, 0, ".", ".")?>,00 </td>
             <td>{{date("j F Y", strtotime($data->created_at))}}</td>
+            @if($data->bukti_transfer == null)
+           <td> <div class="badge badge-warning">Belum Upload</div></td>
+            @else
             <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('public/uploads/bukti_transfer_topup/'.$data->bukti_transfer)}}"  data-toggle="modal" data-target="#myModal"></img></td>
+            @endif
             <td>
               @if($data->status_topup == 'pending')
               <div class="badge badge-warning">Belum Upload Bukti Transfer</div>
