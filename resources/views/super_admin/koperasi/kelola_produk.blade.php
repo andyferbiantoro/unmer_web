@@ -14,7 +14,7 @@ Kelola Produk Koperasi
     <div class="card-body">
 
       <h2 class="primary">Produk Koperasi </h2>
-    <br>
+      <br>
 
       <a href="{{ route('superadmin_koperasi') }}"><button type="button" class="btn btn-primary btn-sm"> Produk Koperasi</button></a>
       <a href="{{ route('superadmin_transaksi_koperasi') }}"><button type="button" class="btn btn-light btn-sm"> Transaksi Koperasi</button></a>
@@ -115,6 +115,11 @@ Kelola Produk Koperasi
        <div class="form-group">
         <label for="nama_produk">Nama Produk</label>
         <input type="text" class="form-control" id="nama_produk" name="nama_produk"  required=""></input>
+      </div>
+
+      <div class="form-group">
+        <label for="deskripsi_produk">Deskripsi Produk</label>
+        <textarea type="text" class="form-control" id="deskripsi_produk" name="deskripsi_produk"  required=""></textarea>
       </div>
 
       <div class="form-group form-success">

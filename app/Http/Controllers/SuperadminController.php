@@ -589,6 +589,7 @@ class SuperadminController extends Controller
 			'id_admin' => $request['id_admin'],
 			'id_partner' => $request['id_partner'],
 			'nama_produk' => $request['nama_produk'],
+			'deskripsi_produk' => $request['deskripsi_produk'],
 			'kode_produk' => $kode_produk,
 			'kategori_produk' => $request['kategori_produk'],
 			'harga' => $request['harga'],

@@ -77,6 +77,12 @@ Detail Koperasi
                     <td>{{$data->sold}} pcs</td>
                   </tr> 
 
+                  <tr>
+                    <th>Deskripsi Produk</th>
+                    <th>:</th>
+                    <td>{{$data->deskripsi_produk}} </td>
+                  </tr> 
+
                 </table>
               </div>
               <hr>
