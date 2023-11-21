@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Detail Offline
+Detail Transaksi Offline
 @endsection
 
 
@@ -22,6 +22,8 @@ Detail Offline
             <tr>
               <th>No</th>
               <th>Nama Produk</th>
+              <th>Size</th>
+              <th>warna</th>
               <th>Harga Satuan</th>
               <th>Jumlah Produk</th>
               <th>Total Harga</th>
@@ -33,9 +35,16 @@ Detail Offline
             <tr>
               <td>{{$no++}}</td>
               <td>{{$data->nama_produk}}</td>
-              <td>Rp. <?=number_format($data->harga_produk, 0, ".", ".")?>,00</td>
+              @if($data->kategori_produk == 'Pakaian')
+              <td>{{$data->size}}</td>
+              <td>{{$data->warna}}</td>
+              @else
+              <td>-</td>
+              <td>-</td>
+              @endif
+              <td>Rp. <?=number_format($data->harga, 0, ".", ".")?>,00</td>
               <td>{{$data->kuantitas}}</td>
-              <td>Rp. <?=number_format($data->total, 0, ".", ".")?>,00</td>
+              <td>Rp. <?=number_format($data->total_harga, 0, ".", ".")?>,00</td>
             </tr>
             @endforeach
           </tbody>
@@ -74,10 +83,10 @@ Detail Offline
     <div class="col-lg-6"></div>
     <div class="col-lg-6">
       <div class="text-right">
-      <button class="btn btn-warning" onclick="print('printPDF')"><i class="fas fa-print"></i> Cetak Invoice</button>
+        <button class="btn btn-warning" onclick="print('printPDF')"><i class="fas fa-print"></i> Cetak Invoice</button>
       </div>
-   </div>
- </div>
+    </div>
+  </div>
 
 </div>
 </div>

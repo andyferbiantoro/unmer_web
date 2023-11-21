@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('kode_transaksi');
             $table->string('status_pemesanan');
             $table->string('status_pembayaran');
+            $table->string('metode_pengiriman');
             $table->timestamps();
         });
     }

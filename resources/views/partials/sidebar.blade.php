@@ -125,12 +125,12 @@
             <li class="nav-item dropdown {{(request()->is('admin_kelola_koperasi')) ? 'active' : ''}}">
              @elseif((request()->is('admin_kasir_lihat_pesanan_agrikulture')))
             <li class="nav-item dropdown {{(request()->is('admin_kasir_lihat_pesanan_agrikulture')) ? 'active' : ''}}">
-            @elseif((request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')))
-            <li class="nav-item dropdown {{(request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')) ? 'active' : ''}}">
-            @elseif((request()->is('admin_kasir_lihat_pesanan_agrikulture_diambil')))
-            <li class="nav-item dropdown {{(request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')) ? 'active' : ''}}">
-            @elseif((request()->is('admin_kasir_lihat_pesanan_agrikulture_offline')))
-            <li class="nav-item dropdown {{(request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')) ? 'active' : ''}}">
+            @elseif((request()->is('admin_kasir_lihat_pesanan_koperasi_diantar')))
+            <li class="nav-item dropdown {{(request()->is('admin_kasir_lihat_pesanan_koperasi_diantar')) ? 'active' : ''}}">
+            @elseif((request()->is('admin_kasir_lihat_pesanan_koperasi_diambil')))
+            <li class="nav-item dropdown {{(request()->is('admin_kasir_lihat_pesanan_koperasi_diantar')) ? 'active' : ''}}">
+            @elseif((request()->is('admin_kasir_lihat_pesanan_koperasi_offline')))
+            <li class="nav-item dropdown {{(request()->is('admin_kasir_lihat_pesanan_koperasi_diantar')) ? 'active' : ''}}">
             @else
             <li class="nav-item dropdown">
             @endif
@@ -141,7 +141,7 @@
 
                 <li class="{{(request()->is('admin_kasir_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_koperasi') }}"><i class="fas fa-cart-plus"></i></i><span>Kasir</span></a></li>
 
-                <li class="{{(request()->is('admin_kasir_lihat_pesanan_agrikulture_diantar')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_lihat_pesanan_agrikulture_diantar') }}"><i class="fas fa-shopping-cart"></i></i><span>Lihat Pesanan</span></a></li> 
+                <li class="{{(request()->is('admin_kasir_lihat_pesanan_koperasi_diantar')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kasir_lihat_pesanan_koperasi_diantar') }}"><i class="fas fa-shopping-cart"></i></i><span>Lihat Pesanan</span></a></li> 
               </ul>
             </li>
 

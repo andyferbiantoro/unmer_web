@@ -13,7 +13,13 @@ Detail Pesanan Agrikultur
 
     <div class="card-body">
 
+      @foreach($transaksi_agrikulture as $metode)
+      @if($metode->metode_pengiriman == 'diantar')
       <a href="{{ route('admin_kasir_lihat_pesanan_agrikulture_diantar') }}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
+      @else
+      <a href="{{ route('admin_kasir_lihat_pesanan_agrikulture_diambil') }}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
+      @endif
+      @endforeach
 
       <br><br>
       @foreach($transaksi_agrikulture as $kode)

@@ -176,6 +176,21 @@ Route::middleware(['auth', 'admin_kasir'])->group(function () {
 	Route::get('/admin_kelola_koperasi', [AdminKasirController::class, 'admin_kelola_koperasi'])->name('admin_kelola_koperasi');
 	Route::get('/admin_kelola_detail_koperasi{id}', [AdminKasirController::class, 'admin_kelola_detail_koperasi'])->name('admin_kelola_detail_koperasi');
 
+
+	//lihat pesanan koperasi
+	Route::get('/admin_kasir_lihat_pesanan_koperasi_diantar', [AdminKasirController::class, 'admin_kasir_lihat_pesanan_koperasi_diantar'])->name('admin_kasir_lihat_pesanan_koperasi_diantar');
+	Route::get('/admin_kasir_lihat_pesanan_koperasi_diambil', [AdminKasirController::class, 'admin_kasir_lihat_pesanan_koperasi_diambil'])->name('admin_kasir_lihat_pesanan_koperasi_diambil');
+	Route::get('/admin_kasir_lihat_pesanan_koperasi_offline', [AdminKasirController::class, 'admin_kasir_lihat_pesanan_koperasi_offline'])->name('admin_kasir_lihat_pesanan_koperasi_offline');
+
+
+	Route::get('/admin_detail_pesanan_koperasi{id}', [AdminKasirController::class, 'admin_detail_pesanan_koperasi'])->name('admin_detail_pesanan_koperasi');
+
+	Route::get('/admin_kasir_detail_koperasi_offline{id}', [AdminKasirController::class, 'admin_kasir_detail_koperasi_offline'])->name('admin_kasir_detail_koperasi_offline');
+
+
+	
+
+
 	//logout admin s
 	Route::get('/admin_kasir_logout', [AuthController::class, 'admin_kasir_logout'])->name('admin_kasir_logout');
 });	

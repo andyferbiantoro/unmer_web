@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Lihat Pesanan Agrikultur
+Lihat Pesanan Koperasi
 @endsection
 
 
@@ -16,11 +16,11 @@ Lihat Pesanan Agrikultur
       <h2 class="primary">Pesanan Offline </h2>
       <hr>
 
-    <a href="{{ route('admin_kasir_lihat_pesanan_agrikulture_diantar') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-motorcycle"></i> Pesanan Diantar</button></a>
-    <a href="{{ route('admin_kasir_lihat_pesanan_agrikulture_diambil') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-shopping-bag"></i> Pesanan Diambil</button></a>
-    <a href="{{ route('admin_kasir_lihat_pesanan_agrikulture_offline') }}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-store"></i> Pesanan Offline</button></a>
-   
-    <hr>
+      <a href="{{ route('admin_kasir_lihat_pesanan_koperasi_diantar') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-motorcycle"></i> Pesanan Diantar</button></a>
+      <a href="{{ route('admin_kasir_lihat_pesanan_koperasi_diambil') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-shopping-bag"></i> Pesanan Diambil</button></a>
+      <a href="{{ route('admin_kasir_lihat_pesanan_koperasi_offline') }}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-store"></i> Pesanan Offline</button></a>
+
+      <hr>
       @if (session('success'))
       <div class="alert alert-success">
         {{ session('success') }}
@@ -52,8 +52,8 @@ Lihat Pesanan Agrikultur
               <td>
                 <!-- <button class="btn btn-warning btn-sm icon-file menu-icon edit" title="Edit">Edit</button> -->
 
-                <a href="{{route('detail_pesanan_offline',$data_offline->id)}}"><button class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i> Detail</button></a>
-               
+                <a href="{{route('admin_kasir_detail_koperasi_offline',$data_offline->id)}}"><button class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i> Detail</button></a>
+
                 <td style="display: none;">{{$data_offline->id}}</td>
               </tr>
               @endforeach

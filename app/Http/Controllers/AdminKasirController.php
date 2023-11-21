@@ -560,4 +560,90 @@ class AdminKasirController extends Controller
 
 		return redirect()->back()->with('success', 'Stok Produk Berhasil Diperbarui');
 	}
+
+
+
+	// Lihat Pesanaan
+	public function admin_kasir_lihat_pesanan_koperasi_diantar()
+	{
+		// $transaksi_agrikulture = TransaksiAgrikulture::orderby('id', 'DESC')->get();
+		$transaksi_koperasi = DB::table('transaksi_koperasis')
+		->join('customers', 'transaksi_koperasis.id_user', '=', 'customers.id_user')
+		->select('transaksi_koperasis.*', 'customers.nama')
+		->orderBy('transaksi_koperasis.id', 'DESC')
+		->where('transaksi_koperasis.metode_pengiriman','diantar')
+		->get();
+
+
+		return view('admin_kasir.koperasi.lihat_pesanan.pesanan_diantar', compact('transaksi_koperasi'));
+	}
+
+
+	public function admin_kasir_lihat_pesanan_koperasi_diambil()
+	{
+		// $transaksi_agrikulture = TransaksiAgrikulture::orderby('id', 'DESC')->get();
+		$transaksi_koperasi = DB::table('transaksi_koperasis')
+		->join('customers', 'transaksi_koperasis.id_user', '=', 'customers.id_user')
+		->select('transaksi_koperasis.*', 'customers.nama')
+		->orderBy('transaksi_koperasis.id', 'DESC')
+		->where('transaksi_koperasis.metode_pengiriman','diambil')
+		->get();
+
+
+		return view('admin_kasir.koperasi.lihat_pesanan.pesanan_diambil', compact('transaksi_koperasi'));
+	}
+
+
+	public function admin_kasir_lihat_pesanan_koperasi_offline()
+	{	
+
+		$pesanan_offline = TransaksiKoperasiOffline::where('id_user_admin_kasir',Auth::user()->id )->orderBy('id', 'DESC')->get();
+		
+		return view('admin_kasir.koperasi.lihat_pesanan.pesanan_offline', compact('pesanan_offline'));
+	}
+
+
+	public function admin_detail_pesanan_koperasi($id)
+	{
+		// $transaksi_agrikulture = TransaksiAgrikulture::orderby('id', 'DESC')->get();
+		$transaksi_koperasi = DB::table('transaksi_koperasis')
+		->join('customers', 'transaksi_koperasis.id_user', '=', 'customers.id_user')
+		->select('transaksi_koperasis.*', 'customers.nama')
+		->orderBy('transaksi_koperasis.id', 'DESC')
+		->where('transaksi_koperasis.id', $id)
+		->get();
+
+
+		$detail_produk = DB::table('detail_transaksi_koperasis')
+		->join('produk_koperasis', 'detail_transaksi_koperasis.id_produk_koperasi', '=', 'produk_koperasis.id')
+		->select('detail_transaksi_koperasis.*', 'produk_koperasis.nama_produk', 'produk_koperasis.kode_produk', 'produk_koperasis.kategori_produk', 'produk_koperasis.harga')
+		->orderBy('detail_transaksi_koperasis.id', 'DESC')
+		->where('detail_transaksi_koperasis.id_transaksi_koperasi', $id)
+		->get();
+		
+		
+		return view('admin_kasir.koperasi.lihat_pesanan.detail_pesanan_koperasi', compact('transaksi_koperasi','detail_produk'));
+	}
+
+
+	public function admin_kasir_detail_koperasi_offline($id)
+	{
+
+		$transaksi_offline = TransaksiKoperasiOffline::where('id',$id)->orderBy('id', 'DESC')->first();
+
+		// $detail_transaksi = DetailTransaksiAgrikulture::where('id_transaksi_agrikulture',$transaksi_offline->id)->get();
+
+		$detail_transaksi = DB::table('detail_transaksi_koperasis')
+		->join('transaksi_koperasi_offlines', 'detail_transaksi_koperasis.id_transaksi_koperasi_offline', '=', 'transaksi_koperasi_offlines.id')
+		->join('produk_koperasis', 'detail_transaksi_koperasis.id_produk_koperasi', '=', 'produk_koperasis.id')
+		->select('detail_transaksi_koperasis.*', 'produk_koperasis.nama_produk','produk_koperasis.harga','produk_koperasis.kategori_produk')
+		->where('detail_transaksi_koperasis.id_transaksi_koperasi_offline',$transaksi_offline->id)
+		->orderBy('detail_transaksi_koperasis.id', 'DESC')
+		->get();
+
+		 // return $transaksi_offline;
+		  // return $detail_transaksi;
+
+		return view('admin_kasir.koperasi.lihat_pesanan.detail_offline',compact('transaksi_offline','detail_transaksi'));
+	}
 }
