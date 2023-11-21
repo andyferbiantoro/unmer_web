@@ -884,6 +884,7 @@ class SuperadminController extends Controller
 		return view('super_admin.kelola_topup.index', compact('transaksi_topup'));
 	}
 
+
 	public function superadmin_konfirmasi_topup(Request $request, $id)
 	{
 
@@ -896,6 +897,14 @@ class SuperadminController extends Controller
 
 		$data_update->update($input);
 
+
+		$update_saldo = Customer::where('id_user', $data_update->id_user)->first();
+		
+		$input = [
+			'saldo' => $update_saldo->saldo + $data_update->nominal,	
+		];
+
+		$update_saldo->update($input);
 
 
 		return redirect()->back()->with('success', 'Produk Berhasil Diupdate');
