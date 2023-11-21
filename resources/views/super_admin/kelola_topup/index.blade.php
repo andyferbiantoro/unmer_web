@@ -50,10 +50,14 @@ Kelola Transaksi
             <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('public/uploads/bukti_transfer_topup/'.$data->bukti_transfer)}}"  data-toggle="modal" data-target="#myModal"></img></td>
             <td>
               @if($data->status_topup == 'pending')
+              <div class="badge badge-warning">Belum Upload Bukti Transfer</div>
+              @elseif($data->status_topup == 'menunggu_konfirmasi')
               <a href="#" data-toggle="modal" onclick="deleteData({{$data->id}})" data-target="#DeleteModal"><button class="btn btn-primary btn-sm"  title="Hapus">Konfirmasi</button>
-                @elseif($data->status_topup == 'dikonfirmasi')  
-                <div class="badge badge-success">Dikonfirmasi</div>
-                @endif
+              @elseif($data->status_topup == 'dikonfirmasi')  
+              <div class="badge badge-success">Dikonfirmasi</div>
+              @elseif($data->status_topup == 'batal')  
+              <div class="badge badge-danger">Top Up Batal</div>
+              @endif
               </td>
               <td style="display: none;">{{$data->id}}</td>
             </tr>
