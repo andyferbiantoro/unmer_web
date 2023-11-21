@@ -183,7 +183,7 @@ Kelola Produk Koperasi
         var data = table.row($tr).data();
         console.log(data);
         $('#stok_update').val(data[5]);
-        $('#updateInformasiform').attr('action','admin_kasir_ubah_stok_koperasi/'+ data[8]);
+        $('#updateInformasiform').attr('action','admin_kasir_ubah_stok_koperasi/'+ data[9]);
         $('#updateInformasi').modal('show');
       });
     });

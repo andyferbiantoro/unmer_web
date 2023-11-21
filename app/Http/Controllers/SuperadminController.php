@@ -422,6 +422,7 @@ class SuperadminController extends Controller
 		->orderBy('transaksi_agrikultures.id', 'DESC')
 		->get();
 
+		// return $transaksi_agrikulture;
 
 		return view('super_admin.agrikulture.transaksi_agrikulture.index', compact('transaksi_agrikulture'));
 	}
@@ -441,8 +442,8 @@ class SuperadminController extends Controller
 
 		$detail_produk = DB::table('detail_transaksi_agrikultures')
 		->join('produk_agrikultures', 'detail_transaksi_agrikultures.id_produk_agrikulture', '=', 'produk_agrikultures.id')
-		->select('detail_transaksi_agrikultures.*', 'produk_agrikultures.nama_produk', 'produk_agrikultures.kode_produk', 'produk_agrikultures.kategori_produk', 'produk_agrikultures.harga_produk')
 		->join('transaksi_agrikultures', 'detail_transaksi_agrikultures.id_transaksi_agrikulture', '=', 'transaksi_agrikultures.id')
+		->select('detail_transaksi_agrikultures.*', 'produk_agrikultures.nama_produk', 'produk_agrikultures.kode_produk', 'produk_agrikultures.kategori_produk', 'produk_agrikultures.harga_produk')
 		->orderBy('detail_transaksi_agrikultures.id', 'DESC')
 		->where('transaksi_agrikultures.id', $id)
 		->get();
@@ -837,6 +838,7 @@ class SuperadminController extends Controller
 		->join('produk_koperasis', 'detail_transaksi_koperasis.id_produk_koperasi', '=', 'produk_koperasis.id')
 		->select('detail_transaksi_koperasis.*', 'produk_koperasis.nama_produk', 'produk_koperasis.kode_produk', 'produk_koperasis.kategori_produk', 'produk_koperasis.harga')
 		->orderBy('detail_transaksi_koperasis.id', 'DESC')
+		->where('detail_transaksi_koperasis.id_transaksi_koperasi', $id)
 		->get();
 		
 		
