@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+
 class SuperadminController extends Controller
 {
 	//
@@ -448,6 +449,7 @@ class SuperadminController extends Controller
 		->where('transaksi_agrikultures.id', $id)
 		->get();
 		
+
 		
 		return view('super_admin.agrikulture.transaksi_agrikulture.detail_transaksi_agrikulture', compact('transaksi_agrikulture','detail_produk'));
 	}

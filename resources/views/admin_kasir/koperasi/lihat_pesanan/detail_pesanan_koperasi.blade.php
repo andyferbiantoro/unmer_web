@@ -55,8 +55,14 @@ Detail Transaksi Koperasi
                   <tr>
                     <th>Status Pemesanan</th>
                     <th>:</th>
-                    <td>{{$data->status_pemesanan}}</td>
-                  </tr>  
+                    @if($data->status_pemesanan == 'dikemas')
+                    <td><div class="badge badge-warning">Sedang Dikemas</div></td>
+                    @elseif($data->status_pemesanan == 'diantar')
+                    <td><div class="badge badge-info">Sedang Diantar</div></td>
+                    @elseif($data->status_pemesanan == 'selesai')
+                    <td><div class="badge badge-success">Pesanan Sampai</div></td>
+                    @endif
+                  </tr>   
 
                   <tr>
                     <th>Catatan</th>
@@ -70,9 +76,25 @@ Detail Transaksi Koperasi
               
             </div>
 
-            <div class="col-lg-6 col-sm-12 col-12">
-
-            </div>  
+            <div class="col-lg-4 col-sm-12 col-12">
+              <div class="text-center">
+                @foreach($transaksi_koperasi as $qr)
+                @if($qr->metode_pengiriman == 'diantar')
+                @if($data->status_pemesanan == 'dikemas')
+                <div class="visible-print text-center">
+                  {!! QrCode::size(200)->color(0, 0, 150)->generate($qr->kode_transaksi); !!}
+                  <br><br>
+                  <div class="badge badge-primary">Scan untuk mengantarkan pesanan</div>
+                </div>
+                @elseif($data->status_pemesanan == 'diantar')
+                <div class="badge badge-info">Pesanan Sedang Diantar</div>
+                @elseif($data->status_pemesanan == 'selesai')
+                <div class="badge badge-success">Pesanan Sudah Sampai</div>
+                @endif
+                @endif
+                @endforeach
+              </div>
+            </div>     
 
             @foreach($transaksi_koperasi as $data)
             <div class="table-responsive">

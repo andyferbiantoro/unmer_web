@@ -34,7 +34,7 @@ Kelola Transaksi Koperasi
               <th>Nominal</th>
               <th>Catatan</th>
               <th>Status Pemesanan</th>
-
+              <th>Metode Pengiriman</th>
               <th>Opsi</th>
               <th style="display: none;">hidden</th>
             </tr>
@@ -53,6 +53,11 @@ Kelola Transaksi Koperasi
               <td><div class="badge badge-info">Sedang Diantar</div></td>
               elseif($data->status_pemesanan == 'selesai')
               <td><div class="badge badge-success">Pesanan Sampai</div></td>
+              @endif
+              @if($data->metode_pengiriman == 'diantar')
+              <td><div class="badge badge-light"><i class="fas fa-motorcycle"></i> Diantar</div> </td>
+              @else
+              <td><div class="badge badge-dark"><i class="fas fa-shopping-bag"></i> Diambil</div> </td>
               @endif
               <td>
                 <!-- <button class="btn btn-warning btn-sm icon-file menu-icon edit" title="Edit">Edit</button> -->
