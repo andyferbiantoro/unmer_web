@@ -373,7 +373,7 @@ public function getno_bantuan(){
             
         return response()->json([
             'code' => '200',
-            'data' => $no
+            'data' =>  ['nomor' => $no]
         ]);
 }
 
