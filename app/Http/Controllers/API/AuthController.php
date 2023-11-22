@@ -24,10 +24,34 @@ class AuthController extends Controller
         return $randomString;
     }
 
+    public function random_id_unmer($panjang = 16)
+    {
+        $karakter = '0123456789';
+        $panjang_karakter = strlen($karakter);
+        $randomString = '';
+        for ($i = 0; $i < $panjang; $i++) {
+            $randomString .= $karakter[rand(0, $panjang_karakter - 1)];
+        }
+        return $randomString;
+    }
+
+    public function random_no_unmer($panjang = 10)
+    {
+        $karakter = '0123456789';
+        $panjang_karakter = strlen($karakter);
+        $randomString = '';
+        for ($i = 0; $i < $panjang; $i++) {
+            $randomString .= $karakter[rand(0, $panjang_karakter - 1)];
+        }
+        return $randomString;
+    }
+
 
     public function register(Request $request)
     {
         $random = $this->getRandomString();
+        $randomid = $this->random_id_unmer();
+        $randomno = $this->random_no_unmer();
         $cekemail = User::where('email', $request->email)->first();
 
         if ($cekemail) {
@@ -42,6 +66,8 @@ class AuthController extends Controller
                 'no_telp' => $request->no_telp,
                 'status' => '1',
                 'otp' => $random,
+                'id_unmer'=>$randomid,
+                'no_unmer'=>$randomno,
                 'role' => 'customer',
           
             ];
@@ -338,7 +364,17 @@ public function updateUserProfile(Request $request)
         ]);
     }
 
+       
+
  
+}
+public function getno_bantuan(){
+    $no = '6285186680098';
+            
+        return response()->json([
+            'code' => '200',
+            'data' => $no
+        ]);
 }
 
 

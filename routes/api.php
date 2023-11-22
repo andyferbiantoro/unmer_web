@@ -35,6 +35,8 @@ Route::post('customer/register',[AuthController::class,'register']);
 Route::post('customer/pin/tambah',[AuthController::class,'create_pin']);
 Route::get('customer/profil/{id}',[AuthController::class,'get_profil']);
 Route::post('customer/profil/update',[AuthController::class,'ubah_profil']);
+Route::get('customer/getno_bantuan',[AuthController::class,'getno_bantuan']);
+
 
 //saldo topup
 Route::get('customer/saldo/{id}',[SaldoController::class,'saldo']);
@@ -46,6 +48,9 @@ Route::post('customer/batal_topup',[SaldoController::class,'batal_topup']);
 Route::get('customer/tranksaski_saldo/{id_user}',[SaldoController::class,'transaksi_saldo_terakhir']);
 Route::get('customer/bank',[SaldoController::class,'bank']);
 
+//kirimsaldo
+
+Route::get('customer/cek_penerima',[SaldoController::class,'getdatapenerima']);
 //agrikulture
 Route::get('customer/list_market',[AgrikulturController::class,'list_market']);
 Route::get('customer/list_kategori_produk_agri',[AgrikulturController::class,'list_kategori_produk_agri']);
@@ -57,6 +62,8 @@ Route::post('customer/list_keranjang',[AgrikulturController::class,'list_keranja
 Route::get('customer/total_keranjang/{id_user}',[AgrikulturController::class,'total_keranjang']);
 Route::post('customer/hapus_keranjang',[AgrikulturController::class,'hapus_keranjang']);
 Route::get('customer/cek_kode_transaksi/{kode_transkasi}',[AgrikulturController::class,'cek_kode_transaksi']);
+Route::get('customer/biaya_layanan',[AgrikulturController::class,'biaya_layanan']);
+
 
 
 
