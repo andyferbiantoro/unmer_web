@@ -154,6 +154,18 @@ class AdminKasirController extends Controller
 			$key->delete();
 		}
 
+		//update saldo admin 
+		$get_nominal = TransaksiAgrikultureOffline::where('id', $lastid)->first();
+
+		$update_saldo = Admin::where('id_user', Auth::user()->id)->first();	
+
+			$input = [
+				'saldo' => $update_saldo->saldo + $get_nominal->nominal_barang ,
+				
+			];
+
+			$update_saldo->update($input);	
+
 
 
 		return redirect()->route('admin_kasir_transaksi_agrikulture_selesai')->with('success', 'Transaksi Berhasil');
@@ -478,6 +490,19 @@ class AdminKasirController extends Controller
 		foreach ($delete_keranjang as $key) {
 			$key->delete();
 		}
+
+
+		//update saldo admin 
+		$get_nominal = TransaksiKoperasiOffline::where('id', $lastid)->first();
+
+		$update_saldo = Admin::where('id_user', Auth::user()->id)->first();	
+
+			$input = [
+				'saldo' => $update_saldo->saldo + $get_nominal->nominal_barang ,
+				
+			];
+
+			$update_saldo->update($input);
 
 		// return $detail_transaksi_offline;
 
