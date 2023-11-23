@@ -277,6 +277,12 @@ class SaldoController extends Controller
             $adm->update([
                 'saldo'=>$akhir
             ]);
+            $cust = Customer::where('id_user',$transaksi->id_user_pengirim)->first();
+            $sisa = $cust->saldo - $transaksi->total;
+            $cust->update([
+                'saldo'=>$sisa
+            ]);
+
             return response()->json([
                 'code' => '200',
                 'message' => 'Transaksi Kirim Saldo Berhasil Ke sesama Unmer'
