@@ -24,6 +24,8 @@ use App\Models\Broadcast;
 use App\Models\DetailBroadcast;
 use App\Models\TransaksiTopUp;
 use App\Models\BiayaLayanan;
+use App\Models\StatusMenu;
+use App\Models\KontakBantuan;
 use File;
 use PDF;
 use DB;
@@ -615,29 +617,29 @@ class SuperadminController extends Controller
 		if ($cek_kategori->kategori_produk == 'Pakaian') {
 			# code...
 		// return $array;
-		$data_size = $request->input('size');
+			$data_size = $request->input('size');
 		// return $data_size;
-		foreach ($data_size as $data) {
+			foreach ($data_size as $data) {
 
-			$simpan_size = new Size();
+				$simpan_size = new Size();
 
-			$simpan_size->id_produk_koperasi = $lastid;
-			$simpan_size->size = $data;
+				$simpan_size->id_produk_koperasi = $lastid;
+				$simpan_size->size = $data;
 
-			$simpan_size->save();
-		}
+				$simpan_size->save();
+			}
 
-		$data_warna = $request->input('warna');
+			$data_warna = $request->input('warna');
 		// return $data_warna;
-		foreach ($data_warna as $data) {
+			foreach ($data_warna as $data) {
 
-			$simpan_warna = new Warna();
+				$simpan_warna = new Warna();
 
-			$simpan_warna->id_produk_koperasi = $lastid;
-			$simpan_warna->warna = $data;
+				$simpan_warna->id_produk_koperasi = $lastid;
+				$simpan_warna->warna = $data;
 
-			$simpan_warna->save();
-		}
+				$simpan_warna->save();
+			}
 		}
 
 		return redirect()->back()->with('success', 'Produk Koperasi Berhasil Ditambahkan');
@@ -989,6 +991,95 @@ class SuperadminController extends Controller
 		$delete_broadcast->delete();
 
 		return redirect()->back()->with('success', 'Pesan Berhasil Dihapus');
+	}
+
+
+	// =======================================================================================================
+	//kelola status menu
+	public function superadmin_kelola_tambahan()
+	{
+
+		$status_menu = StatusMenu::all();
+	
+		return view('super_admin.kelola_tambahan.index',compact('status_menu'));
+	}
+
+
+
+	public function superadmin_aktifkan_menu($id)
+	{
+
+		$data_update = StatusMenu::where('id', $id)->first();
+
+		$input = [
+			'status' => 'aktif',
+		];
+		
+		$data_update->update($input);
+
+		return redirect()->back()->with('success', 'Menu Telah diAktifkan Kembali');
+	}
+
+
+	public function superadmin_non_aktifkan_menu($id)
+	{
+
+		$data_update = StatusMenu::where('id', $id)->first();
+
+		$input = [
+			'status' => 'nonaktif',
+		];
+		
+		$data_update->update($input);
+
+		return redirect()->back()->with('danger', 'Menu Telah diNon-Aktifkan');
+	}
+
+	//kelola kontak bantuan
+	public function superadmin_kelola_kontak_bantuan()
+	{
+
+		$kontak_bantuan = KontakBantuan::all();
+	
+		return view('super_admin.kelola_tambahan.kontak_bantuan',compact('kontak_bantuan'));
+	}
+
+
+	public function superadmin_kelola_kontak_bantuan_add(Request $request)
+	{
+
+		$data_add = new KontakBantuan();
+
+		$data_add->no_telp = $request->input('no_telp');
+		
+		$data_add->save();
+
+		return redirect()->back()->with('success', 'Kontak Bantuan Berhasil Ditambahkan');
+	}
+
+
+	public function superadmin_kelola_kontak_bantuan_update(Request $request, $id)
+	{
+
+		$data_update = KontakBantuan::where('id', $id)->first();
+
+		$input = [
+			'no_telp' => $request['no_telp'],
+		];
+		
+		$data_update->update($input);
+
+		return redirect()->back()->with('success', 'Kontak Berhasil Diperbarui');
+	}
+
+
+	public function superadmin_kelola_kontak_bantuan_delete($id)
+	{
+
+		$delete = KontakBantuan::findOrFail($id);
+		$delete->delete();
+
+		return redirect()->back()->with('success', 'Kontak Berhasil Dihapus');
 	}
 
 

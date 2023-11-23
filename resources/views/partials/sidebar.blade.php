@@ -74,9 +74,10 @@
 
             <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-user"></i></i><span>Kelola User</span></a></li>
 
-            <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-map-marker"></i></i><span>Lokasi User</span></a></li>
 
             <li class="{{(request()->is('superadmin_kelola_topup')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_topup') }}"><i class="fas fa-money-bill"></i><span>Kelola Top Up</span></a></li>
+            
+            <li class="{{(request()->is('superadmin_kelola_tambahan')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_tambahan') }}"><i class="fas fa-cogs"></i></i><span>Kelola Tambahan</span></a></li>
             @endif 
 
 

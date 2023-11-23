@@ -124,6 +124,18 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::post('/superadmin_kelola_broadcast_add', [SuperadminController::class, 'superadmin_kelola_broadcast_add'])->name('superadmin_kelola_broadcast_add');
 	Route::post('/superadmin_kelola_broadcast_delete/{id}', [SuperadminController::class, 'superadmin_kelola_broadcast_delete'])->name('superadmin_kelola_broadcast_delete');
 
+	//kelola Menu
+	Route::get('/superadmin_kelola_tambahan', [SuperadminController::class, 'superadmin_kelola_tambahan'])->name('superadmin_kelola_tambahan');
+	Route::post('/superadmin_aktifkan_menu/{id}', [SuperadminController::class, 'superadmin_aktifkan_menu'])->name('superadmin_aktifkan_menu');
+	Route::post('/superadmin_non_aktifkan_menu/{id}', [SuperadminController::class, 'superadmin_non_aktifkan_menu'])->name('superadmin_non_aktifkan_menu');
+
+	//kelola kontak bantuan
+	Route::get('/superadmin_kelola_kontak_bantuan', [SuperadminController::class, 'superadmin_kelola_kontak_bantuan'])->name('superadmin_kelola_kontak_bantuan');
+	Route::post('/superadmin_kelola_kontak_bantuan_add', [SuperadminController::class, 'superadmin_kelola_kontak_bantuan_add'])->name('superadmin_kelola_kontak_bantuan_add');
+	Route::post('/superadmin_kelola_kontak_bantuan_update/{id}', [SuperadminController::class, 'superadmin_kelola_kontak_bantuan_update'])->name('superadmin_kelola_kontak_bantuan_update');
+	Route::post('/superadmin_kelola_kontak_bantuan_delete/{id}', [SuperadminController::class, 'superadmin_kelola_kontak_bantuan_delete'])->name('superadmin_kelola_kontak_bantuan_delete');
+
+
 	Route::get('/logout_superadmin', [AuthController::class, 'logout_superadmin'])->name('logout_superadmin');
 
 
