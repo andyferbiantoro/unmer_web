@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\Bank;
 use App\Models\Customer;
 use App\Models\Saldo;
@@ -12,6 +13,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 Use App\Models\Notif;
+use App\Models\TransaksiKirimSaldo;
+use Illuminate\Support\Facades\DB;
 
 class SaldoController extends Controller
 {
@@ -45,7 +48,7 @@ class SaldoController extends Controller
         $req['kode_transaksi']=strtoupper(Str::random(6));
         $req['id_user']=$request->id_user;
         $req['total_bayar']=2000+$nominal;
-        $req['timer_transfer']=1;
+        $req['timer_transfer']=5;
         // $req['tanggal_topup']=date('Y-m-d');
         // return $req;
        $saldo = TransaksiTopUp::create($req);
@@ -225,12 +228,85 @@ class SaldoController extends Controller
 
     }
 
-    public function pesan_notifikasi(){
-        $notif = new Notif;
-        $token_device = '';
-        $notif->sendNotifSaldo($token_device, "Saldo anda berhasil ditambah", "Notifikasi Saldo" );
+    // public function pesan_notifikasi(){
+    //     $notif = new Notif;
+    //     $token_device = '';
+    //     $notif->sendNotifSaldo($token_device, "Saldo anda berhasil ditambah", "Notifikasi Saldo" );
            
 
 
+    // }
+
+
+    //kirim saldo
+    public function getdatapenerima(Request $request){
+        // $user =User::where('role','customer')->where('id_unmer',$request->id_unmer)->first();
+        $userlast=DB::table('customers')
+        ->leftjoin('users', 'users.id', 'customers.id_user')
+        ->select('customers.nama', 'customers.id as id_customer', 'users.id_unmer', 'users.id as idnya_user')
+        ->where('role','customer')->where('id_unmer',$request->id_unmer)->first();
+
+        if($userlast){
+            return response()->json([
+                'code' => '200',
+                'data' => $userlast
+            ]);
+    
+        }else{
+            return response()->json([
+                'code' => '500',
+                'data' => ['nama'=>'Penerima Tidak Tersedia']
+            ]);
+    
+
+        }
+
+     
+       
     }
+
+    public function kirimsaldo(Request $request){
+        $req = $request->all();
+
+        if($request->jenis_kirim_saldo=='sesama'){
+            $req['status'] ='berhasil';
+            $transaksi = TransaksiKirimSaldo::create($req);
+            $adm =   Admin::where('role_admin','superadmin')->first();
+            $akhir = $adm->saldo +$transaksi->biaya_layanan;
+            // return $akhir;
+            $adm->update([
+                'saldo'=>$akhir
+            ]);
+            return response()->json([
+                'code' => '200',
+                'message' => 'Transaksi Kirim Saldo Berhasil Ke sesama Unmer'
+            ]);
+
+        }else{
+            $req['bank'] =$request->bank;
+            $req['rekening_bank'] =$request->rekening_bank;
+            $req['status'] ='pending';
+            $transaksi = TransaksiKirimSaldo::create($req);
+            $adm =   Admin::where('role_admin','superadmin')->first();
+            $akhir = $adm->saldo +$transaksi->biaya_layanan;
+            // return $akhir;
+            $adm->update([
+                'saldo'=>$akhir
+            ]);
+            return response()->json([
+                'code' => '201',
+                'message' => 'Transaksi Kirim Saldo Berhasil Ke Bank'
+            ]);
+
+        }
+
+            
+   
+            
+        
+     
+        
+        
+    }
+
 }

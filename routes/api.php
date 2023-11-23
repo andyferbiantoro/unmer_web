@@ -36,6 +36,8 @@ Route::post('customer/pin/tambah',[AuthController::class,'create_pin']);
 Route::get('customer/profil/{id}',[AuthController::class,'get_profil']);
 Route::post('customer/profil/update',[AuthController::class,'ubah_profil']);
 Route::get('customer/getno_bantuan',[AuthController::class,'getno_bantuan']);
+Route::get('customer/getstatus_menu_apk',[AuthController::class,'getstatus_menu_apk']);
+
 
 
 //saldo topup
@@ -51,6 +53,10 @@ Route::get('customer/bank',[SaldoController::class,'bank']);
 //kirimsaldo
 
 Route::get('customer/cek_penerima',[SaldoController::class,'getdatapenerima']);
+Route::post('customer/kirimsaldo',[SaldoController::class,'kirimsaldo']);
+
+
+
 //agrikulture
 Route::get('customer/list_market',[AgrikulturController::class,'list_market']);
 Route::get('customer/list_kategori_produk_agri',[AgrikulturController::class,'list_kategori_produk_agri']);
