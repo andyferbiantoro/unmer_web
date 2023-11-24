@@ -8,6 +8,7 @@ Dashboard Super Admin
 @section('content')
 
 <div class="row">
+  
   <div class="col-lg-6 col-md-6 col-sm-12">
     <div class="card card-statistic-2">
       <div class="card-stats">

@@ -23,6 +23,7 @@ use App\Models\KategoriProdukKoperasi;
 use App\Models\Broadcast;
 use App\Models\DetailBroadcast;
 use App\Models\TransaksiTopUp;
+use App\Models\TransaksiKirimSaldo;
 use App\Models\BiayaLayanan;
 use App\Models\StatusMenu;
 use App\Models\KontakBantuan;
@@ -885,7 +886,7 @@ class SuperadminController extends Controller
 		->orderBy('transaksi_top_ups.id', 'DESC')
 		->get();
 
-		return view('super_admin.kelola_topup.index', compact('transaksi_topup'));
+		return view('super_admin.transaksi.kelola_topup.index', compact('transaksi_topup'));
 	}
 
 
@@ -914,9 +915,59 @@ class SuperadminController extends Controller
 		return redirect()->back()->with('success', 'Produk Berhasil Diupdate');
 	}
 
+	// ===============================================================================================
 
+
+	public function superadmin_transfer_bank()
+	{
+		// $transaksi_topup = TransaksiTopUp::orderby('id', 'DESC')->get();
+		$transfer_bank = DB::table('transaksi_kirim_saldos')
+		->join('customers', 'transaksi_kirim_saldos.id_user_pengirim', '=', 'customers.id_user')
+		->select('transaksi_kirim_saldos.*', 'customers.nama')
+		->orderBy('transaksi_kirim_saldos.id', 'DESC')
+		->where('transaksi_kirim_saldos.jenis_kirim_saldo','bank')
+		->get();
+
+		return view('super_admin.transaksi.transfer_bank.index', compact('transfer_bank'));
+	}
+
+	public function superadmin_konfirmasi_transfer_bank(Request $request, $id)
+	{
+
+
+		$data_update = TransaksiKirimSaldo::where('id', $id)->first();
+
+		$input = [
+			'status' => 'berhasil',	
+		];
+
+		$data_update->update($input);
+
+
+		$update_saldo_pengirim = Customer::where('id_user', $data_update->id_user_pengirim)->first();
+		
+		$input = [
+			'saldo' => $update_saldo_pengirim->saldo - $data_update->total,	
+		];
+
+		$update_saldo_pengirim->update($input);
+
+		//update saldo superadmn
+		$update_saldo_superadmin = Admin::where('role_admin', 'superadmin')->first();
+		
+		$input = [
+			'saldo' => $update_saldo_superadmin->saldo + $data_update->biaya_layanan,	
+		];
+
+		$update_saldo_superadmin->update($input);
+
+
+
+		return redirect()->back()->with('success', 'Transfer Berhasil');
+	}
 
 	// =====================================================================================================================
+
 
 	public function superadmin_kelola_broadcast()
 	{
