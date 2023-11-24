@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\BiayaLayanan;
 use App\Models\Customer;
 use App\Models\DetailMarketAgrikulture;
 use App\Models\DetailTransaksiAgrikulture;
+use App\Models\Haversine;
 use App\Models\KategoriProdukAgrikulture;
 use App\Models\Keranjang;
 use App\Models\MarketAgrikulture;
 use App\Models\ProdukAgrikulture;
 use App\Models\TransaksiAgrikulture;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,23 +24,41 @@ use Termwind\Components\Raw;
 class AgrikulturController extends Controller
 {
     //
-    public function ip(Request $request){
+    public function ip(Request $request)
+    {
         return $request->ip();
     }
-        
-    public function list_market()
-    {
 
+    public function list_market(Request $request)
+    {
+        $hasil = [];
         $market = MarketAgrikulture::get();
-        foreach($market as $m){
-            $m->detail_market =DetailMarketAgrikulture::get();
+
+        if ($request->latitude & $request->longitude) {
+            $hitung = new Haversine;
+            foreach ($market as $m) {
+                $jarak =  $hitung->distance($request->latitude, $request->longitude, $m->latitude, $m->longitude, "K");
+                $jarak_final = round($jarak, 1);
+                $m->jarak = $jarak_final;
+                $m->detail_market = DetailMarketAgrikulture::get();
+
+                $hasil[] = $m;
+            }
+            $data_akhir = collect();
+            $data_akhir->push($hasil);
+            $hasil = $data_akhir->collapse()->SortBy('jarak')->values();
+        } else {
+            foreach ($market as $m) {
+                $m->detail_market = DetailMarketAgrikulture::get();
+                $hasil[] = $m;
+            }
         }
 
         if ($market) {
 
             return response()->json([
                 'code' => '200',
-                'data' => $market
+                'data' => $hasil
             ]);
         } else {
             return response()->json([
@@ -76,8 +97,8 @@ class AgrikulturController extends Controller
     {
 
         $produk = KategoriProdukAgrikulture::orderBy('id', 'desc')->get();
- 
-    
+
+
         if ($produk) {
 
             return response()->json([
@@ -137,79 +158,62 @@ class AgrikulturController extends Controller
         ]);
     }
 
-    function cektransaksi() {
-        
-    }
+
 
     public function create_transaki_market(Request $request)
     {
-        $produkIds = [8,9,10];
+        $produkIds = [8, 9, 10];
 
         //  return $request->id_product;
 
 
-// return $harga_produk;
+        // return $harga_produk;
         $saldoawal = Customer::where('id_user', $request->id_user)->first();
-  
+
         $transaksi = TransaksiAgrikulture::create([
             'id_user' => $request->id_user,
-            'status_pemesanan' => 'menunggu_pembayaran',
+            'status_pemesanan' => 'dikemas',
             'status_pembayaran' => 'sukses',
             'tanggal_pengiriman' => $request->tanggal_pengiriman,
             'waktu_pengiriman' => $request->waktu_pengiriman,
             // 'nominal' => $request->nominal,
             'kode_transaksi' =>  strtoupper(Str::random(8)),
-            'catatan'=>$request->catatan,
-            'alamat'=>$request->alamat,
-            'metode_pengiriman'=>$request->metode_pengiriman
+            'catatan' => $request->catatan,
+            'alamat' => $request->alamat,
+            'metode_pengiriman' => $request->metode_pengiriman
         ]);
 
         $id_prduc = json_decode($request->id_product);
         $kuantitas = json_decode($request->kuantitas);
         $harga_produk = ProdukAgrikulture::whereIn('id', $id_prduc)->get();
-        $total=0;
-        foreach($harga_produk as $n=>$p){
+        $total = 0;
+        foreach ($harga_produk as $n => $p) {
             $qty = $kuantitas[$n];
-            $tt=$qty*$p->harga_produk;
+            $tt = $qty * $p->harga_produk;
             // return $tt;
-            $total = $total+$tt;
+            $total = $total + $tt;
 
-            $req_detail =[
-                'id_transaksi_agrikulture'=>$transaksi->id,
-                'id_produk_agrikulture'=>$p->id,
-                'kuantitas'=>$qty,
-                'total'=>$tt
+            $req_detail = [
+                'id_transaksi_agrikulture' => $transaksi->id,
+                'id_produk_agrikulture' => $p->id,
+                'kuantitas' => $qty,
+                'total' => $tt
             ];
             $detail = DetailTransaksiAgrikulture::create($req_detail);
         }
-        Keranjang::where('id_user', $request->id_user)->whereIn('id_produk_agrikulture',$id_prduc)->delete();
-        TransaksiAgrikulture::where('id',$transaksi->id)->update([
-            'nominal'=>$total
+        Keranjang::where('id_user', $request->id_user)->whereIn('id_produk_agrikulture', $id_prduc)->delete();
+        TransaksiAgrikulture::where('id', $transaksi->id)->update([
+            'nominal' => $total
         ]);
 
         $saldokahir = ($saldoawal->saldo - intval($total));
         $saldoawal->update([
             'saldo' => $saldokahir
         ]);
-        return response()->json([  'code' => '200',
-        'data' => $transaksi->kode_transaksi]);
-    
-
-    
-
-
-        // if ($transaksi) {
-
-        //     return response()->json([
-        //         'code' => '200',
-        //         'message' => 'Berhasil Membuat Pesanan, Pesanan Dikemas'
-        //     ]);
-        // } else {
-        //     return response()->json([
-        //         'code' => '500',
-        //         'message' => 'Gagal'
-        //     ]);
-        // }
+        return response()->json([
+            'code' => '200',
+            'data' => $transaksi->kode_transaksi
+        ]);
     }
 
 
@@ -290,7 +294,7 @@ class AgrikulturController extends Controller
     {
         // $cek = TransaksiAgrikulture::where('kode_transaksi', $kode_transkasi)->first();
         $cek = TransaksiAgrikulture::with('detail_transaksi.produk_agrikultures')->where('kode_transaksi', $kode_transkasi)
-        ->orderBy('id', 'desc')->first();
+            ->orderBy('id', 'desc')->first();
         if ($cek) {
 
             return response()->json([
@@ -303,5 +307,26 @@ class AgrikulturController extends Controller
                 'data' => []
             ]);
         }
+    }
+
+    public function biaya_layanan(Request $request)
+    {
+        $bl = BiayaLayanan::where('kategori_layanan', 'agrikulture')->first();
+        // $m = MarketAgrikulture::where('id',$request->id_market)->first();
+        // $hitung = new Haversine;
+        // $jarak =  $hitung->distance($request->latitude, $request->longitude, $m->latitude, $m->longitude, "K");
+        // $jarak_final = round($jarak, 1);
+
+        if ($request->jarak) {
+            $hasil = $bl->ongkir * round($request->jarak);
+
+            $bl->hasil_ongkir_jarak = $hasil;
+        }
+
+
+        return response()->json([
+            'code' => '200',
+            'data' => $bl
+        ]);
     }
 }

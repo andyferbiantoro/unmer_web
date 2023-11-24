@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\StatusMenu;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -368,6 +369,8 @@ public function updateUserProfile(Request $request)
 
  
 }
+
+//no auth
 public function getno_bantuan(){
     $no = '6285186680098';
             
@@ -375,6 +378,15 @@ public function getno_bantuan(){
             'code' => '200',
             'data' =>  ['nomor' => $no]
         ]);
+}
+
+public function getstatus_menu_apk(Request $request){
+    $status =StatusMenu::where('menu',$request->menu)->first();
+    return response()->json([
+        'code' => '200',
+        'data' => $status
+    ]);
+
 }
 
 
