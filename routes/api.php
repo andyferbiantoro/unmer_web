@@ -54,6 +54,7 @@ Route::get('customer/bank',[SaldoController::class,'bank']);
 
 Route::get('customer/cek_penerima',[SaldoController::class,'getdatapenerima']);
 Route::post('customer/kirimsaldo',[SaldoController::class,'kirimsaldo']);
+Route::get('customer/getkirimsaldo_last/{id}',[SaldoController::class,'getkirimsaldo_last']);
 
 
 

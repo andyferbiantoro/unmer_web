@@ -267,6 +267,7 @@ class SaldoController extends Controller
 
     public function kirimsaldo(Request $request){
         $req = $request->all();
+        $req['kode_transaksi']=strtoupper(Str::random(6));
 
         if($request->jenis_kirim_saldo=='sesama'){
             $req['status'] ='berhasil';
@@ -305,14 +306,35 @@ class SaldoController extends Controller
             ]);
 
         }
+    }
 
+    public function getkirimsaldo_last($id){
+
+        $ks = TransaksiKirimSaldo::where('id_user_pengirim',$id)->where('status','berhasil')->orderBy('id','desc')->first();
+        $createdAt = $ks->updated_at;
+
+        list($date, $time) = explode(' ', $createdAt);
+        $timePart = $time;
+        $carbonDate = Carbon::parse($date);
+        $formattedDate = $carbonDate->translatedFormat('d-F-Y');
+        $ks->tanggal=$formattedDate ;
+        $ks->jam= $timePart;
+
+        if($ks){
+            return response()->json([
+                'code' => '200',
+                'data' => $ks
+            ]);
+    
+        }else{
+            return response()->json([
+                'code' => '500',
+                'data' => []
+            ]);
+    
+
+        }
             
-   
-            
-        
-     
-        
-        
     }
 
 }
