@@ -312,9 +312,9 @@ class SaldoController extends Controller
 
         $ks = TransaksiKirimSaldo::where('id_user_pengirim',$id)->where('status','berhasil')->orderBy('id','desc')->first();
         $pengirim = Customer::where('id_user',$ks->id_user_pengirim)->first();
-        $penerima = Customer::where('id_user',$ks->id_user_penerima)->first();
         $ks->pengirim =$pengirim->nama;
-        $ks->penerima =$penerima->nama;
+        if($ks->id_user_penerima!=null){
+            $penerima = Customer::where('id_user',$ks->id_user_penerima)->first();
         $createdAt = $ks->updated_at;
 
         list($date, $time) = explode(' ', $createdAt);
@@ -346,9 +346,12 @@ class SaldoController extends Controller
 
         $ks = TransaksiKirimSaldo::where('id',$id)->orderBy('id','desc')->first();
         $pengirim = Customer::where('id_user',$ks->id_user_pengirim)->first();
-        $penerima = Customer::where('id_user',$ks->id_user_penerima)->first();
         $ks->pengirim =$pengirim->nama;
+        if($ks->id_user_penerima!=null){
+        $penerima = Customer::where('id_user',$ks->id_user_penerima)->first();
+        
         $ks->penerima =$penerima->nama;
+        }
         $createdAt = $ks->updated_at;
 
         list($date, $time) = explode(' ', $createdAt);
@@ -384,10 +387,13 @@ class SaldoController extends Controller
         // ->where('transaksi_kirim_saldos.id_user_pengirim',$id)->orderBy('id','desc')->get();
         foreach ($ks as $k){
             $pengirim = Customer::where('id_user',$k->id_user_pengirim)->first();
-            $penerima = Customer::where('id_user',$k->id_user_penerima)->first();
+            if($k->id_user_penerima!=null){
+                $penerima = Customer::where('id_user',$k->id_user_penerima)->first();
+                $k->penerima =$penerima->nama;
+            }
             // return[$pengirim,$penerima];
             $k->pengirim =$pengirim->nama;
-            $k->penerima =$penerima->nama;
+            
             $createdAt = $k->updated_at;
 
             list($date, $time) = explode(' ', $createdAt);
