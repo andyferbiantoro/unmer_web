@@ -311,6 +311,10 @@ class SaldoController extends Controller
     public function getkirimsaldo_last($id){
 
         $ks = TransaksiKirimSaldo::where('id_user_pengirim',$id)->where('status','berhasil')->orderBy('id','desc')->first();
+        $pengirim = Customer::where('id_user',$ks->id_user_pengirim)->first();
+        $penerima = Customer::where('id_user',$ks->id_user_penerima)->first();
+        $ks->pengirim =$pengirim->nama;
+        $ks->penerima =$penerima->nama;
         $createdAt = $ks->updated_at;
 
         list($date, $time) = explode(' ', $createdAt);
@@ -335,6 +339,80 @@ class SaldoController extends Controller
 
         }
             
+    }
+
+    
+    public function getkirimsaldo_detail($id){
+
+        $ks = TransaksiKirimSaldo::where('id',$id)->orderBy('id','desc')->first();
+        $pengirim = Customer::where('id_user',$ks->id_user_pengirim)->first();
+        $penerima = Customer::where('id_user',$ks->id_user_penerima)->first();
+        $ks->pengirim =$pengirim->nama;
+        $ks->penerima =$penerima->nama;
+        $createdAt = $ks->updated_at;
+
+        list($date, $time) = explode(' ', $createdAt);
+        $timePart = $time;
+        $carbonDate = Carbon::parse($date);
+        $formattedDate = $carbonDate->translatedFormat('d-F-Y');
+        $ks->tanggal=$formattedDate ;
+        $ks->jam= $timePart;
+
+        if($ks){
+            return response()->json([
+                'code' => '200',
+                'data' => $ks
+            ]);
+    
+        }else{
+            return response()->json([
+                'code' => '500',
+                'data' => []
+            ]);
+    
+
+        }
+            
+    }
+
+    public function history_kirim_saldo($id){
+        $ks = TransaksiKirimSaldo::where('id_user_pengirim',$id)->orderBy('id','desc')->get();
+        // $ks = DB::table('transaksi_kirim_saldos')
+        // ->leftJoin('customers as pengirim','transaksi_kirim_saldos.id_user_pengirim','pengirim.id_user')
+        // ->leftJoin('customers as penerima','transaksi_kirim_saldos.id_user_penerima','penerima.id_user')
+        // ->select('pengirim.nama as pengirim','penerima.nama as penerima','transaksi_kirim_saldos.*')
+        // ->where('transaksi_kirim_saldos.id_user_pengirim',$id)->orderBy('id','desc')->get();
+        foreach ($ks as $k){
+            $pengirim = Customer::where('id_user',$k->id_user_pengirim)->first();
+            $penerima = Customer::where('id_user',$k->id_user_penerima)->first();
+            // return[$pengirim,$penerima];
+            $k->pengirim =$pengirim->nama;
+            $k->penerima =$penerima->nama;
+            $createdAt = $k->updated_at;
+
+            list($date, $time) = explode(' ', $createdAt);
+            $timePart = $time;
+            $carbonDate = Carbon::parse($date);
+            $formattedDate = $carbonDate->translatedFormat('d-F-Y');
+            $k->tanggal=$formattedDate ;
+            $k->jam= $timePart;
+
+        }
+        if($ks){
+            return response()->json([
+                'code' => '200',
+                'data' => $ks
+            ]);
+    
+        }else{
+            return response()->json([
+                'code' => '500',
+                'data' => []
+            ]);
+    
+
+        }
+
     }
 
 }
