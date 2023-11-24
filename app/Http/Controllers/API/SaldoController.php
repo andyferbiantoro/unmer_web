@@ -317,7 +317,9 @@ class SaldoController extends Controller
             $penerima = Customer::where('id_user',$ks->id_user_penerima)->first();
             $ks->penerima =$penerima->nama;
         }
-        $ks->id_user_penerima =0;
+        else{
+            $ks->id_user_penerima =0;
+        }
         $createdAt = $ks->updated_at;
 
         list($date, $time) = explode(' ', $createdAt);
@@ -353,8 +355,10 @@ class SaldoController extends Controller
         if($ks->id_user_penerima!=null){
         $penerima = Customer::where('id_user',$ks->id_user_penerima)->first();
         $ks->penerima =$penerima->nama;
+        }else{
+            $ks->id_user_penerima =0;
         }
-        $ks->id_user_penerima =0;
+       
         $createdAt = $ks->updated_at;
 
         list($date, $time) = explode(' ', $createdAt);
@@ -393,8 +397,10 @@ class SaldoController extends Controller
             if($k->id_user_penerima!=null){
                 $penerima = Customer::where('id_user',$k->id_user_penerima)->first();
                 $k->penerima =$penerima->nama;
+            }else{
+                $k->id_user_penerima =0;
             }
-            $k->id_user_penerima =0;
+           
             // return[$pengirim,$penerima];
             $k->pengirim =$pengirim->nama;
             
