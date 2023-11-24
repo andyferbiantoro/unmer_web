@@ -308,9 +308,9 @@ class SaldoController extends Controller
         }
     }
 
-    public function getkirimsaldo_last($id){
+    public function getkirimsaldo_last(Request $request){
 
-        $ks = TransaksiKirimSaldo::where('id_user_pengirim',$id)->where('status','berhasil')->orderBy('id','desc')->first();
+        $ks = TransaksiKirimSaldo::where('id_user_pengirim',$request->id)->where('status',$request->status)->orderBy('id','desc')->first();
         $pengirim = Customer::where('id_user',$ks->id_user_pengirim)->first();
         $ks->pengirim =$pengirim->nama;
         if($ks->id_user_penerima!=null){
