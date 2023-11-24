@@ -315,6 +315,8 @@ class SaldoController extends Controller
         $ks->pengirim =$pengirim->nama;
         if($ks->id_user_penerima!=null){
             $penerima = Customer::where('id_user',$ks->id_user_penerima)->first();
+            $ks->penerima =$penerima->nama;
+        }
         $createdAt = $ks->updated_at;
 
         list($date, $time) = explode(' ', $createdAt);
