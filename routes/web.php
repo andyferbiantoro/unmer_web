@@ -117,6 +117,11 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::post('/superadmin_konfirmasi_topup/{id}', [SuperadminController::class, 'superadmin_konfirmasi_topup'])->name('superadmin_konfirmasi_topup');
 
 
+	//routing untuk mengelola Transfer Bank
+	Route::get('/superadmin_transfer_bank', [SuperadminController::class, 'superadmin_transfer_bank'])->name('superadmin_transfer_bank');
+	Route::post('/superadmin_konfirmasi_transfer_bank/{id}', [SuperadminController::class, 'superadmin_konfirmasi_transfer_bank'])->name('superadmin_konfirmasi_transfer_bank');
+
+
 
 	//routing untuk broadcast
 	Route::get('/superadmin_kelola_broadcast', [SuperadminController::class, 'superadmin_kelola_broadcast'])->name('superadmin_kelola_broadcast');

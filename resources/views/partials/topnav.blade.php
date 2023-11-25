@@ -3,12 +3,23 @@
         <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
         <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a>
         </li>
+        @if(Auth::user()->role == "superadmin")
+        <h3 style="color: white">Saldo : Rp. <?=number_format($saldo_superadmin->saldo, 0, ".", ".")?>,00</h3>
+        @elseif(Auth::user()->role == "Admin Kasir")
+        <h3 style="color: white">Saldo : Rp. <?=number_format($saldo_admin_kasir->saldo, 0, ".", ".")?>,00</h3>
+        @elseif(Auth::user()->role == "Admin Penginapan")
+        <h3 style="color: white">Saldo : Rp. <?=number_format($saldo_admin_penginapan->saldo, 0, ".", ".")?>,00</h3>
+        @elseif(Auth::user()->role == "Admin Event")
+        <h3 style="color: white">Saldo : Rp. <?=number_format($saldo_admin_event->saldo, 0, ".", ".")?>,00</h3>
+        @elseif(Auth::user()->role == "Admin Pendidikan")
+        <h3 style="color: white">Saldo : Rp. <?=number_format($saldo_admin_pendidikan->saldo, 0, ".", ".")?>,00</h3>
+        @endif
     </ul>
-    
 </form>
 <ul class="navbar-nav navbar-right">
 
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+
         <img alt="image" src="{{asset ('public/assets/img/avatar/avatar-5.png')}}" class="rounded-circle mr-1">
         <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->role}}</div>
     </a>
