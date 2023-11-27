@@ -73,6 +73,8 @@ Route::get('customer/total_keranjang/{id_user}',[AgrikulturController::class,'to
 Route::post('customer/hapus_keranjang',[AgrikulturController::class,'hapus_keranjang']);
 Route::get('customer/cek_kode_transaksi/{kode_transkasi}',[AgrikulturController::class,'cek_kode_transaksi']);
 Route::get('customer/biaya_layanan',[AgrikulturController::class,'biaya_layanan']);
+Route::get('customer/scan_driver_kode',[AgrikulturController::class,'scan_driver_kode']);
+Route::get('customer/list_orderan_agrikultur',[AgrikulturController::class,'list_orderan_agrikultur']);
 
 
 

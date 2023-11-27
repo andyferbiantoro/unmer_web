@@ -188,6 +188,7 @@ class AgrikulturController extends Controller
         $id_prduc = json_decode($request->id_product);
         $kuantitas = json_decode($request->kuantitas);
         $harga_produk = ProdukAgrikulture::whereIn('id', $id_prduc)->get();
+      
         $total = 0;
         foreach ($harga_produk as $n => $p) {
             $qty = $kuantitas[$n];
@@ -205,7 +206,8 @@ class AgrikulturController extends Controller
         }
         Keranjang::where('id_user', $request->id_user)->whereIn('id_produk_agrikulture', $id_prduc)->delete();
         TransaksiAgrikulture::where('id', $transaksi->id)->update([
-            'nominal' => $total
+            'nominal' => $total,
+            'id_market_agrikulture'=>$harga_produk[0]->id_market
         ]);
 
         $saldokahir = ($saldoawal->saldo - intval($total));
