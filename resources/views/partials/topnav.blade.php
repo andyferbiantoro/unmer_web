@@ -4,15 +4,15 @@
         <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a>
         </li>
         @if(Auth::user()->role == "superadmin")
-        <h3 style="color: white">Saldo : Rp. <?=number_format($saldo_superadmin->saldo, 0, ".", ".")?>,00</h3>
+        <h3 style="color: white">Saldo Anda : Rp. <?=number_format($saldo_superadmin->saldo, 0, ".", ".")?>,00</h3><li><a class="nav-link" title="Kelola Saldo" href="{{ route('superadmin_kelola_tambahan') }}"><i class="fas fa-cog"></i></i><span></span></a></li>
         @elseif(Auth::user()->role == "Admin Kasir")
-        <h3 style="color: white">Saldo : Rp. <?=number_format($saldo_admin_kasir->saldo, 0, ".", ".")?>,00</h3>
+        <h3 style="color: white">Saldo Anda : Rp. <?=number_format($saldo_admin_kasir->saldo, 0, ".", ".")?>,00</h3>
         @elseif(Auth::user()->role == "Admin Penginapan")
-        <h3 style="color: white">Saldo : Rp. <?=number_format($saldo_admin_penginapan->saldo, 0, ".", ".")?>,00</h3>
+        <h3 style="color: white">Saldo Anda : Rp. <?=number_format($saldo_admin_penginapan->saldo, 0, ".", ".")?>,00</h3>
         @elseif(Auth::user()->role == "Admin Event")
-        <h3 style="color: white">Saldo : Rp. <?=number_format($saldo_admin_event->saldo, 0, ".", ".")?>,00</h3>
+        <h3 style="color: white">Saldo Anda : Rp. <?=number_format($saldo_admin_event->saldo, 0, ".", ".")?>,00</h3>
         @elseif(Auth::user()->role == "Admin Pendidikan")
-        <h3 style="color: white">Saldo : Rp. <?=number_format($saldo_admin_pendidikan->saldo, 0, ".", ".")?>,00</h3>
+        <h3 style="color: white">Saldo Anda : Rp. <?=number_format($saldo_admin_pendidikan->saldo, 0, ".", ".")?>,00</h3>
         @endif
     </ul>
 </form>

@@ -72,8 +72,23 @@
 
             <li class="{{(request()->is('superadmin_kelola_admin')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_admin') }}"><i class="fas fa-users"></i><span>Kelola Admin</span></a></li>
 
-            <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-user"></i></i><span>Kelola User</span></a></li>
+           
 
+            @if((request()->is('superadmin_kelola_user')))
+            <li class="nav-item dropdown {{(request()->is('superadmin_kelola_user')) ? 'active' : ''}}">
+            @elseif((request()->is('superadmin_kelola_partner')))
+            <li class="nav-item dropdown {{(request()->is('superadmin_kelola_partner')) ? 'active' : ''}}">
+            @else
+            <li class="nav-item dropdown">
+            @endif
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-user"></i>
+              <span>Kelola User</span></a>
+              <ul class="dropdown-menu">
+                <li class="{{(request()->is('superadmin_kelola_user')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_user') }}"><i class="fas fa-user"></i></i><span>User</span></a></li>
+
+                <li class="{{(request()->is('superadmin_kelola_partner')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_partner') }}"><i class="fas fa-handshake"></i></i><span>Partner</span></a></li>
+              </ul>
+            </li>
 
             
             @if((request()->is('superadmin_kelola_topup')))
