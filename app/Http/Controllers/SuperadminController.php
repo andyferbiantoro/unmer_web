@@ -212,6 +212,7 @@ class SuperadminController extends Controller
 	{
 		$data_partner = Customer::orderby('id', 'DESC')->where('status_partner','partner')->get();
 		
+
 		return view('super_admin.kelola_user.partner', compact('data_partner'));
 	}
 
@@ -225,11 +226,7 @@ class SuperadminController extends Controller
 			->where('produk_koperasis.id_partner', $id)
 			->get();
 
-		$nama_partner = DB::table('produk_koperasis')
-			->join('customers', 'produk_koperasis.id_partner', '=', 'customers.id')
-			->select('customers.nama','customers.saldo')
-			->where('produk_koperasis.id_partner', $id)
-			->first();
+		$nama_partner = Customer::where('id',$id)->first();
 			
 		
 		return view('super_admin.kelola_user.detail_partner', compact('detail_partner','nama_partner'));
