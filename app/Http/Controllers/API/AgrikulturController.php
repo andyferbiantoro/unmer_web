@@ -49,7 +49,9 @@ class AgrikulturController extends Controller
             $hasil = $data_akhir->collapse()->SortBy('jarak')->values();
         } else {
             foreach ($market as $m) {
+                $m->jarak = '';
                 $m->detail_market = DetailMarketAgrikulture::get();
+                
                 $hasil[] = $m;
             }
         }
@@ -328,5 +330,81 @@ class AgrikulturController extends Controller
             'code' => '200',
             'data' => $bl
         ]);
+    }
+
+
+    //driver 
+    public function list_orderan_agrikultur(){
+        
+        $transaksi = TransaksiAgrikulture::with('detail_transaksi.produk_agrikultures')
+        ->where('status_pemesanan','dikemas')
+            ->orderBy('id', 'desc')->get();
+
+
+        if ($transaksi) {
+
+            return response()->json([
+                'code' => '200',
+                'data' => $transaksi
+            ]);
+        } else {
+            return response()->json([
+                'code' => '500',
+                'data' => []
+            ]);
+        }
+        
+    
+}
+
+    public function scan_driver_kode(Request $request){
+        $kode_transaksi = $request->kode_transaksi;
+
+        if($request->status=='diantar'){
+
+            $cek = TransaksiAgrikulture::where('kode_transaksi', $kode_transaksi)->where('status_pemesanan','dikemas')
+            ->orderBy('id', 'desc')->first();
+          
+        if ($cek) {
+    
+            $cek->update([
+                'status_pemesanan'=>'diantar'
+            ]);
+    
+            return response()->json([
+                'code' => 200,
+                'message' => 'Berhasil di Scan. Pesanan Siap Diantar'
+            ]);
+        } else {
+            return response()->json([
+                'code' => 200,
+                'message' => 'Kode Transaksi Tidak Ditemukan'
+            ]);
+        }
+    }
+
+        elseif($request->status=='selesai'){
+            
+            $cek = TransaksiAgrikulture::where('kode_transaksi', $kode_transaksi)->where('status_pemesanan','diantar')
+            ->orderBy('id', 'desc')->first();
+        if ($cek) {
+    
+            $cek->update([
+                'status_pemesanan'=>'selesai'
+            ]);
+    
+            return response()->json([
+                'code' => 200,
+                'message' => 'Berhasil di Scan. Pesanan Selesai'
+            ]);
+        } else {
+            return response()->json([
+                'code' => 200,
+                'message' => 'Kode Transaksi Tidak Ditemukan'
+            ]);
+        }
+
+        }
+
     }
 }

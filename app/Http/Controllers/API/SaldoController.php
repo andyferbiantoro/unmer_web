@@ -293,6 +293,7 @@ class SaldoController extends Controller
             $req['bank'] =$request->bank;
             $req['rekening_bank'] =$request->rekening_bank;
             $req['status'] ='pending';
+            $req['nama_penerima'] =$request->nama_penerima;
             $transaksi = TransaksiKirimSaldo::create($req);
             $adm =   Admin::where('role_admin','superadmin')->first();
             $akhir = $adm->saldo +$transaksi->biaya_layanan;
