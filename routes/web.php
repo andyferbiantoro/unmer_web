@@ -54,6 +54,15 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::post('/admin_delete/{id}', [SuperadminController::class, 'admin_delete'])->name('admin_delete');
 
 
+	//Routing untuk kelola User
+	Route::get('/superadmin_kelola_user', [SuperadminController::class, 'superadmin_kelola_user'])->name('superadmin_kelola_user');
+	Route::post('/superadmin_jadikan_partner/{id}', [SuperadminController::class, 'superadmin_jadikan_partner'])->name('superadmin_jadikan_partner');
+
+
+	//Routing untuk kelola Partner
+	Route::get('/superadmin_kelola_partner', [SuperadminController::class, 'superadmin_kelola_partner'])->name('superadmin_kelola_partner');
+	Route::get('/superadmin_detail_partner{id}', [SuperadminController::class, 'superadmin_detail_partner'])->name('superadmin_detail_partner');
+
 	// =================================================AGRIKULUTRE-=========================================================
 
 	//routing untuk mengelola market agrikulture

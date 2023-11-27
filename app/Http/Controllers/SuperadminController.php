@@ -181,6 +181,57 @@ class SuperadminController extends Controller
 		return redirect()->back()->with('success', 'Data Berhasil Dihapus');
 	}
 
+	// ===============================================================================================
+
+
+	public function superadmin_kelola_user()
+	{
+		$data_user = Customer::orderby('id', 'DESC')->get();
+		
+		return view('super_admin.kelola_user.index', compact('data_user'));
+	}
+
+	public function superadmin_jadikan_partner($id)
+	{
+
+
+		$data_update = Customer::where('id', $id)->first();
+
+		$input = [
+			'status_partner' => 'partner',	
+		];
+
+		$data_update->update($input);
+
+		return redirect()->back()->with('success', 'Berhasil Menjadikan Partner');
+	}
+
+// ==================================================================================================
+
+	public function superadmin_kelola_partner()
+	{
+		$data_partner = Customer::orderby('id', 'DESC')->where('status_partner','partner')->get();
+		
+
+		return view('super_admin.kelola_user.partner', compact('data_partner'));
+	}
+
+
+	public function superadmin_detail_partner($id)
+	{
+		$detail_partner = DB::table('produk_koperasis')
+			->join('customers', 'produk_koperasis.id_partner', '=', 'customers.id')
+			->select('produk_koperasis.*', 'customers.nama')
+			->orderBy('produk_koperasis.id', 'DESC')
+			->where('produk_koperasis.id_partner', $id)
+			->get();
+
+		$nama_partner = Customer::where('id',$id)->first();
+			
+		
+		return view('super_admin.kelola_user.detail_partner', compact('detail_partner','nama_partner'));
+	}
+
 	// ==================================================================================================================
 
 

@@ -51,10 +51,10 @@ Kelola Tambahan
               </td>
               <td>
                 @if($data->status == 'aktif')
-                <a href="#" data-toggle="modal" onclick="nonaktifkan({{$data->id}})" data-target="#NonAktifkanModal"><button class="btn btn-danger btn-sm"  title="Non Aktifkan Menu"><i class="fas fa-ban"></i> Non-Aktifkan</button>
+                <a href="#" data-toggle="modal" onclick="nonaktifkan({{$data->id}})" data-target="#NonAktifkanModal"><button class="btn btn-danger btn-sm"  title="Non Aktifkan Menu"><i class="fas fa-lock"></i> Non-Aktifkan</button>
 
                 @elseif($data->status == 'nonaktif')
-                <a href="#" data-toggle="modal" onclick="aktifkan({{$data->id}})" data-target="#AktifkanModal"><button class="btn btn-success btn-sm"  title="Aktifkan Kembali Menu"><i class="fas fa-check"></i> Aktfkan</button>
+                <a href="#" data-toggle="modal" onclick="aktifkan({{$data->id}})" data-target="#AktifkanModal"><button class="btn btn-success btn-sm"  title="Aktifkan Kembali Menu"><i class="fas fa-lock-open"></i> Aktfkan</button>
                 @endif
               </td>
               
