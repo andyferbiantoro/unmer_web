@@ -284,6 +284,12 @@ class SaldoController extends Controller
                 'saldo'=>$sisa
             ]);
 
+            $custnerima = Customer::where('id_user',$transaksi->id_user_penerima)->first();
+            $akhir = $custnerima->saldo + $transaksi->nominal_kirim;
+            $custnerima->update([
+                'saldo'=>$akhir
+            ]);
+
             return response()->json([
                 'code' => '200',
                 'message' => 'Transaksi Kirim Saldo Berhasil Ke sesama Unmer'
