@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\KontakBantuan;
 use App\Models\StatusMenu;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -373,10 +374,11 @@ public function updateUserProfile(Request $request)
 //no auth
 public function getno_bantuan(){
     $no = '6285186680098';
+    $k = KontakBantuan::first();
             
         return response()->json([
             'code' => '200',
-            'data' =>  ['nomor' => $no]
+            'data' =>  ['nomor' => $k->no_telp]
         ]);
 }
 
