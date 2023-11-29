@@ -17,9 +17,12 @@ Kelola Tambahan
       <a href="{{ route('superadmin_kelola_tambahan') }}"><button type="button" class="btn btn-light btn-sm"><i class="fas fa-bars"></i> Kelola Menu</button></a>
       <a href="{{ route('superadmin_kelola_kontak_bantuan') }}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-phone"></i> Kontak bantuan</button></a>
       <br><br>
+      @if($cek_kontak <= 0)
       <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
           <i class="fas fa-plus"></i> Tambah Kontak Bantuan
-        </button><br><br>
+        </button>
+        <br><br>
+        @endif
 
       @if (session('success'))
       <div class="alert alert-success">
