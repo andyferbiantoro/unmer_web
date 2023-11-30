@@ -1142,8 +1142,9 @@ class SuperadminController extends Controller
 	{
 
 		$kontak_bantuan = KontakBantuan::all();
+		$cek_kontak = KontakBantuan::count();
 	
-		return view('super_admin.kelola_tambahan.kontak_bantuan',compact('kontak_bantuan'));
+		return view('super_admin.kelola_tambahan.kontak_bantuan',compact('kontak_bantuan','cek_kontak'));
 	}
 
 
