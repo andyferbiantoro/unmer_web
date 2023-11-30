@@ -316,16 +316,26 @@ class AgrikulturController extends Controller
     public function biaya_layanan(Request $request)
     {
         $bl = BiayaLayanan::where('kategori_layanan', 'agrikulture')->first();
-        // $m = MarketAgrikulture::where('id',$request->id_market)->first();
-        // $hitung = new Haversine;
-        // $jarak =  $hitung->distance($request->latitude, $request->longitude, $m->latitude, $m->longitude, "K");
-        // $jarak_final = round($jarak, 1);
+     
+        if($request->latitude&&$request->longitude){
+        $m = MarketAgrikulture::where('id',$request->id_market)->first();
+        $hitung = new Haversine;
+        $jarak =  $hitung->distance($request->latitude, $request->longitude, $m->latitude, $m->longitude, "K");
+        $jarak_final = round($jarak, 1);
 
-        if ($request->jarak) {
-            $hasil = $bl->ongkir * round($request->jarak);
+        $hasil = $bl->ongkir * round($jarak_final);
 
-            $bl->hasil_ongkir_jarak = $hasil;
+        $bl->hasil_ongkir_jarak = $hasil;
+        $bl->jarak = $jarak_final;
+
         }
+     
+
+        // if ($request->jarak) {
+        //     $hasil = $bl->ongkir * round($request->jarak);
+
+        //     $bl->hasil_ongkir_jarak = $hasil;
+        // }
 
 
         return response()->json([
