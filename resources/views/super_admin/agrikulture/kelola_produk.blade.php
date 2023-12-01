@@ -81,7 +81,7 @@ Kelola Produk Agrikultur
             <td>{{$data->kategori_produk}}</td>
             <td>{{$data->nama_produk}}</td>
             <td>Rp. <?=number_format($data->harga_produk, 0, ".", ".")?>,00</td>
-            <td>{{$data->stok}}</td>
+            <td>{{$data->stok}} pcs</td>
             <td><img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('/public/uploads/produk_agrikulture/'.$data->foto)}}"  data-toggle="modal" data-target="#myModal"></img></td>
 
             <td>
