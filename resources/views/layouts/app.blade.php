@@ -63,6 +63,9 @@
   <script src="{{ asset('public/assets/js/scripts.js') }}"></script>
   <script src="{{ asset('public/assets/js/custom.js') }}"></script>
 
+  <!-- jquery auto refresh -->
+  <script src="{{ asset('public/assets/js/jquery.js') }}"></script>
+
   <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script>

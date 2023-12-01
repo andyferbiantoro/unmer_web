@@ -89,3 +89,5 @@ Route::get('ip',[AgrikulturController::class,'ip']);
 Route::post('customer/update-user-profile',[AuthController::class,'updateUserProfile']);
 
 Route::get('notif_saldo',[SaldoController::class,'sendNotifSaldo']);
+
+
