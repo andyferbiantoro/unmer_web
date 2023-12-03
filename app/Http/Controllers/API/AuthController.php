@@ -401,6 +401,19 @@ public function total_pemasukan_bulan($id){
     $startDate = Carbon::now()->subMonth(); // Tanggal mulai 1 bulan yang lalu
     $endDate = Carbon::now(); // Tanggal sekarang
 
+    $carbonDate = Carbon::parse($startDate);
+    $carbonDate2 = Carbon::parse($endDate);
+
+$bulan = $carbonDate->format('F');
+$tanggal = $carbonDate->format('d'); 
+$tahun = $carbonDate->format('Y'); 
+
+$bulan2 = $carbonDate2->format('F');
+$tanggal2 = $carbonDate2->format('d'); 
+$tahun2 = $carbonDate2->format('Y'); 
+$start = $tanggal.'-'.$bulan.'-'.$tahun;
+$end = $tanggal2.'-'.$bulan2.'-'.$tahun2;
+
 
 
     $total_pemasukan1 = TransaksiKirimSaldo::whereBetween('updated_at', [$startDate, $endDate])->where('id_user_penerima',$id)->sum('nominal_kirim');
@@ -413,7 +426,8 @@ public function total_pemasukan_bulan($id){
 
     return response()->json([
         'code' => '200',
-        'data' =>  ['pemasukan' =>$total_pemasukan,'pengeluaran' =>$total_pengeluaran,]
+        'data' =>  ['pemasukan' =>$total_pemasukan,'pengeluaran' =>$total_pengeluaran,
+        'start' =>$start,'end' =>$end,]
     ]);
 
 
