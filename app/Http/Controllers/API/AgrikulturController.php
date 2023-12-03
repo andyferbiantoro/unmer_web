@@ -209,7 +209,7 @@ class AgrikulturController extends Controller
             'id_market_agrikulture'=>$harga_produk[0]->id_market
         ]);
 
-        $saldokahir = ($saldoawal->saldo - intval($total));
+        $saldokahir = ($saldoawal->saldo - intval($total+$transaksi->biaya_layanan+$transaksi->biaya_ongkir));
         $saldoawal->update([
             'saldo' => $saldokahir
         ]);
