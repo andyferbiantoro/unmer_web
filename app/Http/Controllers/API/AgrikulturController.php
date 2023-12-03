@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\BiayaLayanan;
 use App\Models\Customer;
 use App\Models\DetailMarketAgrikulture;
@@ -24,11 +25,7 @@ use Termwind\Components\Raw;
 class AgrikulturController extends Controller
 {
     //
-    public function ip(Request $request)
-    {
-        return $request->ip();
-    }
-
+  
     public function list_market(Request $request)
     {
         $hasil = [];
@@ -182,7 +179,9 @@ class AgrikulturController extends Controller
             'kode_transaksi' =>  strtoupper(Str::random(8)),
             'catatan' => $request->catatan,
             'alamat' => $request->alamat,
-            'metode_pengiriman' => $request->metode_pengiriman
+            'metode_pengiriman' => $request->metode_pengiriman,
+            'biaya_ongkir'=>$request->biaya_ongkir,
+            'biaya_layanan'=>$request->biaya_layanan
         ]);
 
         $id_prduc = json_decode($request->id_product);
@@ -202,7 +201,7 @@ class AgrikulturController extends Controller
                 'kuantitas' => $qty,
                 'total' => $tt
             ];
-            $detail = DetailTransaksiAgrikulture::create($req_detail);
+            DetailTransaksiAgrikulture::create($req_detail);
         }
         Keranjang::where('id_user', $request->id_user)->whereIn('id_produk_agrikulture', $id_prduc)->delete();
         TransaksiAgrikulture::where('id', $transaksi->id)->update([
@@ -214,10 +213,19 @@ class AgrikulturController extends Controller
         $saldoawal->update([
             'saldo' => $saldokahir
         ]);
+
+        $adm =   Admin::where('role_admin','superadmin')->first();
+        $akhir = $adm->saldo +$transaksi->biaya_layanan;
+        // return $akhir;
+        $adm->update([
+            'saldo'=>$akhir
+        ]);
+
         return response()->json([
             'code' => '200',
             'data' => $transaksi->kode_transaksi
         ]);
+
     }
 
 

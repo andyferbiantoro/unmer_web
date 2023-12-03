@@ -6,7 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\KontakBantuan;
 use App\Models\StatusMenu;
+use App\Models\TransaksiAgrikulture;
+use App\Models\TransaksiKirimSaldo;
+use App\Models\TransaksiKoperasi;
+use App\Models\TransaksiTopUp;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -388,6 +393,29 @@ public function getstatus_menu_apk(Request $request){
         'code' => '200',
         'data' => $status
     ]);
+
+}
+
+
+public function total_pemasukan_bulan($id){
+    $startDate = Carbon::now()->subMonth(); // Tanggal mulai 1 bulan yang lalu
+    $endDate = Carbon::now(); // Tanggal sekarang
+
+
+
+    $total_pemasukan1 = TransaksiKirimSaldo::whereBetween('updated_at', [$startDate, $endDate])->where('id_user_penerima',$id)->sum('nominal_kirim');
+    $total_pemasukan = intval($total_pemasukan1);
+
+    $total1 = TransaksiAgrikulture::whereBetween('updated_at', [$startDate, $endDate])->where('id_user',$id)->sum('nominal');
+    $total2 = TransaksiKoperasi::whereBetween('updated_at', [$startDate, $endDate])->where('id_user',$id)->sum('nominal');
+    $total3 = TransaksiTopUp::whereBetween('updated_at', [$startDate, $endDate])->where('status_topup','berhasil')->where('id_user',$id)->sum('nominal');
+    $total_pengeluaran = $total1+$total2+$total3;
+
+    return response()->json([
+        'code' => '200',
+        'data' =>  ['pemasukan' =>$total_pemasukan,'pengeluaran' =>$total_pengeluaran,]
+    ]);
+
 
 }
 

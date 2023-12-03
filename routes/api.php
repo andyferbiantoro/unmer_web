@@ -35,9 +35,13 @@ Route::post('customer/register',[AuthController::class,'register']);
 Route::post('customer/pin/tambah',[AuthController::class,'create_pin']);
 Route::get('customer/profil/{id}',[AuthController::class,'get_profil']);
 Route::post('customer/profil/update',[AuthController::class,'ubah_profil']);
+Route::post('customer/update-user-profile',[AuthController::class,'updateUserProfile']);
+
+//
 Route::get('customer/getno_bantuan',[AuthController::class,'getno_bantuan']);
 Route::get('customer/getstatus_menu_apk',[AuthController::class,'getstatus_menu_apk']);
-
+Route::get('customer/total_pemasukan_bulan/{id}',[AuthController::class,'total_pemasukan_bulan']);
+Route::get('customer/total_pengeluaran_bulan',[AuthController::class,'total_pengeluaran_bulan']);
 
 
 //saldo topup
@@ -83,9 +87,15 @@ Route::get('customer/list_orderan_agrikultur',[AgrikulturController::class,'list
 Route::get('customer/kategori_produk_koperasi',[KoperasiController::class,'kategori_produk_koperasi']);
 Route::get('customer/list_produk_koperasi',[KoperasiController::class,'list_produk_koperasi']);
 Route::get('customer/detail_produk_koperasi/{id_produk}',[KoperasiController::class,'detail_produk_koperasi']);
+Route::post('customer/tambah_keranjang_koperasi',[KoperasiController::class,'keranjang_koperasi']);
+Route::post('customer/koperasi/hapus_keranjang',[KoperasiController::class,'hapus_keranjang']);
+Route::post('customer/koperasi/list_keranjang',[KoperasiController::class,'list_keranjang']);
+Route::post('customer/koperasi/create_transaksi',[KoperasiController::class,'create_transaksi_koperasi']);
 
-Route::get('ip',[AgrikulturController::class,'ip']);
 
-Route::post('customer/update-user-profile',[AuthController::class,'updateUserProfile']);
+
+
+
+
 
 Route::get('notif_saldo',[SaldoController::class,'sendNotifSaldo']);
