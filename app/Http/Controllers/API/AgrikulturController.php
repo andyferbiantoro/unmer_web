@@ -323,6 +323,7 @@ class AgrikulturController extends Controller
 
     public function biaya_layanan(Request $request)
     {
+
         $bl = BiayaLayanan::where('kategori_layanan', 'agrikulture')->first();
      
         if($request->latitude&&$request->longitude){
