@@ -335,12 +335,17 @@ public function updateUserProfile(Request $request)
         // return $user;
 
         $oldPhoto = $user->foto;
+
+        if($oldPhoto!='default.jpg'){
+
+      
         if (!empty($oldPhoto)) {
             $oldPhotoPath = public_path('uploads/profil') . '/' . $oldPhoto;
             if (file_exists($oldPhotoPath)) {
                 unlink($oldPhotoPath);
             }
         }
+    }
       
         $image = $request->file('foto');
         $imageName = time().'.'.$image->getClientOriginalExtension();
