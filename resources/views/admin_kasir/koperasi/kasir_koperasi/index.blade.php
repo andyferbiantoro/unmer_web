@@ -15,6 +15,11 @@ Kasir Koperasi
       <h2 class="primary">Kasir Koperasi </h2>
       <hr>
       <br>
+      <div class="row">
+        <div class="col-lg-6">
+          <div id="reader" width="500px"></div>
+        </div> 
+      </div><br>
       
 
       @if (session('success'))
@@ -34,7 +39,7 @@ Kasir Koperasi
             <div class="row">
               <div class="col-lg-3">
                 <div class="form-row">
-                  <input type="text" class="form-control" name="kode_produk" placeholder="Kode Barang .." value="{{ old('kode_produk') }}">
+                  <input type="text" class="form-control" id="kode_produk_form" name="kode_produk" placeholder="Kode Barang .." value="{{ old('kode_produk') }}">
                 </div>
               </div>
 
@@ -288,6 +293,27 @@ Kasir Koperasi
             }
           }
         </script>
+
+        <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+        <script type="text/javascript">
+
+          function onScanSuccess(decodedText, decodedResult) {
+          // handle the scanned code as you like, for example:
+           document.getElementById('kode_produk_form').value = decodedText;
+          }
+
+          function onScanFailure(error) {
+          // handle scan failure, usually better to ignore and keep scanning.
+          // for example:
+          // console.warn(`Code scan error = ${error}`);
+              }
+
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+          "reader",
+            { fps: 10, qrbox: {width: 250, height: 250} },
+            /* verbose= */ false);
+          html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+          </script>
 
 
 
