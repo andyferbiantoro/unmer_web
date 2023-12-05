@@ -128,34 +128,51 @@ class AuthController extends Controller
 
 
         if ($cekemail) {
-            $email = $cekemail->email;
-            $req = [
-                'otp' => $random,
-            ];
 
-            // return $req;
+            if($cekemail->role='driver'){
+                $cekemail->update([
+                    'otp'=>1234
+                ]);
+                
+            return response()->json([
+                'code' => '200',
+                'message' => "OTP Driver berhasil di set",
+               
+            ]);
+            }else{
 
-            $cekemail->update($req);
-
-            $name = $cekemail->name;
-            $data = [
-                'name' => $name,
-                'body' => "Kepada Pengguna : $name. ",
-                'otp' => $cekemail->otp,
-
-            ];
-
-            Mail::send('api.otp', $data, function ($message) use ($name, $email) {
-
-
-                $message->to($email, $name)->subject('Pemberitahuan UNMER ');
-            });
-
+                $email = $cekemail->email;
+                $req = [
+                    'otp' => $random,
+                ];
+    
+                // return $req;
+    
+                $cekemail->update($req);
+    
+                $name = $cekemail->name;
+                $data = [
+                    'name' => $name,
+                    'body' => "Kepada Pengguna : $name. ",
+                    'otp' => $cekemail->otp,
+    
+                ];
+    
+                Mail::send('api.otp', $data, function ($message) use ($name, $email) {
+    
+    
+                    $message->to($email, $name)->subject('Pemberitahuan UNMER ');
+                });
+                
             return response()->json([
                 'code' => '200',
                 'message' => "OTP terkirim, Silahkan Cek Email",
                
             ]);
+
+            }
+         
+
         } else {
 
             return response()->json([
@@ -178,10 +195,19 @@ class AuthController extends Controller
             ];
             $cekotp->update($req);
             // return $cekotp->id;
+            if($cekotp->role=='driver'){
+                $data = DB::table('drivers')->leftJoin('users','drivers.id_user','users.id')
+            ->select('users.*','users.id as id_user','drivers.*','drivers.id as id_driver')->where('users.id',$cekotp->id)->first();
+            $data->foto= asset('uploads/profil/'.$data->foto);
 
-            $data = DB::table('customers')->leftJoin('users','customers.id_user','users.id')
+            }else{
+                $data = DB::table('customers')->leftJoin('users','customers.id_user','users.id')
             ->select('users.*','users.id as id_user','customers.*','customers.id as id_customer')->where('users.id',$cekotp->id)->first();
             $data->foto= asset('uploads/profil/'.$data->foto);
+
+            }
+
+            
             // return $data;
     
 
