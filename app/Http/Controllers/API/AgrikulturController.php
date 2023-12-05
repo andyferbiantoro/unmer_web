@@ -381,51 +381,46 @@ class AgrikulturController extends Controller
     public function scan_driver_kode(Request $request){
         $kode_transaksi = $request->kode_transaksi;
 
-        if($request->status=='diantar'){
+        $cek = TransaksiAgrikulture::where('kode_transaksi', $kode_transaksi)
+        ->orderBy('id', 'desc')->first();
 
-            $cek = TransaksiAgrikulture::where('kode_transaksi', $kode_transaksi)->where('status_pemesanan','dikemas')
-            ->orderBy('id', 'desc')->first();
-          
         if ($cek) {
-    
-            $cek->update([
-                'status_pemesanan'=>'diantar'
-            ]);
-    
-            return response()->json([
-                'code' => 200,
-                'message' => 'Berhasil di Scan. Pesanan Siap Diantar'
-            ]);
-        } else {
-            return response()->json([
-                'code' => 200,
-                'message' => 'Kode Transaksi Tidak Ditemukan'
-            ]);
-        }
-    }
 
-        elseif($request->status=='selesai'){
+            if($cek->status_pemesanan=='dikemas'){
+    
+                $cek->update([
+                    'status_pemesanan'=>'diantar'
+                ]);
+        
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'Berhasil di Scan. Pesanan Siap Diantar ke Customer'
+                ]);
+            } 
             
-            $cek = TransaksiAgrikulture::where('kode_transaksi', $kode_transaksi)->where('status_pemesanan','diantar')
-            ->orderBy('id', 'desc')->first();
-        if ($cek) {
-    
-            $cek->update([
-                'status_pemesanan'=>'selesai'
-            ]);
-    
-            return response()->json([
-                'code' => 200,
-                'message' => 'Berhasil di Scan. Pesanan Selesai'
-            ]);
-        } else {
+            else{            
+        
+                $cek->update([
+                    'status_pemesanan'=>'selesai'
+                ]);
+        
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'Berhasil di Scan. Pesanan Selesai'
+                ]);
+            } 
+        
+
+
+        }else{
             return response()->json([
                 'code' => 200,
                 'message' => 'Kode Transaksi Tidak Ditemukan'
             ]);
-        }
 
         }
+
+      
 
     }
 }
