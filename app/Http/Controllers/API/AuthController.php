@@ -123,13 +123,13 @@ class AuthController extends Controller
         $random = $this->getRandomString();
 
         $cekemail = User::where('email', $request->email)->first();
-     
+    //  return $cekemail;
         
 
 
         if ($cekemail) {
 
-            if($cekemail->role='driver'){
+            if($cekemail->role=='driver'){
                 $cekemail->update([
                     'otp'=>1234
                 ]);
