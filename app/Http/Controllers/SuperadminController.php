@@ -48,9 +48,13 @@ class SuperadminController extends Controller
 		$total_partner = Customer::where('status_partner','partner')->count();
 		$total_partner_laki = Customer::where('status_partner','partner')->where('jenis_kelamin','L')->count();
 		$total_partner_perempuan = Customer::where('status_partner','partner')->where('jenis_kelamin','P')->count();
-		
 
-		return view('super_admin.index', compact('total_pengguna','belum_ver','sudah_ver','total_partner','total_partner_laki','total_partner_perempuan'));
+		// transaksi
+		$transaksi_agri = TransaksiAgrikulture::where('status_pemesanan','selesai')->count();
+		$transaksi_kop = TransaksiKoperasi::where('status_pemesanan','selesai')->count();
+		$total_transkasi = $transaksi_agri + $transaksi_kop;
+
+		return view('super_admin.index', compact('total_pengguna','belum_ver','sudah_ver','total_partner','total_partner_laki','total_partner_perempuan','total_transkasi'));
 	}
 
 	public function register(Request $request)
