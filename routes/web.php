@@ -166,6 +166,7 @@ Route::middleware(['auth', 'admin_kasir'])->group(function () {
 	Route::get('/admin_kasir_agrikulture', [AdminKasirController::class, 'admin_kasir_agrikulture'])->name('admin_kasir_agrikulture');
 	Route::post('/kasir_keranjang_add/{id}', [AdminKasirController::class, 'kasir_keranjang_add'])->name('kasir_keranjang_add');
 	Route::post('/kasir_batalkan_produk/{id}', [AdminKasirController::class, 'kasir_batalkan_produk'])->name('kasir_batalkan_produk');
+	Route::post('/kasir_edit_produk/{id}', [AdminKasirController::class, 'kasir_edit_produk'])->name('kasir_edit_produk');
 	Route::post('/kasir_transaksi_offline_add', [AdminKasirController::class, 'kasir_transaksi_offline_add'])->name('kasir_transaksi_offline_add');
 	Route::get('/admin_kasir_transaksi_agrikulture_selesai', [AdminKasirController::class, 'admin_kasir_transaksi_agrikulture_selesai'])->name('admin_kasir_transaksi_agrikulture_selesai');
 
@@ -194,6 +195,7 @@ Route::middleware(['auth', 'admin_kasir'])->group(function () {
 	Route::get('/admin_kasir_koperasi', [AdminKasirController::class, 'admin_kasir_koperasi'])->name('admin_kasir_koperasi');
 	Route::post('/kasir_keranjang_koperasi_add/{id}', [AdminKasirController::class, 'kasir_keranjang_koperasi_add'])->name('kasir_keranjang_koperasi_add');
 	Route::post('/kasir_batalkan_produk_koperasi/{id}', [AdminKasirController::class, 'kasir_batalkan_produk_koperasi'])->name('kasir_batalkan_produk_koperasi');
+	Route::post('/kasir_edit_produk_koperasi/{id}', [AdminKasirController::class, 'kasir_edit_produk_koperasi'])->name('kasir_edit_produk_koperasi');
 	Route::post('/kasir_transaksi_offline_koperasi_add', [AdminKasirController::class, 'kasir_transaksi_offline_koperasi_add'])->name('kasir_transaksi_offline_koperasi_add');
 	Route::get('/admin_kasir_transaksi_koperasi_selesai', [AdminKasirController::class, 'admin_kasir_transaksi_koperasi_selesai'])->name('admin_kasir_transaksi_koperasi_selesai');
 	Route::post('/admin_kasir_ubah_stok_koperasi/{id}', [AdminKasirController::class, 'admin_kasir_ubah_stok_koperasi'])->name('admin_kasir_ubah_stok_koperasi');

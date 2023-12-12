@@ -148,6 +148,7 @@ Kasir Koperasi
                   <th>Warna</th>
                   <th>Total Harga</th>
                   <th>Opsi</th>
+                  <th style="display: none;">hidden</th>
                 </tr>
               </thead>
               <tbody>
@@ -167,9 +168,11 @@ Kasir Koperasi
                   @endif
                   <td>Rp. <?=number_format($data->total_harga, 0, ".", ".")?>,00</td>
                   <td>
+                    <button class="btn btn-warning btn-sm edit" title="Edit"><i class="fas fa-pen"></i> Edit</button>
                     <a href="#" data-toggle="modal" onclick="deleteData({{$data->id}})" data-target="#DeleteModal">
                       <button class="btn btn-danger btn-sm"  title="Hapus">Batal</button>
                     </td>
+                    <td style="display: none;">{{$data->id}}</td>
                   </tr>
                   @endforeach
                 </tbody>
@@ -233,6 +236,39 @@ Kasir Koperasi
 
 
 
+<!-- Modal Update -->
+      <div id="updateInformasi" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+         <!--Modal content-->
+         <form action="" id="updateInformasiform" method="post" enctype="multipart/form-data">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Anda yakin ingin mengubah pesanan ini ?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {{ csrf_field() }}
+              {{ method_field('POST') }}
+
+              <div class="form-group">
+                <label for="kuantitas">Jumlah Produk</label>
+                <input type="number" class="form-control" id="kuantitas_update" name="kuantitas" required="" ></input>
+            </div>
+
+            </div> 
+            <div class="modal-footer">
+              <button type="submit"  class="btn btn-primary float-right mr-2" >Edit</button>
+              <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Batal</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+
 <!-- Modal -->
 <div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -274,6 +310,27 @@ Kasir Koperasi
     $("#deleteForm").submit();
   }
 </script>
+
+
+<script>
+    $(document).ready(function() {
+      var table = $('#dataTable').DataTable();
+      table.on('click', '.edit', function() {
+        $tr = $(this).closest('tr');
+        if ($($tr).hasClass('child')) {
+          $tr = $tr.prev('.parent');
+        }
+        var data = table.row($tr).data();
+        console.log(data);
+        $('#kuantitas_update').val(data[2]);
+        $('#updateInformasiform').attr('action','kasir_edit_produk_koperasi/'+ data[8]);
+        $('#updateInformasi').modal('show');
+      });
+    });
+  </script>
+
+
+
 
 <script>
   function hitungKembalian() {
