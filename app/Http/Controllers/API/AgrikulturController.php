@@ -358,8 +358,11 @@ class AgrikulturController extends Controller
     public function list_orderan_agrikultur(){
         
         $transaksi = TransaksiAgrikulture::with('detail_transaksi.produk_agrikultures')
-        ->where('status_pemesanan','dikemas')
-            ->orderBy('id', 'desc')->get();
+        ->whereIn('status_pemesanan',['dikemas','diantar'])
+        ->leftJoin('market_agrikultures','transaksi_agrikultures.id_market_agrikulture', '=','market_agrikultures.id')
+        ->leftJoin('users','transaksi_agrikultures.id_user', '=','users.id')
+        ->select('market_agrikultures.*','market_agrikultures.longitude as longitude_market','market_agrikultures.latitude as latitude_market','users.*','transaksi_agrikultures.*')
+        ->orderBy('transaksi_agrikultures.id', 'desc')->get();
 
 
         if ($transaksi) {
