@@ -29,6 +29,7 @@ Kelola Produk Agrikultur
           <tr>
             <th>No</th>
             <th>Nama Produk</th>
+            <th>Id Produk</th>
             <th>Kategori Produk</th>
             <th>Harga Produk</th>
             <th>Stok Produk</th>
@@ -44,6 +45,7 @@ Kelola Produk Agrikultur
           <tr>
             <td>{{$no++}}</td>
             <td>{{$data->nama_produk}}</td>
+             <td>{{$data->id}}</td>
             <td>{{$data->kategori_produk}}</td>
             <td>Rp. <?=number_format($data->harga_produk, 0, ".", ".")?>,00</td>
             <td>{{$data->stok}}</td>
@@ -184,8 +186,8 @@ Kelola Produk Agrikultur
         }
         var data = table.row($tr).data();
         console.log(data);
-        $('#stok_update').val(data[4]);
-        $('#updateInformasiform').attr('action','admin_kasir_ubah_stok_agrikulture/'+ data[8]);
+        $('#stok_update').val(data[5]);
+        $('#updateInformasiform').attr('action','admin_kasir_ubah_stok_agrikulture/'+ data[9]);
         $('#updateInformasi').modal('show');
       });
     });

@@ -31,6 +31,7 @@ Kelola Produk Koperasi
             <tr>
               <th>No</th>
               <th>Nama Produk</th>
+              <th>Id Produk</th>
               <th>Kode Produk</th>
               <th>Kategori Produk</th>
               <th>Harga</th>
@@ -47,6 +48,7 @@ Kelola Produk Koperasi
             <tr>
               <td>{{$no++}}</td>
               <td>{{$data->nama_produk}}</td>
+              <td>{{$data->id}}</td>
               <td>{{$data->kode_produk}}</td>
               <td>{{$data->kategori_produk}}</td>
               <td>Rp. <?=number_format($data->harga, 0, ".", ".")?>,00</td>
@@ -182,8 +184,8 @@ Kelola Produk Koperasi
         }
         var data = table.row($tr).data();
         console.log(data);
-        $('#stok_update').val(data[5]);
-        $('#updateInformasiform').attr('action','admin_kasir_ubah_stok_koperasi/'+ data[9]);
+        $('#stok_update').val(data[6]);
+        $('#updateInformasiform').attr('action','admin_kasir_ubah_stok_koperasi/'+ data[10]);
         $('#updateInformasi').modal('show');
       });
     });

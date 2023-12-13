@@ -182,6 +182,20 @@ class AdminKasirController extends Controller
 		return redirect()->back()->with('error', 'Produk Telah Dibatalkan');
 	}
 
+	public function kasir_edit_produk(Request $request, $id)
+	{
+
+		$data_update = KeranjangOffline::where('id',$id)->first();	
+
+		$input = [
+			'kuantitas' => $request->kuantitas,
+		];
+
+		$data_update->update($input);
+
+		return redirect()->back()->with('success', 'Jumlah Produk Berhasil Diperbarui');
+	}
+
 
 	public function admin_kasir_transaksi_agrikulture_selesai()
 	{
@@ -427,6 +441,20 @@ class AdminKasirController extends Controller
 		return redirect()->back()->with('error', 'Produk Telah Dibatalkan');
 	}
 
+	
+public function kasir_edit_produk_koperasi(Request $request, $id)
+	{
+
+		$data_update = KeranjangKoperasiOffline::where('id',$id)->first();	
+
+		$input = [
+			'kuantitas' => $request->kuantitas,
+		];
+
+		$data_update->update($input);
+
+		return redirect()->back()->with('success', 'Jumlah Produk Berhasil Diperbarui');
+	}
 
 
 	public function kasir_transaksi_offline_koperasi_add(Request $request)

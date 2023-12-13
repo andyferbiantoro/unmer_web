@@ -72,7 +72,7 @@ Dashboard Super Admin
           <h4>Total Partner</h4>
         </div>
         <div class="card-body">
-          {{$total_pengguna}} Partner
+          {{$total_partner}} Partner
         </div>
       </div>
     </div>
@@ -145,7 +145,7 @@ Dashboard Super Admin
           <h4>Total Pesanan</h4>
         </div>
         <div class="card-body">
-          {{$total_pengguna}} Pesanan
+          {{$total_transkasi}} Pesanan
         </div>
       </div>
     </div>
