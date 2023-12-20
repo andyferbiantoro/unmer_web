@@ -79,7 +79,7 @@ Route::get('customer/cek_kode_transaksi/{kode_transkasi}',[AgrikulturController:
 Route::get('customer/biaya_layanan',[AgrikulturController::class,'biaya_layanan']);
 Route::get('customer/scan_driver_kode',[AgrikulturController::class,'scan_driver_kode']);
 Route::get('customer/list_orderan_agrikultur',[AgrikulturController::class,'list_orderan_agrikultur']);
-
+Route::get('customer/list_orderan_agrikultur/{kode}',[AgrikulturController::class,'list_orderan_agrikultur_kode']);
 
 
 
