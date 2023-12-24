@@ -444,7 +444,7 @@ public function list_orderan_agrikultur_kode($kode){
 
         }else{
             return response()->json([
-                'code' => 200,
+                'code' => 500,
                 'message' => 'Kode Transaksi Tidak Ditemukan'
             ]);
 
