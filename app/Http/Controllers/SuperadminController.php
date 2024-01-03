@@ -969,8 +969,35 @@ class SuperadminController extends Controller
 		$update_saldo->update($input);
 
 
-		return redirect()->back()->with('success', 'Produk Berhasil Diupdate');
+		return redirect()->back()->with('success', 'Topup Dikonfirmasi');
 	}
+
+
+	public function superadmin_batal_topup(Request $request, $id)
+	{
+
+
+		$data_update = TransaksiTopUp::where('id', $id)->first();
+
+		$input = [
+			'status_topup' => 'batal',	
+		];
+
+		$data_update->update($input);
+
+		return redirect()->back()->with('danger', 'Topup Dibatalkan');
+	}
+
+
+	public function superadmin_delete_topup($id)
+	{
+
+		$delete = TransaksiTopUp::findOrFail($id);
+		$delete->delete();
+
+		return redirect()->back()->with('danger', 'Topup Dihapus');
+	}
+
 
 	// ===============================================================================================
 

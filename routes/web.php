@@ -124,6 +124,8 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	//routing untuk mengelola Top Up
 	Route::get('/superadmin_kelola_topup', [SuperadminController::class, 'superadmin_kelola_topup'])->name('superadmin_kelola_topup');
 	Route::post('/superadmin_konfirmasi_topup/{id}', [SuperadminController::class, 'superadmin_konfirmasi_topup'])->name('superadmin_konfirmasi_topup');
+	Route::post('/superadmin_batal_topup/{id}', [SuperadminController::class, 'superadmin_batal_topup'])->name('superadmin_batal_topup');
+	Route::post('/superadmin_delete_topup/{id}', [SuperadminController::class, 'superadmin_delete_topup'])->name('superadmin_delete_topup');
 
 
 	//routing untuk mengelola Transfer Bank

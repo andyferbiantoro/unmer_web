@@ -29,11 +29,13 @@ Kelola Transaksi
           <tr>
             <th>No</th>
             <th>Nama Customer</th>
+            <th>Kode Transaksi</th>
             <th>Metode Pembayaran</th>
             <th>Nominal</th>
             <th>Tanggal Top Up</th>
             <th>Bukti Transfer</th>
             <th>Opsi</th>
+            <th>Hapus</th>
 
             <th style="display: none;">hidden</th>
           </tr>
@@ -44,6 +46,7 @@ Kelola Transaksi
           <tr>
             <td>{{$no++}}</td>
             <td>{{$data->nama}}</td>
+            <td>{{$data->kode_transaksi}}</td>
             <td>{{$data->metode_pembayaran}}</td>
             <td>Rp. <?=number_format($data->nominal, 0, ".", ".")?>,00 </td>
             <td>{{date("j F Y", strtotime($data->created_at))}}</td>
@@ -56,12 +59,17 @@ Kelola Transaksi
               @if($data->status_topup == 'pending')
               <div class="badge badge-warning">Belum Upload Bukti Transfer</div>
               @elseif($data->status_topup == 'menunggu_konfirmasi')
-              <a href="#" data-toggle="modal" onclick="deleteData({{$data->id}})" data-target="#DeleteModal"><button class="btn btn-primary btn-sm"  title="Hapus">Konfirmasi</button>
+              <a href="#" data-toggle="modal" onclick="konfirmasiData({{$data->id}})" data-target="#DeleteModal"><button class="btn btn-primary btn-sm"  title="Hapus">Konfirmasi</button>
+
+              <a href="#" data-toggle="modal" onclick="batalData({{$data->id}})" data-target="#BatalModal"><button class="btn btn-dark btn-sm"  title="Batal">Batal</button>
               @elseif($data->status_topup == 'dikonfirmasi')  
               <div class="badge badge-success">Dikonfirmasi</div>
               @elseif($data->status_topup == 'batal')  
               <div class="badge badge-danger">Top Up Batal</div>
               @endif
+              </td>
+              <td>
+                <a href="#" data-toggle="modal" onclick="deleteData({{$data->id}})" data-target="HapusModal"><button class="btn btn-danger btn-sm"  title="Hapus">Hapus</button>
               </td>
               <td style="display: none;">{{$data->id}}</td>
             </tr>
@@ -91,12 +99,59 @@ Kelola Transaksi
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="" id="deleteForm" method="post">
+        <form action="" id="KonfirmasiForm" method="post">
 
           {{ csrf_field() }}
           {{ method_field('POST') }}
           <p>Apakah anda yakin ingin mengkonfirmasi top up ini ?</p> <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Batal</button>
           <button type="submit" name="" class="btn btn-primary float-right mr-2" data-dismiss="modal" onclick="formSubmit()">Konfirmasi</button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="BatalModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Batalkan Top Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" id="batalForm" method="post">
+
+          {{ csrf_field() }}
+          {{ method_field('POST') }}
+          <p>Apakah anda yakin ingin Membatalkan top up ini ?</p> <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Batal</button>
+          <button type="submit" name="" class="btn btn-dark float-right mr-2" data-dismiss="modal" onclick="formBatal()">Batalkan</button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="HapusModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Hapus Top Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" id="deleteForm" method="post">
+
+          {{ csrf_field() }}
+          {{ method_field('POST') }}
+          <p>Apakah anda yakin ingin Menghapus top up ini ?</p> <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Batal</button>
+          <button type="submit" name="" class="btn btn-danger float-right mr-2" data-dismiss="modal" onclick="formDelete()">Hapus</button>
 
         </form>
       </div>
@@ -127,14 +182,42 @@ Kelola Transaksi
 
   @section('scripts')
   <script type="text/javascript">
-    function deleteData(id) {
+    function konfirmasiData(id) {
       var id = id;
       var url = '{{route("superadmin_konfirmasi_topup", ":id") }}';
+      url = url.replace(':id', id);
+      $("#KonfirmasiForm").attr('action', url);
+    }
+
+    function formSubmit() {
+      $("#KonfirmasiForm").submit();
+    }
+  </script>
+
+
+  <script type="text/javascript">
+    function batalData(id) {
+      var id = id;
+      var url = '{{route("superadmin_batal_topup", ":id") }}';
+      url = url.replace(':id', id);
+      $("#batalForm").attr('action', url);
+    }
+
+    function formBatal() {
+      $("#batalForm").submit();
+    }
+  </script>
+
+
+  <script type="text/javascript">
+    function deleteData(id) {
+      var id = id;
+      var url = '{{route("superadmin_delete_topup", ":id") }}';
       url = url.replace(':id', id);
       $("#deleteForm").attr('action', url);
     }
 
-    function formSubmit() {
+    function formDelete() {
       $("#deleteForm").submit();
     }
   </script>
