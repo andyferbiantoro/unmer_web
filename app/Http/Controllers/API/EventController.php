@@ -19,6 +19,7 @@ class EventController extends Controller
             $namaBulan = $tanggalObj->format("F");
             
             $v->nama_bulan = $namaBulan;
+            $v->foto = asset('uploads/foto_event/' . $v->foto_event);
         }
         if ($k) {
 
