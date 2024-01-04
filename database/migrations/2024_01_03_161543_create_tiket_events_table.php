@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('tiket_events', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_event');
             $table->string('judul');
             $table->text('keterangan');
             $table->text('deskripsi');
+            $table->string('foto_tiket');
             $table->integer('harga');
             $table->timestamps();
         });

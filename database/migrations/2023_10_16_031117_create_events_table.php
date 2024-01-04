@@ -24,6 +24,7 @@ return new class extends Migration
             $table->time('jam_selesai');
             $table->integer('htm_event');
             $table->string('status');
+            $table->string('foto_event');
             $table->timestamps();
         });
     }

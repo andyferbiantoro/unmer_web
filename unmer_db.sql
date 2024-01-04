@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Jan 2024 pada 14.22
+-- Waktu pembuatan: 04 Jan 2024 pada 04.24
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -352,6 +352,7 @@ CREATE TABLE `events` (
   `jam_selesai` time NOT NULL,
   `htn_event` int(11) NOT NULL,
   `status` varchar(255) NOT NULL,
+  `foto_event` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -946,10 +947,12 @@ INSERT INTO `status_menus` (`id`, `menu`, `status`, `created_at`, `updated_at`) 
 
 CREATE TABLE `tiket_events` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `id_event` int(11) NOT NULL,
   `judul` varchar(255) NOT NULL,
   `keterangan` text NOT NULL,
   `deskripsi` text NOT NULL,
   `harga` int(11) NOT NULL,
+  `foto_tiket` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
