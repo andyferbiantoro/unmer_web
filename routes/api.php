@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AgrikulturController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\KoperasiController;
 use App\Http\Controllers\API\SaldoController;
 use Illuminate\Http\Request;
@@ -92,6 +93,10 @@ Route::post('customer/koperasi/hapus_keranjang',[KoperasiController::class,'hapu
 Route::post('customer/koperasi/list_keranjang',[KoperasiController::class,'list_keranjang']);
 Route::post('customer/koperasi/create_transaksi',[KoperasiController::class,'create_transaksi_koperasi']);
 
+//event
+Route::get('customer/list_event',[EventController::class,'list_event']);
+Route::get('customer/fasilitas/{id_event}',[EventController::class,'fasilitas']);
+Route::get('customer/list_tiket/{id_event}',[EventController::class,'list_tiket_event']);
 
 
 
