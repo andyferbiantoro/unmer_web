@@ -140,10 +140,7 @@ Kelola Event
         <input type="time" class="form-control" id="jam_selesai" name="jam_selesai"  required=""></input>
       </div>
 
-      <div class="form-group">
-        <label for="stok">Stok Tiket</label>
-        <input type="text" class="form-control" id="stok" name="stok"  required=""></input>
-      </div>
+      
 
 
       
