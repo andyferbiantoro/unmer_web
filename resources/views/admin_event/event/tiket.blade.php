@@ -81,18 +81,16 @@ Lihat Tiket
           <input type="text" class="form-control" id="judul" name="judul"  required=""></input>
         </div>
 
-
-
-        <div class="form-group">
-          <label for="keterangan">Keterangan</label>
-          <textarea type="text" class="form-control" id="keterangan" name="keterangan"  required=""></textarea>
-        </div>
-
         <div class="form-group">
           <label for="deskripsi">Deskripsi</label>
           <input type="text" class="form-control" id="deskripsi" name="deskripsi"  required=""></input>
         </div>
 
+        <div class="form-group">
+          <label for="keterangan">Keterangan</label>
+          <textarea type="text" class="form-control" id="keterangan" name="keterangan"  required=""></textarea>
+        </div>
+        
         <div class="form-group">
           <label for="harga">Harga Tiket</label>
           <input type="number" class="form-control" id="harga" name="harga"  required=""></input>
