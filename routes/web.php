@@ -254,7 +254,25 @@ Route::middleware(['auth', 'admin_pendidikan'])->group(function () {
 Route::middleware(['auth', 'admin_event'])->group(function () {
 	Route::get('/admin_event_dashboard', [AdminEventController::class, 'admin_event_dashboard'])->name('admin_event_dashboard');
 
+	//Event
+	Route::get('/admin_kelola_event', [AdminEventController::class, 'admin_kelola_event'])->name('admin_kelola_event');
+	Route::post('/admin_event_add', [AdminEventController::class, 'admin_event_add'])->name('admin_event_add');
+	Route::post('/admin_event_update/{id}', [AdminEventController::class, 'admin_event_update'])->name('admin_event_update');
+	Route::get('/admin_event_delete/{id}', [AdminEventController::class, 'admin_event_delete'])->name('admin_event_delete');
 
+	//detail
+	Route::get('/admin_lihat_detail_event{id}', [AdminEventController::class, 'admin_lihat_detail_event'])->name('admin_lihat_detail_event');
+	Route::post('/admin_fasilitas_event_add', [AdminEventController::class, 'admin_fasilitas_event_add'])->name('admin_fasilitas_event_add');
+
+	//tiket event
+	Route::get('/admin_lihat_tiket_event{id}', [AdminEventController::class, 'admin_lihat_tiket_event'])->name('admin_lihat_tiket_event');
+	Route::post('/admin_tiket_event_add', [AdminEventController::class, 'admin_tiket_event_add'])->name('admin_tiket_event_add');
+	Route::get('/admin_tiket_event_delete/{id}', [AdminEventController::class, 'admin_tiket_event_delete'])->name('admin_tiket_event_delete');
+
+
+
+	//Wisata
+	Route::get('/admin_kelola_wisata', [AdminEventController::class, 'admin_kelola_wisata'])->name('admin_kelola_wisata');
 
 	Route::get('/admin_event_logout', [AuthController::class, 'admin_event_logout'])->name('admin_event_logout');
 

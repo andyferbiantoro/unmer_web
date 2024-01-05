@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TiketEvent extends Model
 {
     use HasFactory;
+    use HasFactory;
+     protected $table = 'tiket_events';
+	protected $guarded = [];
 }
