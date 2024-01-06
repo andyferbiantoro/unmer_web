@@ -60,6 +60,7 @@ class Kernel extends HttpKernel
         'admin_penginapan' => \App\Http\Middleware\AdminPenginapanAuth::class,
         'admin_pendidikan' => \App\Http\Middleware\AdminPendidikanAuth::class,
         'admin_event' => \App\Http\Middleware\AdminEventAuth::class,
+        'admin_wisata' => \App\Http\Middleware\AdminWisataAuth::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,

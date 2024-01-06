@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminKasirController;
 use App\Http\Controllers\AdminPenginapanController;
 use App\Http\Controllers\AdminPendidikanController;
 use App\Http\Controllers\AdminEventController;
+use App\Http\Controllers\AdminWisataController;
 use App\Http\Controllers\WebViewAndroidController;
 
 
@@ -49,6 +50,7 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 	Route::get('/superadmin_admin_event', [SuperadminController::class, 'superadmin_admin_event'])->name('superadmin_admin_event');
 	Route::get('/superadmin_admin_pendidikan', [SuperadminController::class, 'superadmin_admin_pendidikan'])->name('superadmin_admin_pendidikan');
 	Route::get('/superadmin_admin_kasir', [SuperadminController::class, 'superadmin_admin_kasir'])->name('superadmin_admin_kasir');
+	Route::get('/superadmin_admin_wisata', [SuperadminController::class, 'superadmin_admin_wisata'])->name('superadmin_admin_wisata');
 	Route::post('/admin_add', [SuperadminController::class, 'admin_add'])->name('admin_add');
 	Route::post('/admin_update/{id}', [SuperadminController::class, 'admin_update'])->name('admin_update');
 	Route::post('/admin_delete/{id}', [SuperadminController::class, 'admin_delete'])->name('admin_delete');
@@ -275,6 +277,16 @@ Route::middleware(['auth', 'admin_event'])->group(function () {
 	Route::get('/admin_kelola_wisata', [AdminEventController::class, 'admin_kelola_wisata'])->name('admin_kelola_wisata');
 
 	Route::get('/admin_event_logout', [AuthController::class, 'admin_event_logout'])->name('admin_event_logout');
+
+});	
+
+//Routing untuk role Admin Wisata
+Route::middleware(['auth', 'admin_wisata'])->group(function () {
+	Route::get('/admin_wisata_dashboard', [AdminWisataController::class, 'admin_wisata_dashboard'])->name('admin_wisata_dashboard');
+
+
+
+	Route::get('/admin_wisata_logout', [AuthController::class, 'admin_wisata_logout'])->name('admin_wisata_logout');
 
 });	
 

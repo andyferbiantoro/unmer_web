@@ -113,6 +113,8 @@ class AuthController extends Controller
             return redirect()->route('admin_pendidikan_dashboard')->with('success', 'Anda Berhasil Login');
         }else if(auth()->user()->role == "Admin Event"){
             return redirect()->route('admin_event_dashboard')->with('success', 'Anda Berhasil Login');
+        }else if(auth()->user()->role == "Admin Wisata"){
+            return redirect()->route('admin_wisata_dashboard')->with('success', 'Anda Berhasil Login');
         }
 
     }else{
@@ -155,6 +157,15 @@ class AuthController extends Controller
     }
 
     public function admin_event_logout(){
+
+        auth()->logout(); //logout
+        
+        return redirect()->route('cek_nid')->with('success', 'Anda Berhasil Logout');
+        
+    }
+
+
+    public function admin_wisata_logout(){
 
         auth()->logout(); //logout
         

@@ -190,6 +190,16 @@
            
 
              @endif
+
+
+             @if(Auth::user()->role == 'Admin Wisata')
+             <br>
+             
+            <li class="{{(request()->is('admin_kelola_wisata')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kelola_wisata') }}"><i class="fas fa-mountain"></i><span>Kelola Wisata</span></a></li>
+
+           
+
+             @endif
           </ul>
 
 

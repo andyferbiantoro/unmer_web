@@ -118,6 +118,14 @@ class SuperadminController extends Controller
 	}
 
 
+	public function superadmin_admin_wisata()
+	{
+		$admin = Admin::orderby('id', 'DESC')->where('role_admin', 'Admin Wisata')->get();
+
+		return view('super_admin.kelola_admin.tabel_admin.admin_wisata', compact('admin'));
+	}
+
+
 	public function admin_add(Request $request)
 	{
 

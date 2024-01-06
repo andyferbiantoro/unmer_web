@@ -64,6 +64,12 @@
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
             @endif
+
+            @if(Auth::user()->role == "Admin Wisata")
+            <a href="{{route('admin_wisata_logout')}}" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            @endif
         </div>
     </li>
 </ul>

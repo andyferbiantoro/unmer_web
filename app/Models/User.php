@@ -95,4 +95,13 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function isAdminWisata(){
+
+        if($this->role == 'Admin Wisata'){
+
+            return true;
+        }
+        return false;
+    }
 }

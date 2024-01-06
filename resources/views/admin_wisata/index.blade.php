@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Dashboard Admin Kasir
+    Dashboard Admin Wisata
 @endsection
 
 
@@ -15,7 +15,7 @@
                 </div> -->
                 <div class="card-body">
                    <div class="text-center" >
-               <h1>Selamat Datang Admin Kasir</h1>
+               <h1>Selamat Datang Admin Wisata</h1>
                     <!-- <span class="avatar">
                         <img src="../img/brilliant1.jpg" >
                     </span><br> -->
@@ -29,5 +29,3 @@
 
 
 @endsection
-
-

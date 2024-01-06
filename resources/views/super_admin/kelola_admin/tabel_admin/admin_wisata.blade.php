@@ -12,16 +12,16 @@ Kelola Admin
   <div class="card">
               
                 <div class="card-body">
-                  <h2 class="primary">Admin Pendidikan </h2><hr>
+                  <h2 class="primary">Admin Wisata </h2><hr>
                   <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
                     Tambah Admin 
                   </button><br><br>
 
                   <a href="{{ route('superadmin_kelola_admin') }}"><button type="button" class="btn btn-light btn-sm">Tabel Admin Penginapan</button></a>
                   <a href="{{ route('superadmin_admin_kasir') }}"><button type="button" class="btn btn-light btn-sm">Tabel Admin Kasir</button></a>
-                  <a href="{{ route('superadmin_admin_pendidikan') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Pendidikan</button></a>
+                  <a href="{{ route('superadmin_admin_pendidikan') }}"><button type="button" class="btn btn-light btn-sm">Tabel Admin Pendidikan</button></a>
                   <a href="{{ route('superadmin_admin_event') }}"><button type="button" class="btn btn-light btn-sm">Tabel Admin Event</button></a>
-                  <a href="{{ route('superadmin_admin_wisata') }}"><button type="button" class="btn btn-light btn-sm">Tabel Admin Wisata</button><br><br></a>
+                  <a href="{{ route('superadmin_admin_wisata') }}"><button type="button" class="btn btn-primary btn-sm">Tabel Admin Wisata</button><br><br></a>
 
 
                   @if (session('success'))
@@ -41,6 +41,7 @@ Kelola Admin
                           <th>Tanggal Lahir</th>
                           <th>Status</th>
                           <th>Jabatan Admin</th>
+
                           <th>Opsi</th>
                           <th style="display: none;">hidden</th>
                         </tr>
@@ -138,15 +139,14 @@ Kelola Admin
                   </div>
 
                    <div class="form-group">
-                    <input type="hidden" class="form-control" id="role_admin" name="role_admin"  required="" value="Admin Pendidikan"></input>
+                    <input type="hidden" class="form-control" id="role_admin" name="role_admin"  required="" value="Admin Wisata"></input>
                   </div>
 
                   <div class="form-group">
-                    <input type="hidden" class="form-control" id="role" name="role"  required="" value="Admin Kasir"></input>
+                    <input type="hidden" class="form-control" id="role" name="role"  required="" value="Admin Wisata"></input>
                   </div>
 
-
-                 
+                  
 
 
                </div>
