@@ -104,10 +104,6 @@ Lihat Tiket
         @endforeach
 
 
-        <div class="form-group">
-          <label for="foto_tiket">Foto Tiket</label>
-          <input type="file" class="form-control" id="foto_tiket" name="foto_tiket" required=""></input>
-        </div>
 
 
       </div>

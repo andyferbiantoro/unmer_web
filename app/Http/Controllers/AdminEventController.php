@@ -173,14 +173,6 @@ class AdminEventController extends Controller
 		
 		
 
-		if ($request->hasFile('foto_tiket')) {
-			$file = $request->file('foto_tiket');
-			$filename = $file->getClientOriginalName();
-			$file->move('public/uploads/tiket_event/', $filename);
-			$data_add->foto_tiket = $filename;
-		} else {
-			echo "Gagal upload gambar";
-		}
 		
 
 		$data_add->save();
