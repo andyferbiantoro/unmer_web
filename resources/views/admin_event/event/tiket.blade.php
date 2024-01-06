@@ -41,14 +41,12 @@ Lihat Tiket
           <div class="col-12 col-md-6 col-lg-3">
             <div class="card card-primary">
               <div class="card-header">
-                <img style="border-radius: 0%" height="70" src="{{asset('/public/uploads/tiket_event/'.$tiket->foto_tiket)}}"></img>
+               <h4>{{$tiket->judul}}</h4>
               </div>
               <div class="card-body">
-                <hr>
-                <h4>{{$tiket->judul}}</h4>
-                <b>{{$tiket->deskripsi}}</b>
-                <p>Rp. <?=number_format($tiket->harga, 0, ".", ".")?>,00</p><hr>
-                <p>{{$tiket->keterangan}}</p>
+                <h5>{{$tiket->deskripsi}}</h5>
+                Rp. <?=number_format($tiket->harga, 0, ".", ".")?>,00 <br>
+                <p>{{$tiket->keterangan}}</p><hr>
                 Stok : {{$tiket->stok}} PCS <br>
                 Terjual : {{$tiket->sold}} PCS <br><br>
                 <a href="{{route('admin_tiket_event_delete',$tiket->id)}}"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button></a>
