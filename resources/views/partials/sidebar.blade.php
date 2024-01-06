@@ -185,9 +185,9 @@
              @if(Auth::user()->role == 'Admin Event')
              <br>
              
-            <li class="{{(request()->is('admin_kelola_event')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kelola_event') }}"><i class="fas fa-calendar-check"></i><span>Kelola Event</span></a></li>
+            <li class="{{(request()->is('admin_kelola_event')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kelola_event') }}"><i class="fas fa-calendar-check"></i><span>Kelola Event dan Festival</span></a></li>
 
-            <li class="{{(request()->is('admin_kelola_wisata')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kelola_event') }}"><i class="fas fa-mountain"></i><span>Kelola Wisata</span></a></li>
+           
 
              @endif
           </ul>

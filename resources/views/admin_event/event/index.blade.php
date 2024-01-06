@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Kelola Event
+Kelola Event dan Festival
 @endsection
 
 
@@ -12,7 +12,7 @@ Kelola Event
   <div class="card">
 
     <div class="card-body">
-      <h2 class="primary">Event</h2>
+      <h2 class="primary">Event dan Festival</h2>
      <hr>
     <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
     Tambah Event
@@ -139,16 +139,39 @@ Kelola Event
         <label for="jam_selesai">Jam Selesai</label>
         <input type="time" class="form-control" id="jam_selesai" name="jam_selesai"  required=""></input>
       </div>
-
-      
-
-
-      
     
     <div class="form-group">
       <label for="foto_event">Foto Event</label>
       <input type="file" class="form-control" id="foto_event" name="foto_event" required=""></input>
     </div>
+
+
+    <div class="form-group">
+              <label>Posisi Event</label>
+              <div class="row">
+                <div class="col-lg-6 col-sm-12 col-12">
+                  <div id="mapInput" style="width: 100%; height: 320px; border-radius: 3px;"></div>
+                  <p>klik satu kali untuk menentukan posisi</p>
+                </div>
+                <div class="col-lg-6 col-sm-12 col-12">
+
+                  <div class="form-group">
+                    <label for="latitude_lap">Latitude</label>
+                    <div class="input-group">
+                      <input type="number" step="any" id="lat" name="latitude" class="form-control" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="longitude">Longitude</label>
+                    <div class="input-group">
+                      <input name="longitude" step="any" id="leng" type="number" class="form-control" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
     
 
   </div>
@@ -250,6 +273,78 @@ Kelola Event
       });
     });
   </script>
+
+
+  <script>
+    function initialize() {
+    //Cek Support Geolocation
+    if (navigator.geolocation) {
+      //Mengambil Fungsi golocation
+      navigator.geolocation.getCurrentPosition(lokasi);
+    } else {
+      swal("Maaf Browser tidak Support HTML 5");
+    }
+    //Variabel Marker
+    var marker;
+
+    function taruhMarker(peta, posisiTitik) {
+
+      if (marker) {
+        // pindahkan marker
+        marker.setPosition(posisiTitik);
+      } else {
+        // buat marker baru
+        marker = new google.maps.Marker({
+          position: posisiTitik,
+          map: peta,
+          icon: 'https://img.icons8.com/plasticine/40/000000/marker.png',
+        });
+      }
+
+    }
+    //Buat Peta
+    var peta = new google.maps.Map(document.getElementById("mapInput"), {
+      center: {
+        lat: -8.408698,
+        lng: 114.2339090
+      },
+      zoom: 9
+    });
+    //Fungsi untuk geolocation
+    function lokasi(position) {
+      //Mengirim data koordinat ke form input
+      document.getElementById("lat").value = position.coords.latitude;
+      document.getElementById("leng").value = position.coords.longitude;
+      //Current Location
+      var lat = position.coords.latitude;
+      var long = position.coords.longitude;
+      var latlong = new google.maps.LatLng(lat, long);
+      //Current Marker 
+      var currentMarker = new google.maps.Marker({
+        position: latlong,
+        icon: 'https://img.icons8.com/plasticine/40/000000/user-location.png',
+        map: peta,
+        title: "Anda Disini"
+      });
+      //Membuat Marker Map dengan Klik
+      var latLng = new google.maps.LatLng(-8.408698, 114.2339090);
+
+      var addMarkerClick = google.maps.event.addListener(peta, 'click', function(event) {
+
+
+        taruhMarker(this, event.latLng);
+
+        //Kirim data ke form input dari klik
+        document.getElementById("lat").value = event.latLng.lat();
+        document.getElementById("leng").value = event.latLng.lng();
+
+      });
+    }
+
+  }
+</script>
+<!-- ====================== End Input Map ====================== -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv-h2II7DbFQkpL9pDxNRq3GWXqS5Epts&callback=initialize" type="text/javascript"></script>
 
   @endsection
 

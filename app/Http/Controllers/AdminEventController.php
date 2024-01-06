@@ -50,6 +50,8 @@ class AdminEventController extends Controller
 		$data_add->jam_mulai = $request->input('jam_mulai');
 		$data_add->jam_selesai = $request->input('jam_selesai');
 		$data_add->status = '1';
+		$data_add->longitude = $request->input('longitude');
+		$data_add->latitude = $request->input('latitude');
 		
 
 		if ($request->hasFile('foto_event')) {
