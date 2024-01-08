@@ -15,7 +15,7 @@ Edit Event
 
       
        @foreach($wisata as $wis)
-       <a href="{{route('admin_lihat_detail_wisata',$wis->id)}}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
+       <a href="{{route('admin_lihat_detail_wisata',$wis->id)}}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
        @endforeach
       <br><br>
       <h2 class="primary">Edit Wisata</h2><br>
@@ -45,7 +45,6 @@ Edit Event
                   <label for="deskripsi">Deskripsi</label>
                   <input type="text" class="form-control" id="deskripsi" name="deskripsi" value="{{$data->deskripsi}}"  required=""></input>
                 </div>
-                
 
                <div class="form-group">
                 <label for="hari_operasional_awal">Hari Operasional Awal</label>

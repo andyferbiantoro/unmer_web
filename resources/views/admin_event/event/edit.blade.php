@@ -15,7 +15,7 @@ Edit Event
 
       
        @foreach($event as $ev)
-       <a href="{{route('admin_lihat_detail_event',$ev->id)}}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
+       <a href="{{route('admin_lihat_detail_event',$ev->id)}}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
        @endforeach
       <br><br>
       <h2 class="primary">Edit Event</h2><br>

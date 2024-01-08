@@ -33,6 +33,15 @@ class AdminWisataController extends Controller
 	}
 
 
+	public function admin_wisata_lokasi_wisata($id)
+	{
+		
+		$wisata = Wisata::where('id', $id)->get();
+
+		return view('admin_wisata.wisata.lokasi', compact('wisata'));
+	}
+
+
 	public function admin_wisata_add(Request $request)
 	{
 

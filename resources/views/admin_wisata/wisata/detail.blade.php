@@ -13,15 +13,17 @@ Detail Wisata
 
     <div class="card-body">
 
-      <a href="{{ route('admin_kelola_wisata') }}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
+      <a href="{{ route('admin_kelola_wisata') }}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
      
 
      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambahFasilitas">
-       Tambah Fasilitas
+       <i class="fas fa-plus"></i> Tambah Fasilitas
      </button>
 
-     @foreach($wisata as $wis)
-       <a href="{{route('admin_wisata_edit',$wis->id)}}"><button type="button" class="btn btn-primary btn-sm">Edit</button></a>
+      @foreach($wisata as $wis)
+       <a href="{{route('admin_wisata_edit',$wis->id)}}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button></a>
+
+       <a href="{{route('admin_wisata_lokasi_wisata',$wis->id)}}"><button type="button" class="btn btn-dark btn-sm"><i class="fas fa-map-pin"></i> Lihat Lokasi</button></a>
        @endforeach
      
      <br><br>

@@ -13,14 +13,16 @@ Detail Event
 
     <div class="card-body">
 
-      <a href="{{ route('admin_kelola_event') }}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
-     
+      <a href="{{ route('admin_kelola_event') }}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
 
      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambahFasilitas">
-       Tambah Fasilitas
+       <i class="fas fa-plus"></i> Tambah Fasilitas
      </button>
+
       @foreach($event as $ev)
-       <a href="{{route('admin_event_edit',$ev->id)}}"><button type="button" class="btn btn-primary btn-sm">Edit</button></a>
+       <a href="{{route('admin_event_edit',$ev->id)}}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button></a>
+
+       <a href="{{route('admin_event_lokasi_event',$ev->id)}}"><button type="button" class="btn btn-dark btn-sm"><i class="fas fa-map-pin"></i> Lihat Lokasi</button></a>
        @endforeach
 
     

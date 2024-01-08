@@ -15,7 +15,7 @@ Kelola Event dan Festival
       <h2 class="primary">Event dan Festival</h2>
      <hr>
     <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
-    Tambah Event
+    <i class="fas fa-plus"></i> Tambah Event
     </button><br><br>
     @if (session('success'))
     <div class="alert alert-success">

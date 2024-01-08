@@ -34,6 +34,15 @@ class AdminEventController extends Controller
 	}
 
 
+	public function admin_event_lokasi_event($id)
+	{
+		
+		$event = Event::where('id', $id)->get();
+
+		return view('admin_event.event.lokasi', compact('event'));
+	}
+
+
 
 	public function admin_event_add(Request $request)
 	{

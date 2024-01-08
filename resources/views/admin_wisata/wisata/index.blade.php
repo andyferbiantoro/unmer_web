@@ -15,7 +15,7 @@ Kelola Wisata
       <h2 class="primary">Wisata</h2>
       <hr>
       <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
-        Tambah Wisata
+        <i class="fas fa-plus"></i> Tambah Wisata
       </button><br><br>
       @if (session('success'))
       <div class="alert alert-success">

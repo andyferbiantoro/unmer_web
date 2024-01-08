@@ -13,9 +13,9 @@ Lihat Tiket Wisata
 
     <div class="card-body">
 
-      <a href="{{ route('admin_kelola_wisata') }}"><button type="button" class="btn btn-danger btn-sm">Kembali</button></a>
+      <a href="{{ route('admin_kelola_wisata') }}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
       <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
-       Tambah Tiket
+       <i class="fas fa-plus"></i> Tambah Tiket
      </button>
 
 

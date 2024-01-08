@@ -268,6 +268,10 @@ Route::middleware(['auth', 'admin_event'])->group(function () {
 	Route::post('/admin_event_update/{id}', [AdminEventController::class, 'admin_event_update'])->name('admin_event_update');
 
 
+	//lokasi
+	Route::get('/admin_wisata_lokasi_event{id}', [AdminEventController::class, 'admin_event_lokasi_event'])->name('admin_event_lokasi_event');
+
+
 	//detail
 	Route::get('/admin_lihat_detail_event{id}', [AdminEventController::class, 'admin_lihat_detail_event'])->name('admin_lihat_detail_event');
 	Route::post('/admin_fasilitas_event_add', [AdminEventController::class, 'admin_fasilitas_event_add'])->name('admin_fasilitas_event_add');
@@ -299,6 +303,9 @@ Route::middleware(['auth', 'admin_wisata'])->group(function () {
 	//edit
 	Route::get('/admin_wisata_edit{id}', [AdminWisataController::class, 'admin_wisata_edit'])->name('admin_wisata_edit');
 	Route::post('/admin_wisata_update/{id}', [AdminWisataController::class, 'admin_wisata_update'])->name('admin_wisata_update');
+
+	//lokasi
+	Route::get('/admin_wisata_lokasi_wisata{id}', [AdminWisataController::class, 'admin_wisata_lokasi_wisata'])->name('admin_wisata_lokasi_wisata');
 
 	//detail
 	Route::get('/admin_lihat_detail_wisata{id}', [AdminWisataController::class, 'admin_lihat_detail_wisata'])->name('admin_lihat_detail_wisata');
