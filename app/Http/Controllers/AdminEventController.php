@@ -181,7 +181,7 @@ class AdminEventController extends Controller
 	public function admin_tiket_event_add(Request $request)
 	{
 
-
+		$kode_tiket = mt_rand(10000, 99999);
 
 		$data_add = new TiketEvent();
 
@@ -193,6 +193,7 @@ class AdminEventController extends Controller
 		$data_add->harga = $request->input('harga');
 		$data_add->stok = $request->input('stok');
 		$data_add->sold = '0';
+		$data_add->kode_tiket = $kode_tiket;
 		
 		$data_add->save();
 		

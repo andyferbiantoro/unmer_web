@@ -249,6 +249,7 @@ class AdminWisataController extends Controller
 	public function admin_tiket_wisata_add(Request $request)
 	{
 
+		$kode_tiket = mt_rand(10000, 99999);
 		$data_add = new TiketWisata();
 	
 		$data_add->id_wisata = $request->input('id_wisata');
@@ -258,10 +259,8 @@ class AdminWisataController extends Controller
 		$data_add->harga = $request->input('harga');
 		$data_add->stok = $request->input('stok');
 		$data_add->sold = '0';
-		
-		
+		$data_add->kode_tiket = $kode_tiket;
 
-		
 
 		$data_add->save();
 		
