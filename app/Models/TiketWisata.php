@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TiketEvent extends Model
+class TiketWisata extends Model
 {
-    
     use HasFactory;
-     protected $table = 'tiket_events';
+    protected $table = 'tiket_wisatas';
 	protected $guarded = [];
 }

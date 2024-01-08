@@ -19,7 +19,11 @@ Detail Event
      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambahFasilitas">
        Tambah Fasilitas
      </button>
-     
+      @foreach($event as $ev)
+       <a href="{{route('admin_event_edit',$ev->id)}}"><button type="button" class="btn btn-primary btn-sm">Edit</button></a>
+       @endforeach
+
+    
      <br><br>
      <h2 class="primary">Detail Event</h2><br>
 
@@ -88,6 +92,7 @@ Detail Event
                   <tr>
                     <th>No</th>
                     <th>Fasilitas</th>
+                    <th>Opsi</th>
                   </tr>
                 </thead>
 
@@ -97,6 +102,7 @@ Detail Event
                   <tr>
                     <td>{{$no++}}</td>
                     <td>{{$detail->fasilitas}}</td>
+                    <td> <a href="{{route('admin_fasilitas_event_delete',$detail->id)}}"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button></a></td>
                   </tr>
                   @endforeach
                 </tbody>
@@ -121,6 +127,13 @@ Detail Event
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
 
 
 
@@ -249,6 +262,33 @@ Detail Event
   </div>
 
   @endsection
+
+
+  @section('scripts')
+
+
+
+    <!-- ====================== Input Map ====================== -->
+
+     <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -8.241350866473171, lng: 114.08902679785155 }, // Koordinat tengah peta
+                zoom: 10
+            });
+
+            // Tampilkan marker untuk setiap toko
+            @foreach($event as $ev)
+                new google.maps.Marker({
+                    position: { lat: {{ $ev->latitude }}, lng: {{ $ev->longitude }} },
+                    map: map,
+                    title: '{{ $ev->nama_toko }}'
+                });
+            @endforeach
+        }
+    </script>
+     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv-h2II7DbFQkpL9pDxNRq3GWXqS5Epts&callback=initialize&callback=initMap" type="text/javascript"></script>
+    @endsection
 
 
 

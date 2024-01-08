@@ -15,7 +15,7 @@
                 </div> -->
                 <div class="card-body">
                    <div class="text-center" >
-               <h1>Selamat Datang Admin Event</h1>
+                <h1>Selamat Datang Admin Event</h1>
                     <!-- <span class="avatar">
                         <img src="../img/brilliant1.jpg" >
                     </span><br> -->

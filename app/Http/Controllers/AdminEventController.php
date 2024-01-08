@@ -12,6 +12,8 @@ use PDF;
 use DB;
 use Auth;
 
+
+
 class AdminEventController extends Controller
 {
     //
@@ -67,7 +69,7 @@ class AdminEventController extends Controller
 		$data_add->save();
 		
 
-	// return $cek_keranjang;
+	    // return $cek_keranjang;
 
 		return redirect()->back()->with('success', 'Event Berhasil Ditambahkan');
 	}
@@ -141,7 +143,7 @@ class AdminEventController extends Controller
 
 		$data_add = new DetailEvent();
 
-	
+
 		$data_add->id_event = $request->input('id_event');
 		$data_add->fasilitas = $request->input('fasilitas');
 		
@@ -155,14 +157,26 @@ class AdminEventController extends Controller
 		return redirect()->back()->with('success', 'Failitas Berhasil Ditambahkan');
 	}
 
+
+	public function admin_fasilitas_event_delete($id)
+	{
+
+		$delete_fasilitas = DetailEvent::where('id', $id)->first();
+		$delete_fasilitas->delete();
+
+		return redirect()->back()->with('success', 'Fasilitas Berhasil Dihapus');
+	}
+
+
+
 	public function admin_tiket_event_add(Request $request)
 	{
 
-	
+
 
 		$data_add = new TiketEvent();
 
-	
+
 		$data_add->id_event = $request->input('id_event');
 		$data_add->judul = $request->input('judul');
 		$data_add->keterangan = $request->input('keterangan');
@@ -171,10 +185,6 @@ class AdminEventController extends Controller
 		$data_add->stok = $request->input('stok');
 		$data_add->sold = '0';
 		
-		
-
-		
-
 		$data_add->save();
 		
 
@@ -185,12 +195,79 @@ class AdminEventController extends Controller
 
 
 
-	// ======================================================================================================================
-
-	public function admin_kelola_wisata()
+	public function admin_event_edit($id)
 	{
+		
+		$event = Event::where('id', $id)->get();
 
-		return view('admin_event.wisata.index');
+		$detail_event = DetailEvent::where('id_event', $id)->orderBy('id', 'DESC')->get();
+
+
+		return view('admin_event.event.edit', compact('detail_event','event'));
 	}
+
+
+	public function admin_event_update(Request $request, $id)
+	{
+		$long = $request->longitude;
+		$lat = $request->latitude;
+		$data_update = Event::where('id',$id)->first();	
+
+		if ($long == null && $lat == null) {
+			$input = [
+				'judul_event' => $request->judul_event,
+				'deskripsi' => $request->deskripsi,
+				'lokasi' => $request->lokasi,
+				'tanggal_event' => $request->tanggal_event,
+				'jam_mulai' => $request->jam_mulai,
+				'jam_selesai' => $request->jam_selesai,
+				'longitude' => $data_update->longitude,
+				'latitude' => $data_update->latitude,
+
+			];
+
+			if ($file = $request->file('foto_event')) {
+				if ($data_update->foto_event) {
+					File::delete('uploads/event/' . $data_update->foto_event);
+				}
+				$nama_file = $file->getClientOriginalName();
+				$file->move(public_path() . '/uploads/event/', $nama_file);
+				$input['foto_event'] = $nama_file;
+			}
+
+			$data_update->update($input);
+
+		}else{
+			$input = [
+				'judul_event' => $request->judul_event,
+				'deskripsi' => $request->deskripsi,
+				'lokasi' => $request->lokasi,
+				'tanggal_event' => $request->tanggal_event,
+				'jam_mulai' => $request->jam_mulai,
+				'jam_selesai' => $request->jam_selesai,
+				'longitude' => $request->longitude,
+				'latitude' => $request->latitude,
+
+			];
+
+			if ($file = $request->file('foto_event')) {
+				if ($data_update->foto_event) {
+					File::delete('uploads/event/' . $data_update->foto_event);
+				}
+				$nama_file = $file->getClientOriginalName();
+				$file->move(public_path() . '/uploads/event/', $nama_file);
+				$input['foto_event'] = $nama_file;
+			}
+
+			$data_update->update($input);
+
+		}
+		
+
+		return redirect()->back()->with('success', 'Event Berhasil Diperbarui');
+	}
+
+
+
 
 }
