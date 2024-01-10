@@ -200,6 +200,12 @@ class AuthController extends Controller
             ->select('users.*','users.id as id_user','drivers.*','drivers.id as id_driver')->where('users.id',$cekotp->id)->first();
             $data->foto= asset('uploads/profil/'.$data->foto);
 
+            }else if($cekotp->role=='admin_tiket'){
+                $data = DB::table('users')
+                ->select('users.*')->where('users.id',$cekotp->id)->first();
+                $data->foto= asset('uploads/profil/'.$data->foto);
+    
+
             }else{
                 $data = DB::table('customers')->leftJoin('users','customers.id_user','users.id')
             ->select('users.*','users.id as id_user','customers.*','customers.id as id_customer')->where('users.id',$cekotp->id)->first();
