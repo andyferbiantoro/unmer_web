@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\DetailEvent;
 use App\Models\Event;
 use App\Models\TiketEvent;
+use App\Models\TransaksiEvent;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -77,6 +78,7 @@ class EventController extends Controller
             ]);
         }
     }
+    
 
     
     // public function create_transaki_tiket(Request $request)
@@ -140,4 +142,27 @@ class EventController extends Controller
     //     ]);
 
     // }
+
+    public function cektiket(Request $request){
+        $cek = TransaksiEvent::where('kode_transaksi', $request->kode_transaksi)
+        ->orderBy('id', 'desc')->first();
+
+        if ($cek) {
+
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'Tiket Berhasil Registrasi'
+                ]);
+           
+
+
+        }else{
+            return response()->json([
+                'code' => 500,
+                'message' => 'Kode Tiket Tidak Ditemukan'
+            ]);
+
+        }
+
+    }
 }
