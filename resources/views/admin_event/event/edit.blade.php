@@ -123,7 +123,7 @@ Edit Event
             <form method="post" action="{{route('admin_event_update',$data->id)}}" enctype="multipart/form-data">
 
               <div class="form-group">
-                <label for="latitude_lap">Foto Produk</label>
+                <label for="latitude_lap">Foto Event</label>
                 <div></div><span ><img  style="width: 100%; height: 400px; border-radius: 3px;" 
                   src="{{asset('public/uploads/event/'.$data->foto_event)}}"></span>
                 </div>

@@ -282,12 +282,27 @@ Route::middleware(['auth', 'admin_event'])->group(function () {
 	Route::post('/admin_tiket_event_add', [AdminEventController::class, 'admin_tiket_event_add'])->name('admin_tiket_event_add');
 	Route::get('/admin_tiket_event_delete/{id}', [AdminEventController::class, 'admin_tiket_event_delete'])->name('admin_tiket_event_delete');
 
+	//transaksi Event
+	Route::get('/admin_kelola_transaksi_event', [AdminEventController::class, 'admin_kelola_transaksi_event'])->name('admin_kelola_transaksi_event');
+
+
+	//Scan Tiket Event
+	Route::get('/admin_scan_tiket_event', [AdminEventController::class, 'admin_scan_tiket_event'])->name('admin_scan_tiket_event');
+	Route::post('/admin_update_status_tiket_event/{id}', [AdminEventController::class, 'admin_update_status_tiket_event'])->name('admin_update_status_tiket_event');
+
 
 
 	
 	Route::get('/admin_event_logout', [AuthController::class, 'admin_event_logout'])->name('admin_event_logout');
 
 });	
+
+
+
+
+
+
+
 
 //Routing untuk role Admin Wisata
 Route::middleware(['auth', 'admin_wisata'])->group(function () {

@@ -14,7 +14,6 @@ Detail Wisata
     <div class="card-body">
 
       <a href="{{ route('admin_kelola_wisata') }}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
-     
 
      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambahFasilitas">
        <i class="fas fa-plus"></i> Tambah Fasilitas
@@ -72,7 +71,7 @@ Detail Wisata
                 <tr>
                   <th>Alamat</th>
                   <th>:</th>
-                  <td>{{$data->alamat}} WIB</td>
+                  <td>{{$data->alamat}}</td>
                 </tr> 
 
               

@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Event;
 use App\Models\TiketEvent;
 use App\Models\DetailEvent;
+use App\Models\TransaksiEvent;
 use File;
 use PDF;
 use DB;
@@ -278,6 +279,66 @@ class AdminEventController extends Controller
 	}
 
 
+// ===============================================================================================================
 
+
+
+	public function admin_kelola_transaksi_event()
+	{
+
+
+		return view('admin_event.transaksi.index');
+	}
+
+// ================================================================================================================
+
+	public function admin_scan_tiket_event(Request $request)
+	{
+
+		$kode_transaksi = $request->kode_transaksi;
+
+		if ($kode_transaksi == null) {
+			$cari_tiket = DB::table('transaksi_events')
+			->join('customers', 'transaksi_events.id_customer', '=', 'customers.id')
+			->join('events', 'transaksi_events.id_event', '=', 'events.id')
+			->join('tiket_events', 'transaksi_events.id_tiket', '=', 'tiket_events.id')
+			->select('transaksi_events.*', 'customers.nama','events.judul_event','tiket_events.judul','tiket_events.harga','tiket_events.kode_tiket')
+			->orderBy('transaksi_events.id', 'DESC')
+			->where('transaksi_events.kode_transaksi','0')
+			->get();
+
+
+		}else{
+			// $cari_tiket = ProdukKoperasi::where('kode_transaksi',$kode_transaksi)->get();
+
+			$cari_tiket = DB::table('transaksi_events')
+			->join('customers', 'transaksi_events.id_customer', '=', 'customers.id')
+			->join('events', 'transaksi_events.id_event', '=', 'events.id')
+			->join('tiket_events', 'transaksi_events.id_tiket', '=', 'tiket_events.id')
+			->select('transaksi_events.*', 'customers.nama','events.judul_event','tiket_events.judul','tiket_events.harga','tiket_events.kode_tiket')
+			->orderBy('transaksi_events.id', 'DESC')
+			->where('transaksi_events.kode_transaksi',$kode_transaksi)
+			->get();
+		}
+
+		return view('admin_event.scan_tiket.index',compact('cari_tiket'));
+	}
+
+
+
+	public function admin_update_status_tiket_event(Request $request, $id)
+	{
+
+		$data_update = TransaksiEvent::where('id',$id)->first();	
+
+		
+		$input = [
+			'status' => 'valid',
+		];
+
+		$data_update->update($input);
+
+		return redirect()->back()->with('success', 'Tiket Berhasil Diverifikasi');
+	}
 
 }

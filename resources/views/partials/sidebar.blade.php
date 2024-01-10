@@ -187,6 +187,10 @@
              
             <li class="{{(request()->is('admin_kelola_event')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kelola_event') }}"><i class="fas fa-calendar-check"></i><span>Kelola Event dan Festival</span></a></li>
 
+            <li class="{{(request()->is('admin_kelola_transaksi_event')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kelola_transaksi_event') }}"><i class="fas fa-money-bill"></i></i><span>Kelola Transaksi</span></a></li>
+
+            <li class="{{(request()->is('admin_scan_tiket_event')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_scan_tiket_event') }}"><i class="fas fa-qrcode"></i><span>Scan Tiket</span></a></li>
+
            
 
              @endif
