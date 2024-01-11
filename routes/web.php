@@ -285,6 +285,8 @@ Route::middleware(['auth', 'admin_event'])->group(function () {
 	//transaksi Event
 	Route::get('/admin_kelola_transaksi_event', [AdminEventController::class, 'admin_kelola_transaksi_event'])->name('admin_kelola_transaksi_event');
 
+	Route::get('/admin_pembelian_tiket{id}', [AdminEventController::class, 'admin_pembelian_tiket'])->name('admin_pembelian_tiket');
+
 
 	//Scan Tiket Event
 	Route::get('/admin_scan_tiket_event', [AdminEventController::class, 'admin_scan_tiket_event'])->name('admin_scan_tiket_event');
