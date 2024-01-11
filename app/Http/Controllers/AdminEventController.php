@@ -286,9 +286,34 @@ class AdminEventController extends Controller
 	public function admin_kelola_transaksi_event()
 	{
 
+		$event = Event::OrderBy('id', 'DESC')->get();
 
-		return view('admin_event.transaksi.index');
+
+		return view('admin_event.transaksi.index', compact('event'));
 	}
+
+
+
+	public function admin_pembelian_tiket($id)
+	{
+
+		$pembelian_tiket = DB::table('transaksi_events')
+			->join('customers', 'transaksi_events.id_customer', '=', 'customers.id')
+			->join('events', 'transaksi_events.id_event', '=', 'events.id')
+			->join('tiket_events', 'transaksi_events.id_tiket', '=', 'tiket_events.id')
+			->select('transaksi_events.*', 'customers.nama','events.judul_event','tiket_events.judul','tiket_events.harga','tiket_events.kode_tiket')
+			->orderBy('transaksi_events.id', 'DESC')
+			->where('transaksi_events.id_event', $id)
+			->where('transaksi_events.status', 'valid')
+			->get();
+		
+		// /return $pembelian_tiket;
+
+		return view('admin_event.transaksi.pembelian_tiket', compact('pembelian_tiket'));
+	}
+
+
+
 
 // ================================================================================================================
 
@@ -330,7 +355,7 @@ class AdminEventController extends Controller
 	{
 
 		$data_update = TransaksiEvent::where('id',$id)->first();	
-
+		
 		
 		$input = [
 			'status' => 'valid',
@@ -341,4 +366,6 @@ class AdminEventController extends Controller
 		return redirect()->back()->with('success', 'Tiket Berhasil Diverifikasi');
 	}
 
+
+// ==================================================================================================================
 }
