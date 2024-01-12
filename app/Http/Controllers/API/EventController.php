@@ -163,6 +163,8 @@ class EventController extends Controller
 
 
         if ($cek) {
+
+            if($cek->status=='pending'){
         
 
                 return response()->json([
@@ -171,6 +173,14 @@ class EventController extends Controller
                     'data'=>$cek
                     
                 ]);
+            }else{
+                return response()->json([
+                    'code' => 400,
+                    'message' => 'Tiket Kadaluwarsa',
+                    // 'data'=>$cek
+                    
+                ]);
+            }
            
 
 
@@ -190,6 +200,8 @@ class EventController extends Controller
         ->orderBy('id', 'desc')->first();
 
         if ($cek) {
+
+            if($cek->status=='pending'){
             $cek->update([
                 'status'=>'valid'
             ]);
@@ -199,6 +211,15 @@ class EventController extends Controller
                     'message' => 'Tiket Berhasil Registrasi',
                     
                 ]);
+
+            }else{
+                return response()->json([
+                    'code' => 400,
+                    'message' => 'Tiket Kadaluwarsa',
+                    
+                ]);
+            }
+           
            
 
 
@@ -210,5 +231,55 @@ class EventController extends Controller
 
         }
 
+    }
+
+
+    public function list_transaksi_tiket($id_user){
+
+        $cek = DB::table('transaksi_events')
+        ->leftJoin('events','transaksi_events.id_event','events.id')
+        ->leftJoin('customers','transaksi_events.id_customer','customers.id')
+        ->leftJoin('tiket_events','transaksi_events.id_tiket','tiket_events.id')
+        ->select('customers.nama','events.*','tiket_events.*','transaksi_events.*')
+        ->where('transaksi_events.id_customer',$id_user)
+        ->orderBy('transaksi_events.id', 'desc')->get();
+
+        if ($cek) {
+
+            return response()->json([
+                'code' => '200',
+                'data' => $cek
+            ]);
+        } else {
+            return response()->json([
+                'code' => '500',
+                'data' => []
+            ]);
+        }
+    }
+
+    
+    public function list_transaksi_tiket_first($id){
+
+        $cek = DB::table('transaksi_events')
+        ->leftJoin('events','transaksi_events.id_event','events.id')
+        ->leftJoin('customers','transaksi_events.id_customer','customers.id')
+        ->leftJoin('tiket_events','transaksi_events.id_tiket','tiket_events.id')
+        ->select('customers.nama','events.*','tiket_events.*','transaksi_events.*')
+        ->where('transaksi_events.id',$id)
+        ->orderBy('transaksi_events.id', 'desc')->get();
+
+        if ($cek) {
+
+            return response()->json([
+                'code' => '200',
+                'data' => $cek
+            ]);
+        } else {
+            return response()->json([
+                'code' => '500',
+                'data' => []
+            ]);
+        }
     }
 }
