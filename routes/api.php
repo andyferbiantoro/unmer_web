@@ -100,6 +100,8 @@ Route::get('customer/list_tiket/{id_event}',[EventController::class,'list_tiket_
 Route::get('customer/cek_kode_tiket',[EventController::class,'cektiket']);
 Route::get('customer/registrasi_tiket',[EventController::class,'registrasi_tiket']);
 Route::post('customer/create_transaki_tiket',[EventController::class,'create_transaki_tiket']);
+Route::get('customer/list_transaki_tiket/{id_user}',[EventController::class,'list_transaksi_tiket']);
+Route::get('customer/list_transaki_tiket_first/{id}',[EventController::class,'list_transaksi_tiket_first']);
 
 
 
