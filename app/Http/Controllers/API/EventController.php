@@ -95,7 +95,7 @@ class EventController extends Controller
         $transaksi = TransaksiEvent::create([
             'id_customer' => $request->id_user,
             'kode_transaksi' =>  strtoupper(Str::random(8)),
-            // 'biaya_layanan'=>$request->biaya_layanan,
+            'biaya_layanan'=>$request->biaya_layanan,
             'id_event'=>$request->id_event,
             'id_tiket'=>$request->id_tiket,
             'nominal'=>$request->nominal,
