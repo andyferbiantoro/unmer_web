@@ -14,7 +14,7 @@ Lokasi Event
       <div class="card-body">
 
         @foreach($event as $ev)
-       <a href="{{ route('admin_kelola_event') }}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
+       <a href="{{route('superadmin_lihat_detail_event',$ev->id)}}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
        @endforeach
 
         <br><br>

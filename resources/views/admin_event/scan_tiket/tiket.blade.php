@@ -13,7 +13,7 @@ Lihat Tiket
 
     <div class="card-body">
 
-      <a href="{{ route('admin_kelola_event') }}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
+      
       <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambah">
        <i class="fas fa-plus"></i> Tambah Tiket
      </button>

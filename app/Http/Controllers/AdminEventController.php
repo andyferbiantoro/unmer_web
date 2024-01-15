@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\TiketEvent;
 use App\Models\DetailEvent;
 use App\Models\TransaksiEvent;
+use App\Models\FotoEvent;
 use File;
 use PDF;
 use DB;
@@ -28,10 +29,13 @@ class AdminEventController extends Controller
 	public function admin_kelola_event()
 	{
 		$id_admin = Admin::where('id_user',Auth::user()->id)->first();
-
 		$event = Event::where('id_admin', $id_admin->id)->orderBy('id', 'DESC')->get();
 
-		return view('admin_event.event.index', compact('event'));
+		$id_event = Event::where('id_admin', $id_admin->id)->orderBy('id', 'DESC')->first();
+		$detail_event = DetailEvent::where('id_event', $id_event->id)->orderBy('id', 'DESC')->get();
+		$foto_event = FotoEvent::where('id_event', $id_event->id)->orderby('id','DESC')->get();
+
+		return view('admin_event.event.index', compact('event','detail_event','foto_event'));
 	}
 
 
@@ -39,6 +43,7 @@ class AdminEventController extends Controller
 	{
 		
 		$event = Event::where('id', $id)->get();
+
 
 		return view('admin_event.event.lokasi', compact('event'));
 	}
@@ -136,15 +141,17 @@ class AdminEventController extends Controller
 
 
 
-	public function admin_lihat_tiket_event($id)
+	public function admin_lihat_tiket_event()
 	{
+		$id_admin = Admin::where('id_user',Auth::user()->id)->first();
+		$id_event = Event::where('id_admin', $id_admin->id)->first();
+
 		
+		$tiket_event = TiketEvent::where('id_event', $id_event->id)->orderBy('id', 'DESC')->get();
+		$event = Event::where('id', $id_event->id)->get();
 
-		$tiket_event = TiketEvent::where('id_event', $id)->orderBy('id', 'DESC')->get();
-		$event = Event::where('id', $id)->get();
 
-
-		return view('admin_event.event.tiket', compact('tiket_event','event'));
+		return view('admin_event.scan_tiket.tiket', compact('tiket_event','event'));
 	}
 
 
@@ -368,4 +375,60 @@ class AdminEventController extends Controller
 
 
 // ==================================================================================================================
+
+public function admin_foto_event_edit($id)
+	{
+		
+		$foto_event = FotoEvent::where('id_event', $id)->get();
+		$event = Event::where('id', $id)->first();
+
+
+
+		return view('admin_event.event.lihat_foto', compact('foto_event','event'));
+	}
+
+
+	public function admin_foto_event_add(Request $request)
+	{
+
+		
+		
+		$get_count = FotoEvent::where('id_event',$request->input('id_event'))->count();
+
+		$add_foto = new FotoEvent();
+
+		$add_foto->id_event = $request->input('id_event');
+		$add_foto->indeks = $get_count+1;
+
+		if ($request->hasFile('foto_event')) {
+			$file = $request->file('foto_event');
+			$filename = $file->getClientOriginalName();
+			$file->move('public/uploads/event/', $filename);
+			$add_foto->foto_event = $filename;
+		} else {
+			echo "Gagal upload gambar";
+		}
+
+		$add_foto->save();
+			# code...
+		
+
+		
+
+	    // return $cek_keranjang;
+
+		return redirect()->back()->with('success', 'Event Berhasil Ditambahkan');
+	}
+
+	public function admin_foto_event_delete($id)
+	{
+
+		$delete_foto = FotoEvent::where('id', $id)->first();
+		File::delete('public/uploads/event/' . $delete_foto->foto_event);
+		$delete_foto->delete();
+		
+		return redirect()->back()->with('success', 'Foto Berhasil Dihapus');
+	}
+
 }
+

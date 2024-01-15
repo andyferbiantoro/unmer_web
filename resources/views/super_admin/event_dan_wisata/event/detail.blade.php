@@ -13,60 +13,34 @@ Detail Event
 
     <div class="card-body">
 
-      <a href="{{ route('admin_kelola_event') }}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
+      <a href="{{ route('superadmin_kelola_event') }}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
 
-     <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambahFasilitas">
+      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalTambahFasilitas">
        <i class="fas fa-plus"></i> Tambah Fasilitas
      </button>
 
-      @foreach($event as $ev)
-       <a href="{{route('admin_event_edit',$ev->id)}}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button></a>
+     @foreach($event as $ev)
+     <a href="{{route('superadmin_event_edit',$ev->id)}}"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button></a>
 
-       <a href="{{route('admin_event_lokasi_event',$ev->id)}}"><button type="button" class="btn btn-dark btn-sm"><i class="fas fa-map-pin"></i> Lihat Lokasi</button></a>
-       <a href="{{route('admin_foto_event_edit',$ev->id)}}"><button type="button" class="btn btn-info btn-sm"><i class="fas fa-images"></i> Lihat Foto</button></a>
-       @endforeach
+     <a href="{{route('superadmin_event_lokasi_event',$ev->id)}}"><button type="button" class="btn btn-dark btn-sm"><i class="fas fa-map-pin"></i> Lihat Lokasi</button></a>
 
-    
+     <a href="{{route('superadmin_foto_event_edit',$ev->id)}}"><button type="button" class="btn btn-info btn-sm"><i class="fas fa-images"></i> Lihat Foto</button></a>
+     @endforeach
+
+
      <br><br>
-     <h2 class="primary">Profil Event</h2><br>
+     <h2 class="primary">Detail Event</h2><br>
 
      @if (session('success'))
      <div class="alert alert-success">
       {{ session('success') }}
     </div>
     @endif
-
- @foreach($event as $data)
-    <div id="carouselExampleControls{{$data->id}}" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
-        @foreach($foto_event as $image)
-        @if($image->indeks == 1)
-        <div class="carousel-item active">
-          @else    
-          <div class="carousel-item">
-            @endif    
-            <img class="d-block w-100" src="{{asset('public/uploads/event/'.$image->foto_event)}}" alt="First slide">
-          </div>
-          <br>
-          @endforeach
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls{{$data->id}}" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls{{$data->id}}" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-    </div>
-@endforeach
-
     <div class="text-left" >
 
       <div class="form-group">
         <div class="row">
-          <div class="col-lg-12 col-sm-12 col-12">
+          <div class="col-lg-6 col-sm-12 col-12">
             @foreach($event as $data)
             <div class="table-responsive">
               <table id="dataTable"  class="table table-hover">
@@ -132,7 +106,7 @@ Detail Event
                   <tr>
                     <td>{{$no++}}</td>
                     <td>{{$detail->fasilitas}}</td>
-                    <td> <a href="{{route('admin_fasilitas_event_delete',$detail->id)}}"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button></a></td>
+                    <td> <a href="{{route('superadmin_fasilitas_event_delete',$detail->id)}}"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button></a></td>
                   </tr>
                   @endforeach
                 </tbody>
@@ -141,7 +115,35 @@ Detail Event
             @endforeach
           </div>
 
-         
+          <div class="col-lg-6 col-sm-12 col-12">
+
+           
+
+             <div id="carouselExampleControls{{$data->id}}" class="carousel slide" data-ride="carousel">
+                      <div class="carousel-inner">
+                        @foreach($foto_event as $image)
+                        @if($image->indeks == 1)
+                        <div class="carousel-item active">
+                            @else    
+                            <div class="carousel-item">
+                                @endif    
+                                <img class="d-block w-100" src="{{asset('public/uploads/event/'.$image->foto_event)}}" alt="First slide">
+                            </div>
+                            <br>
+                            @endforeach
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls{{$data->id}}" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls{{$data->id}}" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
           </div>
 
         </div>
@@ -169,7 +171,7 @@ Detail Event
         <h5 class="modal-title" id="myLargeModalLabel">Tambah Fasilitas</h5>
       </div>
       <div class="modal-body">
-       <form method="post" action="{{route('admin_fasilitas_event_add')}}" enctype="multipart/form-data">
+       <form method="post" action="{{route('superadmin_fasilitas_event_add')}}" enctype="multipart/form-data">
 
         {{csrf_field()}}
 
@@ -212,7 +214,7 @@ Detail Event
         <h5 class="modal-title" id="myLargeModalLabel">Tambah Tiket</h5>
       </div>
       <div class="modal-body">
-       <form method="post" action="{{route('admin_tiket_event_add')}}" enctype="multipart/form-data">
+       <form method="post" action="{{route('superadmin_tiket_event_add')}}" enctype="multipart/form-data">
 
         {{csrf_field()}}
 
@@ -267,6 +269,22 @@ Detail Event
 
 
 
+
+
+
+<!-- show Foto -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body text-center">
+        <img src="" id="img01" style="width: 450px; height: auto;" >
+      </div>
+    </div>
+  </div>
+
   @endsection
 
 
@@ -274,27 +292,27 @@ Detail Event
 
 
 
-    <!-- ====================== Input Map ====================== -->
+  <!-- ====================== Input Map ====================== -->
 
-     <script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
+  <script>
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: -8.241350866473171, lng: 114.08902679785155 }, // Koordinat tengah peta
                 zoom: 10
-            });
+              });
 
             // Tampilkan marker untuk setiap toko
             @foreach($event as $ev)
-                new google.maps.Marker({
-                    position: { lat: {{ $ev->latitude }}, lng: {{ $ev->longitude }} },
-                    map: map,
-                    title: '{{ $ev->nama_toko }}'
-                });
+            new google.maps.Marker({
+              position: { lat: {{ $ev->latitude }}, lng: {{ $ev->longitude }} },
+              map: map,
+              title: '{{ $ev->nama_toko }}'
+            });
             @endforeach
-        }
-    </script>
-     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv-h2II7DbFQkpL9pDxNRq3GWXqS5Epts&callback=initialize&callback=initMap" type="text/javascript"></script>
-    @endsection
+          }
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv-h2II7DbFQkpL9pDxNRq3GWXqS5Epts&callback=initialize&callback=initMap" type="text/javascript"></script>
+        @endsection
 
 
 

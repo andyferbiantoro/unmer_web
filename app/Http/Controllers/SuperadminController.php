@@ -27,6 +27,11 @@ use App\Models\TransaksiKirimSaldo;
 use App\Models\BiayaLayanan;
 use App\Models\StatusMenu;
 use App\Models\KontakBantuan;
+use App\Models\Event;
+use App\Models\TiketEvent;
+use App\Models\DetailEvent;
+use App\Models\FotoEvent;
+use App\Models\TransaksiEvent;
 use File;
 use PDF;
 use DB;
@@ -232,14 +237,14 @@ class SuperadminController extends Controller
 	public function superadmin_detail_partner($id)
 	{
 		$detail_partner = DB::table('produk_koperasis')
-			->join('customers', 'produk_koperasis.id_partner', '=', 'customers.id')
-			->select('produk_koperasis.*', 'customers.nama')
-			->orderBy('produk_koperasis.id', 'DESC')
-			->where('produk_koperasis.id_partner', $id)
-			->get();
+		->join('customers', 'produk_koperasis.id_partner', '=', 'customers.id')
+		->select('produk_koperasis.*', 'customers.nama')
+		->orderBy('produk_koperasis.id', 'DESC')
+		->where('produk_koperasis.id_partner', $id)
+		->get();
 
 		$nama_partner = Customer::where('id',$id)->first();
-			
+
 		
 		return view('super_admin.kelola_user.detail_partner', compact('detail_partner','nama_partner'));
 	}
@@ -1143,7 +1148,7 @@ class SuperadminController extends Controller
 	{
 
 		$status_menu = StatusMenu::all();
-	
+
 		return view('super_admin.kelola_tambahan.index',compact('status_menu'));
 	}
 
@@ -1184,7 +1189,7 @@ class SuperadminController extends Controller
 
 		$kontak_bantuan = KontakBantuan::all();
 		$cek_kontak = KontakBantuan::count();
-	
+
 		return view('super_admin.kelola_tambahan.kontak_bantuan',compact('kontak_bantuan','cek_kontak'));
 	}
 
@@ -1224,6 +1229,258 @@ class SuperadminController extends Controller
 		$delete->delete();
 
 		return redirect()->back()->with('success', 'Kontak Berhasil Dihapus');
+	}
+
+
+	// =======================================================================================================
+
+
+	public function superadmin_kelola_event()
+	{
+
+		$admin_event = Admin::where('role_admin','Admin Event')->orderby('id','DESC')->get();
+		
+		// $event = Event::orderBy('id', 'DESC')->get();
+
+		$event = DB::table('events')
+		->join('admins', 'events.id_admin', '=', 'admins.id')
+		->select('events.*', 'admins.nama')
+		->orderBy('id', 'DESC')
+		->get();
+
+		return view('super_admin.event_dan_wisata.event.index',compact('admin_event','event'));
+	}
+
+
+	public function superadmin_event_add(Request $request)
+	{
+
+		$data = ([
+			'id_admin' => $request['id_admin'],
+			'judul_event' => $request['judul_event'],
+			'deskripsi' => $request['deskripsi'],
+			'lokasi' => $request['lokasi'],
+			'tanggal_event' => $request['tanggal_event'],
+			'jam_mulai' => $request['jam_mulai'],
+			'jam_selesai' => $request['jam_selesai'],
+			'status' => '1',
+			'longitude' => $request['longitude'],
+			'latitude' => $request['latitude'],
+			
+
+
+		]);
+
+		// return $data;
+		$lastid = Event::create($data)->id;
+		
+		$get_count = FotoEvent::where('id_event',$request->input('id_event'))->count();
+
+		$add_foto = new FotoEvent();
+
+		$add_foto->id_event = $lastid;
+		$add_foto->indeks = $get_count+1;
+
+		if ($request->hasFile('foto_event')) {
+			$file = $request->file('foto_event');
+			$filename = $file->getClientOriginalName();
+			$file->move('public/uploads/event/', $filename);
+			$add_foto->foto_event = $filename;
+		} else {
+			echo "Gagal upload gambar";
+		}
+
+		$add_foto->save();
+			# code...
+		
+
+		
+
+	    // return $cek_keranjang;
+
+		return redirect()->back()->with('success', 'Event Berhasil Ditambahkan');
+	}
+
+
+	public function superadmin_event_delete($id)
+	{
+
+
+		$cek_event = Event::where('id', $id)->first();
+
+		$delete_tiket = TiketEvent::where('id_event', $cek_event->id)->get();
+
+		foreach ($delete_tiket as $key) {
+			File::delete('uploads/tiket_event/' . $key->foto_tiket);
+			$key->delete();
+		}
+
+		$delete_fasilitas = DetailEvent::where('id_event', $cek_event->id)->get();
+
+		foreach ($delete_fasilitas as $key) {
+			$key->delete();
+		}
+
+		$delete = Event::findOrFail($id);
+		$delete->delete();
+
+		return redirect()->back()->with('success', 'Data Berhasil Dihapus');
+	}
+
+
+
+	public function superadmin_lihat_detail_event($id)
+	{
+		
+		$event = Event::where('id', $id)->get();
+		$foto_event = FotoEvent::where('id_event', $id)->orderby('id','DESC')->get();
+
+		$detail_event = DetailEvent::where('id_event', $id)->orderBy('id', 'DESC')->get();
+
+
+		return view('super_admin.event_dan_wisata.event.detail', compact('detail_event','event','foto_event'));
+	}
+
+
+	public function superadmin_fasilitas_event_add(Request $request)
+	{
+
+		$data_add = new DetailEvent();
+
+
+		$data_add->id_event = $request->input('id_event');
+		$data_add->fasilitas = $request->input('fasilitas');
+		
+
+		// return $data_add;	
+		$data_add->save();
+		
+
+	// return $cek_keranjang;
+
+		return redirect()->back()->with('success', 'Failitas Berhasil Ditambahkan');
+	}
+
+
+	public function superadmin_fasilitas_event_delete($id)
+	{
+
+		$delete_fasilitas = DetailEvent::where('id', $id)->first();
+		$delete_fasilitas->delete();
+
+		return redirect()->back()->with('success', 'Fasilitas Berhasil Dihapus');
+	}
+
+
+	public function superadmin_event_edit($id)
+	{
+		
+		$event = Event::where('id', $id)->get();
+
+		$detail_event = DetailEvent::where('id_event', $id)->orderBy('id', 'DESC')->get();
+
+
+		return view('super_admin.event_dan_wisata.event.edit', compact('detail_event','event'));
+	}
+
+
+	public function superadmin_event_update(Request $request, $id)
+	{
+		$long = $request->longitude;
+		$lat = $request->latitude;
+		$data_update = Event::where('id',$id)->first();	
+
+		if ($long == null && $lat == null) {
+			$input = [
+				'judul_event' => $request->judul_event,
+				'deskripsi' => $request->deskripsi,
+				'lokasi' => $request->lokasi,
+				'tanggal_event' => $request->tanggal_event,
+				'jam_mulai' => $request->jam_mulai,
+				'jam_selesai' => $request->jam_selesai,
+				'longitude' => $data_update->longitude,
+				'latitude' => $data_update->latitude,
+
+			];
+
+			
+
+			$data_update->update($input);
+
+		}else{
+			$input = [
+				'judul_event' => $request->judul_event,
+				'deskripsi' => $request->deskripsi,
+				'lokasi' => $request->lokasi,
+				'tanggal_event' => $request->tanggal_event,
+				'jam_mulai' => $request->jam_mulai,
+				'jam_selesai' => $request->jam_selesai,
+				'longitude' => $request->longitude,
+				'latitude' => $request->latitude,
+
+			];
+
+			
+
+			$data_update->update($input);
+
+		}
+		
+
+		return redirect()->back()->with('success', 'Event Berhasil Diperbarui');
+	}
+
+	public function superadmin_event_lokasi_event($id)
+	{
+		
+		$event = Event::where('id', $id)->get();
+
+		return view('super_admin.event_dan_wisata.event.lokasi', compact('event'));
+	}
+
+
+	public function superadmin_foto_event_edit($id)
+	{
+		
+		$foto_event = FotoEvent::where('id_event', $id)->get();
+		$event = Event::where('id', $id)->first();
+
+
+
+		return view('super_admin.event_dan_wisata.event.lihat_foto', compact('foto_event','event'));
+	}
+
+
+	public function superadmin_foto_event_add(Request $request)
+	{
+
+		
+		
+		$get_count = FotoEvent::where('id_event',$request->input('id_event'))->count();
+
+		$add_foto = new FotoEvent();
+
+		$add_foto->id_event = $request->input('id_event');
+		$add_foto->indeks = $get_count+1;
+
+		if ($request->hasFile('foto_event')) {
+			$file = $request->file('foto_event');
+			$filename = $file->getClientOriginalName();
+			$file->move('public/uploads/event/', $filename);
+			$add_foto->foto_event = $filename;
+		} else {
+			echo "Gagal upload gambar";
+		}
+
+		$add_foto->save();
+			# code...
+		
+
+		
+
+	    // return $cek_keranjang;
+
+		return redirect()->back()->with('success', 'Event Berhasil Ditambahkan');
 	}
 
 

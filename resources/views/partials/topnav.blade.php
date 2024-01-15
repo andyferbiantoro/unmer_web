@@ -21,7 +21,21 @@
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
 
         <img alt="image" src="{{asset ('public/assets/img/avatar/avatar-5.png')}}" class="rounded-circle mr-1">
-        <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->role}}</div>
+        
+
+         @if(Auth::user()->role == "superadmin")
+        <div class="d-sm-none d-lg-inline-block">Hi, {{$saldo_superadmin->nama}}</div></span></a></li>
+        @elseif(Auth::user()->role == "Admin Kasir")
+        <div class="d-sm-none d-lg-inline-block">Hi, {{$saldo_admin_kasir->nama}}</div>
+        @elseif(Auth::user()->role == "Admin Penginapan")
+        <div class="d-sm-none d-lg-inline-block">Hi, {{$saldo_admin_penginapan->nama}}</div>
+        @elseif(Auth::user()->role == "Admin Event")
+        <div class="d-sm-none d-lg-inline-block">Hi, {{$saldo_admin_event->nama}}</div>
+         @elseif(Auth::user()->role == "Admin Wisata")
+        <div class="d-sm-none d-lg-inline-block">Hi, {{$saldo_admin_wisata->nama}}</div>
+        @elseif(Auth::user()->role == "Admin Pendidikan")
+        <div class="d-sm-none d-lg-inline-block">Hi, {{$saldo_admin_pendidikan->nama}}</div>
+        @endif
     </a>
     <div class="dropdown-menu dropdown-menu-right">
 

@@ -29,12 +29,12 @@ Pembelian P@embelian Event dan Festival
           <tr>
             <th>No</th>
             <th>Nama Pemesan</th>
-            <th>Judul Tiket</th>
+            <th>Tiket</th>
             <th>Harga Tiket</th>
             <th>Kode Tiket</th>
             <th>Kode Transaksi</th>
+            <th>Tanggal Beli</th>
             <th>Status Transaksi</th>
-           
             <th style="display: none;">hidden</th>
           </tr>
         </thead>
@@ -45,9 +45,10 @@ Pembelian P@embelian Event dan Festival
             <td>{{$no++}}</td>
             <td>{{$data->nama}}</td>
             <td>{{$data->judul}}</td>
-            <td>{{$data->harga}}</td>
+            <td>Rp. <?=number_format($data->harga, 0, ".", ".")?>,00</td>
             <td>{{$data->kode_tiket}}</td>
             <td>{{$data->kode_transaksi}}</td>
+            <td>{{date("j F Y", strtotime($data->created_at))}}</td>
             <td>
                 @if($data->status == 'valid')
                 <div class="badge badge-success">Valid</div>
@@ -55,8 +56,7 @@ Pembelian P@embelian Event dan Festival
                 <div class="badge badge-danger">Pending</div>
                 @endif
               </td>
-          
-              <td style="display: none;">{{$data->id}}</td>
+            <td style="display: none;">{{$data->id}}</td>
             </tr>
             @endforeach
           </tbody>

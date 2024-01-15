@@ -15,7 +15,7 @@ Edit Event
 
       
        @foreach($event as $ev)
-       <a href="{{ route('admin_kelola_event') }}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
+       <a href="{{route('superadmin_lihat_detail_event',$ev->id)}}"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Kembali</button></a>
        @endforeach
       <br><br>
       <h2 class="primary">Edit Event</h2><br>
@@ -68,7 +68,9 @@ Edit Event
                 <input type="time" class="form-control" id="jam_selesai" name="jam_selesai" value="{{$data->jam_selesai}}"  required=""></input>
               </div>
 
-            
+             
+
+
               <div class="form-group">
                     <label>Posisi event</label>
                     <div class="row">
@@ -101,7 +103,7 @@ Edit Event
               </div>
 
             </form>
-            <hr>
+          
 
             @endforeach
               
@@ -109,7 +111,11 @@ Edit Event
 
           </div>
 
+          <div class="col-lg-6 col-sm-12 col-12">
+
+
           
+            </div>
           </div>
         </div>
       </div>

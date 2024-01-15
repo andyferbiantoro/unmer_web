@@ -34,7 +34,6 @@ Transaksi Event dan Festival
             <th>Tanggal Event</th>
             <th>Jam Mulai</th>
             <th>jam Selesai</th>
-            <th>Foto Event</th>
             <th>Opsi</th>
             <th style="display: none;">hidden</th>
           </tr>
@@ -50,7 +49,6 @@ Transaksi Event dan Festival
             <td>{{date("j F Y", strtotime($data->tanggal_event))}}</td>
             <td>{{ \Carbon\Carbon::parse($data->jam_mulai)->timezone('Asia/Jakarta')->format('H:i') }} WIB</td>
             <td>{{ \Carbon\Carbon::parse($data->jam_selesai)->timezone('Asia/Jakarta')->format('H:i') }} WIB</td>
-            <td><img style="border-radius: 0%" height="70" src="{{asset('/public/uploads/event/'.$data->foto_event)}}"></img></td>
 
             <td>
                       

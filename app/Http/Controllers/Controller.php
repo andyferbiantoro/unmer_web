@@ -21,7 +21,7 @@ class Controller extends BaseController
        $saldo_admin_Penginapan = Admin::where('role_admin','Admin Penginapan')->first();
        $saldo_admin_event = Admin::where('role_admin','Admin Event')->first();
        $saldo_amdin_pendidikan = Admin::where('role_admin','Admin Pendidikan')->first();
-
+       
        
       
        View::share ( 'saldo_superadmin', $saldo_superadmin );

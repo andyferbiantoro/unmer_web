@@ -158,13 +158,45 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 
 
 
+
+	//Superadmin_kelola_Event
+	Route::get('/superadmin_kelola_event', [SuperadminController::class, 'superadmin_kelola_event'])->name('superadmin_kelola_event');
+	Route::get('/superadmin_event_delete/{id}', [SuperadminController::class, 'superadmin_event_delete'])->name('superadmin_event_delete');
+	Route::post('/superadmin_event_add', [SuperadminController::class, 'superadmin_event_add'])->name('superadmin_event_add');
+
+
+
+	Route::get('/superadmin_lihat_detail_event{id}', [SuperadminController::class, 'superadmin_lihat_detail_event'])->name('superadmin_lihat_detail_event');
+	Route::post('/superadmin_fasilitas_event_add', [SuperadminController::class, 'superadmin_fasilitas_event_add'])->name('superadmin_fasilitas_event_add');
+	Route::get('/superadmin_fasilitas_event_delete/{id}', [SuperadminController::class, 'superadmin_fasilitas_event_delete'])->name('superadmin_fasilitas_event_delete');
+
+
+	Route::get('/superadmin_event_edit{id}', [SuperadminController::class, 'superadmin_event_edit'])->name('superadmin_event_edit');
+	Route::post('/superadmin_event_update/{id}', [SuperadminController::class, 'superadmin_event_update'])->name('superadmin_event_update');
+
+	Route::get('/superadmin_lihat_tiket_event{id}', [SuperadminController::class, 'superadmin_lihat_tiket_event'])->name('superadmin_lihat_tiket_event');
+	Route::post('/superadmin_tiket_event_add', [SuperadminController::class, 'superadmin_tiket_event_add'])->name('superadmin_tiket_event_add');
+	Route::get('/superadmin_tiket_event_delete/{id}', [SuperadminController::class, 'superadmin_tiket_event_delete'])->name('superadmin_tiket_event_delete');
+
+	Route::get('/superadmin_foto_event_edit{id}', [SuperadminController::class, 'superadmin_foto_event_edit'])->name('superadmin_foto_event_edit');
+	Route::post('/superadmin_foto_event_add', [SuperadminController::class, 'superadmin_foto_event_add'])->name('superadmin_foto_event_add');
+	Route::get('/superadmin_foto_event_delete/{id}', [SuperadminController::class, 'superadmin_foto_event_delete'])->name('superadmin_foto_event_delete');
+
+
+	Route::get('/superadmin_event_lokasi_event{id}', [SuperadminController::class, 'superadmin_event_lokasi_event'])->name('superadmin_event_lokasi_event');
+
+
+
+	//Superadmin_kelola_Wisata
+	Route::get('/superadmin_kelola_wisata', [SuperadminController::class, 'superadmin_kelola_wisata'])->name('superadmin_kelola_wisata');
+
 });	
 // ===========================================================================================================================
 
 
 //Routing untuk role Admin Kasir
 Route::middleware(['auth', 'admin_kasir'])->group(function () {
-	Route::get('/admin_kasir_dashboard', [AdminKasirController::class, 'admin_kasir_dashboard'])->name('admin_kasir_dashboard');
+	Route::get('/c', [AdminKasirController::class, 'admin_kasir_dashboard'])->name('admin_kasir_dashboard');
 
 	//Kasir agrikulture
 	Route::get('/admin_kasir_agrikulture', [AdminKasirController::class, 'admin_kasir_agrikulture'])->name('admin_kasir_agrikulture');
@@ -260,7 +292,7 @@ Route::middleware(['auth', 'admin_event'])->group(function () {
 	Route::get('/admin_kelola_event', [AdminEventController::class, 'admin_kelola_event'])->name('admin_kelola_event');
 	Route::post('/admin_event_add', [AdminEventController::class, 'admin_event_add'])->name('admin_event_add');
 	Route::post('/admin_event_update/{id}', [AdminEventController::class, 'admin_event_update'])->name('admin_event_update');
-	Route::get('/admin_event_delete/{id}', [AdminEventController::class, 'admin_event_delete'])->name('admin_event_delete');
+	
 
 
 	//edit
@@ -278,7 +310,7 @@ Route::middleware(['auth', 'admin_event'])->group(function () {
 	Route::get('/admin_fasilitas_event_delete/{id}', [AdminEventController::class, 'admin_fasilitas_event_delete'])->name('admin_fasilitas_event_delete');
 
 	//tiket event
-	Route::get('/admin_lihat_tiket_event{id}', [AdminEventController::class, 'admin_lihat_tiket_event'])->name('admin_lihat_tiket_event');
+	Route::get('/admin_lihat_tiket_event', [AdminEventController::class, 'admin_lihat_tiket_event'])->name('admin_lihat_tiket_event');
 	Route::post('/admin_tiket_event_add', [AdminEventController::class, 'admin_tiket_event_add'])->name('admin_tiket_event_add');
 	Route::get('/admin_tiket_event_delete/{id}', [AdminEventController::class, 'admin_tiket_event_delete'])->name('admin_tiket_event_delete');
 
@@ -291,6 +323,11 @@ Route::middleware(['auth', 'admin_event'])->group(function () {
 	//Scan Tiket Event
 	Route::get('/admin_scan_tiket_event', [AdminEventController::class, 'admin_scan_tiket_event'])->name('admin_scan_tiket_event');
 	Route::post('/admin_update_status_tiket_event/{id}', [AdminEventController::class, 'admin_update_status_tiket_event'])->name('admin_update_status_tiket_event');
+
+
+	Route::get('/admin_foto_event_edit{id}', [AdminEventController::class, 'admin_foto_event_edit'])->name('admin_foto_event_edit');
+	Route::post('/admin_foto_event_add', [AdminEventController::class, 'admin_foto_event_add'])->name('admin_foto_event_add');
+	Route::get('/admin_foto_event_delete/{id}', [AdminEventController::class, 'admin_foto_event_delete'])->name('admin_foto_event_delete');
 
 
 

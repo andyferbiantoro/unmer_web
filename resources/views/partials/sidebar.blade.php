@@ -56,13 +56,20 @@
             </ul>
           </li>
 
-          <li class="nav-item dropdown {{(request()->is('lapak')) ? 'active' : ''}}">
+           @if((request()->is('superadmin_kelola_event')))
+          <li class="nav-item dropdown {{(request()->is('superadmin_kelola_event')) ? 'active' : ''}}">
+          @elseif((request()->is('superadmin_kelola_wisata')))
+          <li class="nav-item dropdown {{(request()->is('superadmin_kelola_wisata')) ? 'active' : ''}}">
+          @else
+          <li class="nav-item dropdown">
+          @endif
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-mountain"></i>
-              <span>Wisata & Event</span></a>
+              <span>Event & Wisata</span></a>
               <ul class="dropdown-menu">
-                <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-hotel"></i></i><span>Wisata</span></a></li>
+                <li class="{{(request()->is('superadmin_kelola_event')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_event') }}"><i class="fas fa-hotel"></i></i><span>Event</span></a></li>
 
-                <li class="{{(request()->is('superadmin_koperasi')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_koperasi') }}"><i class="fas fa-hotel"></i></i><span>Event</span></a></li>
+                <li class="{{(request()->is('superadmin_kelola_wisata')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('superadmin_kelola_wisata') }}"><i class="fas fa-hotel"></i></i><span>Wisata</span></a></li>
+
               </ul>
             </li>
 
@@ -189,7 +196,23 @@
 
             <li class="{{(request()->is('admin_kelola_transaksi_event')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_kelola_transaksi_event') }}"><i class="fas fa-money-bill"></i></i><span>Kelola Transaksi</span></a></li>
 
-            <li class="{{(request()->is('admin_scan_tiket_event')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_scan_tiket_event') }}"><i class="fas fa-qrcode"></i><span>Scan Tiket</span></a></li>
+           
+
+            @if((request()->is('admin_scan_tiket_event')))
+            <li class="nav-item dropdown {{(request()->is('admin_scan_tiket_event')) ? 'active' : ''}}">
+            @elseif((request()->is('admin_lihat_tiket_event')))
+            <li class="nav-item dropdown {{(request()->is('admin_lihat_tiket_event')) ? 'active' : ''}}">
+            @else
+            <li class="nav-item dropdown">
+            @endif
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-ticket-alt"></i>
+              <span>Kelola Tiket</span></a>
+              <ul class="dropdown-menu">
+                <li class="{{(request()->is('admin_scan_tiket_event')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_scan_tiket_event') }}"><i class="fas fa-qrcode"></i><span>Scan Tiket</span></a></li>
+
+                <li class="{{(request()->is('admin_lihat_tiket_event')) ? 'active' : ''}}"><a class="nav-link" href="{{ route('admin_lihat_tiket_event') }}"><i class="fas fa-ticket-alt"></i><span>Daftar Tiket</span></a></li>
+              </ul>
+            </li>
 
            
 
