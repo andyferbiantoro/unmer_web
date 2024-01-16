@@ -19,15 +19,29 @@ class EventController extends Controller
 {
     //
     
-    public function list_event(){
-        
-        $images = [];
-        $k = Event::orderBy('id','desc')->get();
-
+    public function list_event(Request $request){
+        if($request->has('cari') && !empty($request->cari)){
+          
         $k = DB::table('foto_events')
         ->leftJoin('events','foto_events.id_event','events.id')
         ->select('foto_events.foto_event','foto_events.indeks','events.*')
-        ->where('foto_events.indeks','1')
+        ->where('foto_events.indeks','1')->where('judul_event', 'like', '%'.$request->cari.'%')
+        ->get();
+        } else {
+      
+            $k = DB::table('foto_events')
+            ->leftJoin('events','foto_events.id_event','events.id')
+            ->select('foto_events.foto_event','foto_events.indeks','events.*')
+            ->where('foto_events.indeks','1')
+            ->get();
+        }
+    
+
+       
+        $k = DB::table('foto_events')
+        ->leftJoin('events','foto_events.id_event','events.id')
+        ->select('foto_events.foto_event','foto_events.indeks','events.*')
+        ->where('foto_events.indeks','1')->where('judul_event', 'like', '%'.$request->cari.'%')
         ->get();
         foreach($k as $v){
             $tanggalObj = new DateTime($v->tanggal_event);
