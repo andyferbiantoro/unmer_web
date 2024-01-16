@@ -23,15 +23,23 @@ class EventController extends Controller
         
         $images = [];
         $k = Event::orderBy('id','desc')->get();
+
+        $k = DB::table('foto_events')
+        ->leftJoin('events','foto_events.id_event','events.id')
+        ->select('foto_events.foto_event','foto_events.indeks','events.*')
+        ->where('foto_events.indeks','1')
+        ->get();
         foreach($k as $v){
             $tanggalObj = new DateTime($v->tanggal_event);
-
-            $image = FotoEvent::where('id_event',$v->id)->where('indeks',1)->first();
-
             $namaBulan = $tanggalObj->format("F");
-
-            
             $v->nama_bulan = $namaBulan;
+            $v->foto = asset('uploads/event/' . $v->foto_event);
+
+
+            // $image = FotoEvent::where('id_event',$v->id)->where('indeks',1)->first();
+            
+            
+            
         //  foreach($image as $i){
 
         //     $i->foto = asset('uploads/event/' . $i->foto_event);
