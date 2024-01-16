@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Customer;
 use App\Models\DetailEvent;
 use App\Models\Event;
+use App\Models\FotoEvent;
 use App\Models\TiketEvent;
 use App\Models\TransaksiEvent;
 use DateTime;
@@ -23,10 +24,12 @@ class EventController extends Controller
         foreach($k as $v){
             $tanggalObj = new DateTime($v->tanggal_event);
 
+            $image = FotoEvent::where('id_event',$v->id)->where('indeks',1)->first();
+
             $namaBulan = $tanggalObj->format("F");
             
             $v->nama_bulan = $namaBulan;
-            $v->foto = asset('uploads/event/' . $v->foto_event);
+            $v->foto = asset('uploads/event/' . $image->foto_event);
         }
         if ($k) {
 
@@ -53,6 +56,30 @@ class EventController extends Controller
             return response()->json([
                 'code' => '200',
                 'data' => $k
+            ]);
+        } else {
+            return response()->json([
+                'code' => '500',
+                'data' => []
+            ]);
+        }
+
+    }
+
+    public function list_foto_event($id_event){
+
+        $image = FotoEvent::where('id_event',$id_event)->get();
+
+        foreach($image as $v)
+                {
+                    $v->foto = asset('uploads/event/' . $v->foto_event);
+                }       
+
+        if ($image) {
+
+            return response()->json([
+                'code' => '200',
+                'data' => $image
             ]);
         } else {
             return response()->json([
