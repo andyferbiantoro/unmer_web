@@ -20,6 +20,8 @@ class EventController extends Controller
     //
     
     public function list_event(){
+        
+        $images = [];
         $k = Event::orderBy('id','desc')->get();
         foreach($k as $v){
             $tanggalObj = new DateTime($v->tanggal_event);
@@ -27,9 +29,15 @@ class EventController extends Controller
             $image = FotoEvent::where('id_event',$v->id)->where('indeks',1)->first();
 
             $namaBulan = $tanggalObj->format("F");
+
             
             $v->nama_bulan = $namaBulan;
-            $v->foto = asset('uploads/event/' . $image->foto_event);
+        //  foreach($image as $i){
+
+        //     $i->foto = asset('uploads/event/' . $i->foto_event);
+        //  }
+        //  $v->foto = $image->foto;
+         
         }
         if ($k) {
 
