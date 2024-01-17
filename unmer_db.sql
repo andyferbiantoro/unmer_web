@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Jan 2024 pada 04.24
+-- Waktu pembuatan: 17 Jan 2024 pada 10.18
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -36,7 +36,7 @@ CREATE TABLE `admins` (
   `tanggal_lahir` date NOT NULL,
   `status` varchar(255) NOT NULL,
   `role_admin` varchar(255) NOT NULL,
-  `saldo` int(11) NOT NULL,
+  `saldo` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -46,11 +46,9 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `id_user`, `nama`, `nik`, `tempat_lahir`, `tanggal_lahir`, `status`, `role_admin`, `saldo`, `created_at`, `updated_at`) VALUES
-(10, 14, 'Dono Pradono', '35100114029900092', 'BWI', '2023-10-18', 'Aktif', 'Admin Pendidikan', 0, '2023-10-26 03:49:49', '2023-10-26 03:49:49'),
-(11, 15, 'Suherman', '35100114029900092', 'BWI', '2023-10-09', 'Aktif', 'Admin Event', 0, '2023-10-26 03:50:17', '2023-10-26 03:50:17'),
-(12, 16, 'Andy Ferbiantoro', '3510011402990001', 'BWI', '2023-10-16', 'Aktif', 'Admin Penginapan', 0, '2023-10-26 06:40:21', '2023-10-26 06:40:21'),
-(13, 18, 'Dono Pradono', '3510011402990003', 'Banyuwangi', '2023-11-07', 'Aktif', 'Admin Kasir', 310000, '2023-11-06 19:25:53', '2023-11-29 03:10:31'),
-(14, 2, 'Super Admin', '111111', 'bwi', '2000-11-01', 'Aktif', 'superadmin', 156000, NULL, '2023-11-28 03:50:01');
+(14, 2, 'Super Admin', '111111', 'bwi', '2000-11-01', 'Aktif', 'superadmin', 156000, NULL, '2023-11-28 03:50:01'),
+(24, 44, 'Suherman', '0010010010010', 'BWI', '2024-01-01', 'Aktif', 'Admin Event', 0, '2024-01-17 09:01:33', '2024-01-17 09:01:33'),
+(25, 45, 'Nana', '23123123123123', 'Jember', '2024-01-15', 'Aktif', 'Admin Event', 0, '2024-01-17 09:02:29', '2024-01-17 09:02:29');
 
 -- --------------------------------------------------------
 
@@ -185,11 +183,18 @@ INSERT INTO `detail_broadcasts` (`id`, `id_broadcast`, `id_user_penerima`, `crea
 
 CREATE TABLE `detail_events` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` int(11) NOT NULL,
+  `id_event` int(11) NOT NULL,
   `fasilitas` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `detail_events`
+--
+
+INSERT INTO `detail_events` (`id`, `id_event`, `fasilitas`, `created_at`, `updated_at`) VALUES
+(7, 15, 'wc', '2024-01-13 02:37:57', '2024-01-13 02:37:57');
 
 -- --------------------------------------------------------
 
@@ -323,6 +328,14 @@ CREATE TABLE `detail_wisatas` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `detail_wisatas`
+--
+
+INSERT INTO `detail_wisatas` (`id`, `id_wisata`, `fasilitas`, `created_at`, `updated_at`) VALUES
+(3, 2, 'toilet', '2024-01-07 07:01:55', '2024-01-07 07:01:55'),
+(4, 2, 'toilet', '2024-01-07 07:16:08', '2024-01-07 07:16:08');
+
 -- --------------------------------------------------------
 
 --
@@ -346,16 +359,24 @@ CREATE TABLE `events` (
   `id_admin` int(11) NOT NULL,
   `judul_event` varchar(255) NOT NULL,
   `deskripsi` text NOT NULL,
-  `lokasi` varchar(255) NOT NULL,
+  `lokasi` varchar(255) DEFAULT NULL,
   `tanggal_event` date NOT NULL,
   `jam_mulai` time NOT NULL,
   `jam_selesai` time NOT NULL,
-  `htn_event` int(11) NOT NULL,
   `status` varchar(255) NOT NULL,
-  `foto_event` varchar(255) DEFAULT NULL,
+  `longitude` varchar(255) NOT NULL,
+  `latitude` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `events`
+--
+
+INSERT INTO `events` (`id`, `id_admin`, `judul_event`, `deskripsi`, `lokasi`, `tanggal_event`, `jam_mulai`, `jam_selesai`, `status`, `longitude`, `latitude`, `created_at`, `updated_at`) VALUES
+(15, 11, 'Bazar Buku 4', 'qeqweqw', 'sasdasdasdad', '2024-01-19', '09:29:00', '12:29:00', '1', '114.31767975195311', '-8.267385442326582', '2024-01-13 02:29:35', '2024-01-15 12:50:34'),
+(16, 17, 'Bedah Rumah', 'rumahnya dibedah doang', 'bali', '2024-01-16', '10:33:00', '15:33:00', '1', '114.53450941052277', '-8.199874983533633', '2024-01-16 03:33:36', '2024-01-16 03:33:36');
 
 -- --------------------------------------------------------
 
@@ -421,6 +442,31 @@ CREATE TABLE `festivals` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `foto_events`
+--
+
+CREATE TABLE `foto_events` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_event` int(11) NOT NULL,
+  `indeks` int(11) NOT NULL,
+  `foto_event` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `foto_events`
+--
+
+INSERT INTO `foto_events` (`id`, `id_event`, `indeks`, `foto_event`, `created_at`, `updated_at`) VALUES
+(7, 15, 1, 'Feed_1_slide_1_Selasa_17-11-2023.jpg', '2024-01-15 03:44:13', '2024-01-15 03:44:13'),
+(8, 15, 2, 'Feed_2_slide_2_Selasa_20-11-2023.jpg', '2024-01-15 03:44:24', '2024-01-15 03:44:24'),
+(9, 16, 1, 'Feed_4_Senin_25-11-2023.jpg', '2024-01-16 03:33:36', '2024-01-16 03:33:36'),
+(10, 16, 2, 'Feed_2_Senin_17-11-2023.jpg', '2024-01-16 03:35:23', '2024-01-16 03:35:23');
 
 -- --------------------------------------------------------
 
@@ -778,7 +824,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (50, '2023_11_23_144233_create_transaksi_kirim_saldos_table', 20),
 (51, '2023_12_05_194122_create_drivers_table', 20),
 (52, '2024_01_03_161543_create_tiket_events_table', 20),
-(53, '2024_01_03_194523_create_panitia_events_table', 20);
+(53, '2024_01_03_194523_create_panitia_events_table', 20),
+(54, '2024_01_07_110458_create_tiket_wisatas_table', 21),
+(55, '2024_01_09_095107_create_transaksi_events_table', 22),
+(56, '2024_01_12_092612_create_foto_events_table', 23);
 
 -- --------------------------------------------------------
 
@@ -839,8 +888,7 @@ INSERT INTO `produk_agrikultures` (`id`, `id_market`, `nama_produk`, `kode_produ
 (8, 4, 'Wortel', '3221973871', 'Sayur', '10000', 'wortel.jpg', '1', 0, 13, '2023-10-27 18:56:40', '2023-11-23 08:25:56'),
 (10, 4, 'Apel', '9448777343', 'Buah', '20000', 'apel.jpg', '1', 16, 7, '2023-10-29 20:45:24', '2023-11-17 08:52:44'),
 (15, 4, 'kol', '9316462568', 'Sayur', '15000', 'kol.jpg', '1', 19, NULL, '2023-11-16 10:27:27', '2023-11-16 10:53:54'),
-(16, 4, 'Timun Renes', '2669266588', 'Sayur', '5000', 'timun.jpg', '1', 20, NULL, '2023-11-16 11:11:14', '2023-11-17 08:06:20'),
-(17, 8, 'Timun', '-792294533', 'Sayur', '20000', '095405600_1460032684-087708400_1426677006-timun.jpg', '1', 5, NULL, '2023-11-19 07:43:54', '2023-11-21 03:28:16');
+(18, 4, 'timun', '8915748554', 'Sayur', '4000', 'timun.jpg', '1', 13, NULL, '2024-01-04 09:41:49', '2024-01-04 09:41:49');
 
 -- --------------------------------------------------------
 
@@ -949,13 +997,49 @@ CREATE TABLE `tiket_events` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `id_event` int(11) NOT NULL,
   `judul` varchar(255) NOT NULL,
-  `keterangan` text NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
   `deskripsi` text NOT NULL,
   `harga` int(11) NOT NULL,
-  `foto_tiket` varchar(255) DEFAULT NULL,
+  `kode_tiket` varchar(255) DEFAULT NULL,
+  `stok` int(11) NOT NULL,
+  `sold` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `tiket_events`
+--
+
+INSERT INTO `tiket_events` (`id`, `id_event`, `judul`, `keterangan`, `deskripsi`, `harga`, `kode_tiket`, `stok`, `sold`, `created_at`, `updated_at`) VALUES
+(10, 15, 'tiket reguler', 'dsadasd', 'ini tiket biasa', 1000, '50406', 12, 0, '2024-01-15 12:38:40', '2024-01-15 12:38:40');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tiket_wisatas`
+--
+
+CREATE TABLE `tiket_wisatas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_wisata` int(11) NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `keterangan` text NOT NULL,
+  `deskripsi` text NOT NULL,
+  `kode_tiket` varchar(255) DEFAULT NULL,
+  `harga` int(11) NOT NULL,
+  `stok` int(11) NOT NULL,
+  `sold` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `tiket_wisatas`
+--
+
+INSERT INTO `tiket_wisatas` (`id`, `id_wisata`, `judul`, `keterangan`, `deskripsi`, `kode_tiket`, `harga`, `stok`, `sold`, `created_at`, `updated_at`) VALUES
+(4, 2, 'tiket reguler', 'murah', 'ini tiket biasa', '43642', 6000, 90, 0, '2024-01-08 09:18:53', '2024-01-08 09:18:53');
 
 -- --------------------------------------------------------
 
@@ -1017,6 +1101,32 @@ INSERT INTO `transaksi_agrikulture_offlines` (`id`, `id_user_admin_kasir`, `id_m
 (3, 18, 4, 10000, 20000, 10000, '2023-11-19 06:47:02', '2023-11-19 06:47:02'),
 (4, 18, 4, 10000, 20000, 10000, '2023-11-21 03:13:26', '2023-11-21 03:13:26'),
 (5, 18, 4, 10000, 20000, 10000, '2023-11-23 08:25:56', '2023-11-23 08:25:56');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `transaksi_events`
+--
+
+CREATE TABLE `transaksi_events` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_customer` int(11) NOT NULL,
+  `id_event` int(11) NOT NULL,
+  `id_tiket` int(11) NOT NULL,
+  `nominal` int(11) NOT NULL,
+  `kode_transaksi` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `transaksi_events`
+--
+
+INSERT INTO `transaksi_events` (`id`, `id_customer`, `id_event`, `id_tiket`, `nominal`, `kode_transaksi`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 6, 8, 10000, '5542', 'valid', '2024-01-09 07:54:23', '2024-01-09 09:02:00'),
+(2, 19, 6, 8, 100000, '3461', 'valid', '2024-01-09 09:02:53', '2024-01-09 09:07:33');
 
 -- --------------------------------------------------------
 
@@ -1168,6 +1278,7 @@ CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
+  `nama_admin` varchar(200) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `pin` varchar(11) DEFAULT NULL,
   `nid_unmer` varchar(100) DEFAULT NULL,
@@ -1189,18 +1300,17 @@ CREATE TABLE `users` (
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `email_verified_at`, `password`, `pin`, `nid_unmer`, `no_telp`, `otp`, `role`, `status`, `longitude`, `latitude`, `foto`, `id_unmer`, `no_unmer`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'andyfebri742@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', NULL, '000000', NULL, NULL, 'superadmin', '1', NULL, NULL, 'default.jpg', NULL, NULL, NULL, '2023-10-17 04:44:12', '2023-11-29 12:54:22'),
-(9, 'eggi@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', '111111', NULL, '085334770518', NULL, 'customer', '1', '113.88209684501402', '-8.383711103129833', 'default.jpg', NULL, NULL, NULL, NULL, NULL),
-(10, 'egga_maretiyo@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', '222222', NULL, '231323123', NULL, 'customer', '1', '113.88209684501402', '-8.383711103129833', 'default.jpg', NULL, NULL, NULL, NULL, NULL),
-(15, 'suherman@gmail.com', NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', NULL, '444444', '085245677312', '913768', 'Admin Event', '1', NULL, NULL, 'default.jpg', NULL, NULL, NULL, '2023-10-26 03:50:17', '2024-01-03 13:17:47'),
-(16, 'andyfebri@gmail.com', NULL, '$2y$10$C/47JCf363WhPfYyEnT9IuC6ciPoi2e8VXRPlOjiCwvoGqbNGrX2u', NULL, '111111', '085245677312', '', 'Admin Penginapan', '1', NULL, NULL, 'default.jpg', NULL, NULL, NULL, '2023-10-26 06:40:21', '2023-11-21 07:09:22'),
-(18, 'dono@gmail.com', NULL, '$2y$10$sVBM2ZbgrxBmk7/G.Gs93.0rmKvuiJF5UardcloVxUJ1VD/bWr2e2', NULL, '333333', '085245677312', NULL, 'Admin Kasir', '1', NULL, NULL, 'default.jpg', NULL, NULL, NULL, '2023-11-06 19:25:53', '2023-11-06 19:25:53'),
-(19, 'anam45188@gmail.com', NULL, NULL, NULL, NULL, '0833131', '', 'customer', '1', NULL, NULL, '1700386393.jpg', '123', '111122223334444', NULL, '2023-11-19 06:09:01', '2023-11-30 02:37:49'),
-(28, 'm.fernandahardiyanto@gmail.com', NULL, NULL, NULL, NULL, '081334946903', '', 'customer', '1', NULL, NULL, 'default.jpg', NULL, NULL, NULL, '2023-11-22 07:28:09', '2023-11-22 07:30:45'),
-(29, 'anam@gmail.com', NULL, NULL, NULL, NULL, '0822567181911', '3360', 'customer', '1', NULL, NULL, 'default.jpg', '8883996881089018', '2375689375', NULL, '2023-11-26 16:03:50', '2023-11-26 16:03:50'),
-(30, 'mahfudzkhoirunnizam@gmail.com', NULL, NULL, NULL, NULL, '083853958171', '', 'customer', '1', NULL, NULL, 'default.jpg', '222', '2505614153', NULL, '2023-11-26 16:04:44', '2023-11-26 18:10:13'),
-(31, 'andyfebri999@gmail.com', NULL, NULL, NULL, NULL, '085334770518', '', 'customer', '1', NULL, NULL, 'default.jpg', '111', '7999379249', NULL, '2023-11-28 03:05:10', '2023-11-28 04:09:55');
+INSERT INTO `users` (`id`, `email`, `email_verified_at`, `nama_admin`, `password`, `pin`, `nid_unmer`, `no_telp`, `otp`, `role`, `status`, `longitude`, `latitude`, `foto`, `id_unmer`, `no_unmer`, `remember_token`, `created_at`, `updated_at`) VALUES
+(2, 'andyfebri742@gmail.com', NULL, NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', NULL, '000000', NULL, NULL, 'superadmin', '1', NULL, NULL, 'default.jpg', NULL, NULL, NULL, '2023-10-17 04:44:12', '2023-11-29 12:54:22'),
+(9, 'eggi@gmail.com', NULL, NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', '111111', NULL, '085334770518', NULL, 'customer', '1', '113.88209684501402', '-8.383711103129833', 'default.jpg', NULL, NULL, NULL, NULL, NULL),
+(10, 'egga_maretiyo@gmail.com', NULL, NULL, '$2y$10$3F7jQoWrorknEYX5oUR.tOXLNls8TjsxOMxSBEVvkbLsBe78kdUN.', '222222', NULL, '231323123', NULL, 'customer', '1', '113.88209684501402', '-8.383711103129833', 'default.jpg', NULL, NULL, NULL, NULL, NULL),
+(19, 'anam45188@gmail.com', NULL, NULL, NULL, NULL, NULL, '0833131', '', 'customer', '1', NULL, NULL, '1700386393.jpg', '123', '111122223334444', NULL, '2023-11-19 06:09:01', '2023-11-30 02:37:49'),
+(28, 'm.fernandahardiyanto@gmail.com', NULL, NULL, NULL, NULL, NULL, '081334946903', '', 'customer', '1', NULL, NULL, 'default.jpg', NULL, NULL, NULL, '2023-11-22 07:28:09', '2023-11-22 07:30:45'),
+(29, 'anam@gmail.com', NULL, NULL, NULL, NULL, NULL, '0822567181911', '3360', 'customer', '1', NULL, NULL, 'default.jpg', '8883996881089018', '2375689375', NULL, '2023-11-26 16:03:50', '2023-11-26 16:03:50'),
+(30, 'mahfudzkhoirunnizam@gmail.com', NULL, NULL, NULL, NULL, NULL, '083853958171', '', 'customer', '1', NULL, NULL, 'default.jpg', '222', '2505614153', NULL, '2023-11-26 16:04:44', '2023-11-26 18:10:13'),
+(31, 'andyfebri999@gmail.com', NULL, NULL, NULL, NULL, NULL, '085334770518', '', 'customer', '1', NULL, NULL, 'default.jpg', '111', '7999379249', NULL, '2023-11-28 03:05:10', '2023-11-28 04:09:55'),
+(44, 'suherman@gmail.com', NULL, 'Suherman', '$2y$10$MinMacHR/upBt6pqGvqd4Olnsj47n3ltPr0ZMvkXRb7HARY3X6u3S', NULL, '111222', '082234453342', NULL, 'Admin Event', '1', NULL, NULL, 'default.jpg', NULL, NULL, NULL, '2024-01-17 09:01:33', '2024-01-17 09:01:33'),
+(45, 'nana@gmail.com', NULL, 'Nana', '$2y$10$P10mXxRoAaRMXE/0K5rd5OgA4fRbyRNfTtoF4BuTBs.qSW//ZUf3O', NULL, '112211', '23123123123', NULL, 'Admin Event', '1', NULL, NULL, 'default.jpg', NULL, NULL, NULL, '2024-01-17 09:02:29', '2024-01-17 09:02:29');
 
 -- --------------------------------------------------------
 
@@ -1238,19 +1348,26 @@ CREATE TABLE `wisatas` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `id_admin` int(11) NOT NULL,
   `nama_tempat_wisata` varchar(255) NOT NULL,
-  `Deskripsi` text NOT NULL,
-  `htm_wisata` int(11) NOT NULL,
+  `deskripsi` text NOT NULL,
   `hari_operasional_awal` varchar(255) NOT NULL,
   `hari_operasional_akhir` varchar(255) NOT NULL,
   `jam_buka` time NOT NULL,
   `jam_tutup` time NOT NULL,
   `alamat` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
+  `foto_wisata` varchar(255) NOT NULL,
   `longitude` varchar(255) NOT NULL,
   `latitude` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `wisatas`
+--
+
+INSERT INTO `wisatas` (`id`, `id_admin`, `nama_tempat_wisata`, `deskripsi`, `hari_operasional_awal`, `hari_operasional_akhir`, `jam_buka`, `jam_tutup`, `alamat`, `status`, `foto_wisata`, `longitude`, `latitude`, `created_at`, `updated_at`) VALUES
+(2, 16, 'Ijen Geopark', 'ini kawah ijen', 'Senin', 'Sabtu', '07:59:00', '16:59:00', 'Pesanggaran', '1', 'Screenshot_3.jpg', '114.09280334814451', '-8.358216900982743', '2024-01-07 07:00:23', '2024-01-09 02:46:23');
 
 --
 -- Indexes for dumped tables
@@ -1369,6 +1486,12 @@ ALTER TABLE `favorit_koperasis`
 -- Indeks untuk tabel `festivals`
 --
 ALTER TABLE `festivals`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `foto_events`
+--
+ALTER TABLE `foto_events`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1506,6 +1629,12 @@ ALTER TABLE `tiket_events`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `tiket_wisatas`
+--
+ALTER TABLE `tiket_wisatas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `transaksi_agrikultures`
 --
 ALTER TABLE `transaksi_agrikultures`
@@ -1515,6 +1644,12 @@ ALTER TABLE `transaksi_agrikultures`
 -- Indeks untuk tabel `transaksi_agrikulture_offlines`
 --
 ALTER TABLE `transaksi_agrikulture_offlines`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `transaksi_events`
+--
+ALTER TABLE `transaksi_events`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1568,7 +1703,7 @@ ALTER TABLE `wisatas`
 -- AUTO_INCREMENT untuk tabel `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT untuk tabel `banks`
@@ -1604,7 +1739,7 @@ ALTER TABLE `detail_broadcasts`
 -- AUTO_INCREMENT untuk tabel `detail_events`
 --
 ALTER TABLE `detail_events`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_festivals`
@@ -1640,7 +1775,7 @@ ALTER TABLE `detail_transaksi_koperasis`
 -- AUTO_INCREMENT untuk tabel `detail_wisatas`
 --
 ALTER TABLE `detail_wisatas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `drivers`
@@ -1652,7 +1787,7 @@ ALTER TABLE `drivers`
 -- AUTO_INCREMENT untuk tabel `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -1677,6 +1812,12 @@ ALTER TABLE `favorit_koperasis`
 --
 ALTER TABLE `festivals`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `foto_events`
+--
+ALTER TABLE `foto_events`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `hotels`
@@ -1760,7 +1901,7 @@ ALTER TABLE `market_agrikultures`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
@@ -1772,7 +1913,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT untuk tabel `produk_agrikultures`
 --
 ALTER TABLE `produk_agrikultures`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk_koperasis`
@@ -1802,7 +1943,13 @@ ALTER TABLE `status_menus`
 -- AUTO_INCREMENT untuk tabel `tiket_events`
 --
 ALTER TABLE `tiket_events`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT untuk tabel `tiket_wisatas`
+--
+ALTER TABLE `tiket_wisatas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaksi_agrikultures`
@@ -1815,6 +1962,12 @@ ALTER TABLE `transaksi_agrikultures`
 --
 ALTER TABLE `transaksi_agrikulture_offlines`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `transaksi_events`
+--
+ALTER TABLE `transaksi_events`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaksi_kirim_saldos`
@@ -1844,7 +1997,7 @@ ALTER TABLE `transaksi_top_ups`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT untuk tabel `warnas`
@@ -1856,7 +2009,7 @@ ALTER TABLE `warnas`
 -- AUTO_INCREMENT untuk tabel `wisatas`
 --
 ALTER TABLE `wisatas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -145,6 +145,11 @@ Kelola Event dan Festival
           <input type="time" class="form-control" id="jam_selesai" name="jam_selesai"  required=""></input>
         </div>
 
+         <div class="form-group">
+          <label for="foto_event">Foto Event</label>
+          <input type="file" class="form-control" id="foto_event" name="foto_event"  required=""></input>
+        </div>
+
         
         <div class="form-group">
           <label>Posisi Event</label>
