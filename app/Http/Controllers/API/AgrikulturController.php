@@ -67,10 +67,16 @@ class AgrikulturController extends Controller
         }
     }
 
-    public function list_produk_market($id_market)
+    public function list_produk_market($id_market,Request $request)
     {
+        if($request->has('cari') && !empty($request->cari)){
+            $produk = ProdukAgrikulture::where('id_market', $id_market)
+            ->where('nama_produk', 'like', '%'.$request->cari.'%')->orderBy('id', 'desc')->get();
+        }else{
+            $produk = ProdukAgrikulture::where('id_market', $id_market)->orderBy('id', 'desc')->get();
+        }
 
-        $produk = ProdukAgrikulture::where('id_market', $id_market)->orderBy('id', 'desc')->get();
+
         // $produk = DB::table('produk_agrikultures')
         // ->leftjoin('kategori_produk_agrikultures','produk_agrikultures.id_kategori_produk','kategori_produk_agrikultures.id')
         // ->select('kategori_produk_agrikultures.*','produk_agrikultures.*')

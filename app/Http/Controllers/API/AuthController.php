@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\KontakBantuan;
+use App\Models\Notif;
 use App\Models\StatusMenu;
 use App\Models\TransaksiAgrikulture;
 use App\Models\TransaksiKirimSaldo;
@@ -200,7 +201,7 @@ class AuthController extends Controller
             ->select('users.*','users.id as id_user','drivers.*','drivers.id as id_driver')->where('users.id',$cekotp->id)->first();
             $data->foto= asset('uploads/profil/'.$data->foto);
 
-            }else if($cekotp->role=='admin_tiket'){
+            }else if($cekotp->role=='Admin Event'){
                 $data = DB::table('users')
                 ->select('users.*')->where('users.id',$cekotp->id)->first();
                 $data->foto= asset('uploads/profil/'.$data->foto);
@@ -468,6 +469,13 @@ $end = $tanggal2.'-'.$bulan2.'-'.$tahun2;
     ]);
 
 
+}
+
+public function notif(){
+    $notif = new Notif();
+    $tokenList ='fl7ZqIljRQq_1Tc01jG9xP:APA91bEdbSEZSZxkKgZOKz3V623Ov5Ofr25mFpvt1mSTKTCU8zilJOqhqPRhRZlmcSCNWMQQbl1xbQUkvsgewYfD0ODBvS4uVi-5vOOzCsSrFjDAfoG3au5LF-1ZifachMkTiOwOrp_I';
+    $notif->sendNotifSaldo($tokenList,"Hai Ibu ada agenda kegiatan posyandu nih, yang diadakan hari ini."," Jangan sampai terlewat ya !",
+     "Notifikasi Posyandu" );
 }
 
 

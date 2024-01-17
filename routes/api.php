@@ -97,6 +97,7 @@ Route::post('customer/koperasi/create_transaksi',[KoperasiController::class,'cre
 Route::get('customer/list_event',[EventController::class,'list_event']);
 Route::get('customer/fasilitas/{id_event}',[EventController::class,'fasilitas']);
 Route::get('customer/list_tiket/{id_event}',[EventController::class,'list_tiket_event']);
+Route::get('customer/foto_event/{id_event}',[EventController::class,'list_foto_event']);
 Route::get('customer/cek_kode_tiket',[EventController::class,'cektiket']);
 Route::get('customer/registrasi_tiket',[EventController::class,'registrasi_tiket']);
 Route::post('customer/create_transaki_tiket',[EventController::class,'create_transaki_tiket']);
@@ -108,6 +109,7 @@ Route::get('customer/list_transaki_tiket_first/{id}',[EventController::class,'li
 
 
 
-Route::get('notif_saldo',[SaldoController::class,'sendNotifSaldo']);
+
+Route::get('notif_saldo',[AuthController::class,'notif']);
 
 

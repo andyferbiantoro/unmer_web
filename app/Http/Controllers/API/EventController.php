@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Customer;
 use App\Models\DetailEvent;
 use App\Models\Event;
+use App\Models\FotoEvent;
 use App\Models\TiketEvent;
 use App\Models\TransaksiEvent;
 use DateTime;
@@ -18,15 +19,47 @@ class EventController extends Controller
 {
     //
     
-    public function list_event(){
-        $k = Event::orderBy('id','desc')->get();
+    public function list_event(Request $request){
+        if($request->has('cari') && !empty($request->cari)){
+          
+        $k = DB::table('foto_events')
+        ->leftJoin('events','foto_events.id_event','events.id')
+        ->select('foto_events.foto_event','foto_events.indeks','events.*')
+        ->where('foto_events.indeks','1')->where('judul_event', 'like', '%'.$request->cari.'%')
+        ->get();
+        } else {
+      
+            $k = DB::table('foto_events')
+            ->leftJoin('events','foto_events.id_event','events.id')
+            ->select('foto_events.foto_event','foto_events.indeks','events.*')
+            ->where('foto_events.indeks','1')
+            ->get();
+        }
+    
+
+       
+        $k = DB::table('foto_events')
+        ->leftJoin('events','foto_events.id_event','events.id')
+        ->select('foto_events.foto_event','foto_events.indeks','events.*')
+        ->where('foto_events.indeks','1')->where('judul_event', 'like', '%'.$request->cari.'%')
+        ->get();
         foreach($k as $v){
             $tanggalObj = new DateTime($v->tanggal_event);
-
             $namaBulan = $tanggalObj->format("F");
-            
             $v->nama_bulan = $namaBulan;
             $v->foto = asset('uploads/event/' . $v->foto_event);
+
+
+            // $image = FotoEvent::where('id_event',$v->id)->where('indeks',1)->first();
+            
+            
+            
+        //  foreach($image as $i){
+
+        //     $i->foto = asset('uploads/event/' . $i->foto_event);
+        //  }
+        //  $v->foto = $image->foto;
+         
         }
         if ($k) {
 
@@ -53,6 +86,30 @@ class EventController extends Controller
             return response()->json([
                 'code' => '200',
                 'data' => $k
+            ]);
+        } else {
+            return response()->json([
+                'code' => '500',
+                'data' => []
+            ]);
+        }
+
+    }
+
+    public function list_foto_event($id_event){
+
+        $image = FotoEvent::where('id_event',$id_event)->get();
+
+        foreach($image as $v)
+                {
+                    $v->foto = asset('uploads/event/' . $v->foto_event);
+                }       
+
+        if ($image) {
+
+            return response()->json([
+                'code' => '200',
+                'data' => $image
             ]);
         } else {
             return response()->json([
