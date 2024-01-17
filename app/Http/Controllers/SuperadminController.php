@@ -134,16 +134,28 @@ class SuperadminController extends Controller
 	public function admin_add(Request $request)
 	{
 
-		$data = ([
-			'email' => $request['email'],
-			'nid_unmer' => $request['nid_unmer'],
-			'no_telp' => $request['no_telp'],
-			'password' => Hash::make($request['password']),
-			'role' => $request['role'],
-			'status' => '1',
-		]);
+		$cek_nid = User::where('nid_unmer', $request->nid_unmer)->first();
+		$cek_email = User::where('email', $request->email)->first();
 
-		$lastid = User::create($data)->id;
+		if ($cek_nid ) {
+			return redirect()->back()->with('error', 'Tambah Admin Gagal, NID Sudah terdaftar');
+		
+		}elseif($cek_email){
+			return redirect()->back()->with('error', 'Tambah Admin Gagal, Email Sudah terdaftar');
+
+		}else{
+			$data = ([
+				'email' => $request['email'],
+				'nid_unmer' => $request['nid_unmer'],
+				'no_telp' => $request['no_telp'],
+				'password' => Hash::make($request['password']),
+				'role' => $request['role'],
+				'status' => '1',
+				'nama_admin' =>'nama_admin',
+			]);
+
+			$lastid = User::create($data)->id;
+		}
 
 
 		$data_add = new Admin();
@@ -157,6 +169,19 @@ class SuperadminController extends Controller
 
 
 		$data_add->save();
+
+		$ambil_nama = Admin::where('id_user', $lastid)->first();
+
+		$data_update = User::where('id', $lastid)->first();
+		// return $data_update;
+
+		$input = [
+			'nama_admin' => $ambil_nama->nama,
+			
+		];
+
+		$data_update->update($input);
+
 
 		return redirect()->back()->with('success', 'Admin Berhasil Ditambahkan');
 	}

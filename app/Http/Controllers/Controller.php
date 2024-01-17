@@ -22,13 +22,16 @@ class Controller extends BaseController
        $saldo_admin_event = Admin::where('role_admin','Admin Event')->first();
        $saldo_amdin_pendidikan = Admin::where('role_admin','Admin Pendidikan')->first();
        
-       
+       // $nama_admin_event =  Admin::where('role_admin','Admin Event')->where('id_user',Auth::user()->id)->first();
       
        View::share ( 'saldo_superadmin', $saldo_superadmin );
        View::share ( 'saldo_admin_kasir', $saldo_admin_kasir );
        View::share ( 'saldo_admin_Penginapan', $saldo_admin_Penginapan );
        View::share ( 'saldo_admin_event', $saldo_admin_event );
        View::share ( 'saldo_amdin_pendidikan', $saldo_amdin_pendidikan );
+
+
+       
       
     }  
 }

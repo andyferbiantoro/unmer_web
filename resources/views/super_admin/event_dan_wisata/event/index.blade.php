@@ -37,7 +37,6 @@ Kelola Event dan Festival
               <th>Tanggal Event</th>
               <th>Jam Mulai</th>
               <th>jam Selesai</th>
-              <th>Foto Event</th>
               <th>Opsi</th>
               <th style="display: none;">hidden</th>
             </tr>
@@ -54,7 +53,7 @@ Kelola Event dan Festival
               <td>{{date("j F Y", strtotime($data->tanggal_event))}}</td>
               <td>{{ \Carbon\Carbon::parse($data->jam_mulai)->timezone('Asia/Jakarta')->format('H:i') }} WIB</td>
               <td>{{ \Carbon\Carbon::parse($data->jam_selesai)->timezone('Asia/Jakarta')->format('H:i') }} WIB</td>
-              <td>td>
+            
 
               <td>
                 <a href="{{route('superadmin_lihat_detail_event',$data->id)}}"><button class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i> Detail</button></a>
@@ -146,12 +145,7 @@ Kelola Event dan Festival
           <input type="time" class="form-control" id="jam_selesai" name="jam_selesai"  required=""></input>
         </div>
 
-        <div class="form-group">
-          <label for="foto_event">Foto Event</label>
-          <input type="file" class="form-control" id="foto_event" name="foto_event" required="" ></input>
-        </div>
-
-
+        
         <div class="form-group">
           <label>Posisi Event</label>
           <div class="row">

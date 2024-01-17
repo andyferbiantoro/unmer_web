@@ -23,23 +23,19 @@
         <img alt="image" src="{{asset ('public/assets/img/avatar/avatar-5.png')}}" class="rounded-circle mr-1">
         
 
-        @if(Auth::user()->role == "superadmin")
-        <div class="d-sm-none d-lg-inline-block">Hi, {{$saldo_superadmin->nama}}</div></span></a></li>
-          @if(Auth::user()->role == "superadmin")
-            <a href="{{route('logout_superadmin')}}" class="dropdown-item has-icon text-danger">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-            @endif
+       @if(Auth::user()->role == "superadmin")
+        <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->role}}</div>
+          
         @elseif(Auth::user()->role == "Admin Kasir")
-        <div class="d-sm-none d-lg-inline-block">Hi, {{$saldo_admin_kasir->nama}}</div>
+        <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->nama_admin}}</div>
         @elseif(Auth::user()->role == "Admin Penginapan")
-        <div class="d-sm-none d-lg-inline-block">Hi, {{$saldo_admin_penginapan->nama}}</div>
+        <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->nama_admin}}</div>
         @elseif(Auth::user()->role == "Admin Event")
-        <div class="d-sm-none d-lg-inline-block">Hi, {{$saldo_admin_event->nama}}</div>
+        <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->nama_admin}}</div>
         @elseif(Auth::user()->role == "Admin Wisata")
-        <div class="d-sm-none d-lg-inline-block">Hi, {{$saldo_admin_wisata->nama}}</div>
+        <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->nama_admin}}</div>
         @elseif(Auth::user()->role == "Admin Pendidikan")
-        <div class="d-sm-none d-lg-inline-block">Hi, {{$saldo_admin_pendidikan->nama}}</div>
+        <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->nama_admin}}</div>
         @endif
     </a>
     <div class="dropdown-menu dropdown-menu-right">
@@ -55,6 +51,11 @@
             </a> -->
             <div class="dropdown-divider"></div>
           
+            @if(Auth::user()->role == "superadmin")
+            <a href="{{route('logout_superadmin')}}" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            @endif
 
             @if(Auth::user()->role == "Admin Kasir")
             <a href="{{route('admin_kasir_logout')}}" class="dropdown-item has-icon text-danger">
