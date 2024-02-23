@@ -44,12 +44,23 @@
               <div class="card-body">
                 <form action="{{route('proses_cek_otp')}}" method="post">
                   {{csrf_field()}}
+                   
 
                   <input type="text" class="form-control" tabindex="1" required="" name="otp" placeholder="Kode OTP"><br>
                  
                   <button type="submit" class="btn btn-primary btn-lg btn-block">Lanjutkan</button>
-                </form>   
+                </form>  
+                <hr>
+
               </div>
+
+              <form action="{{route('proses_cek_nid')}}" method="post">
+                    {{csrf_field()}}
+                    
+                     <input type="hidden" class="form-control" tabindex="1" required="" name="nid_unmer" value="{{$cek_nid->nid_unmer}}">
+
+                    <button type="submit" class="btn btn-warning btn-sm btn-block">Kirim Ulang Kode OTP</button>
+              </form> 
             </div>
           </div>
         </div>

@@ -28,6 +28,7 @@ Route::post('/proses_cek_nid', [AuthController::class, 'proses_cek_nid'])->name(
 
 Route::get('/cek_otp', [AuthController::class, 'cek_otp'])->name('cek_otp');
 Route::post('/proses_cek_otp', [AuthController::class, 'proses_cek_otp'])->name('proses_cek_otp');
+Route::post('/requestOTP', [AuthController::class, 'requestOTP'])->name('requestOTP');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/proses_login', [AuthController::class, 'proses_login'])->name('proses_login');

@@ -8,11 +8,15 @@ use App\Models\User;
 class AuthController extends Controller
 {
     //
-	public function cek_nid()
-	{
+	public function cek_nid(Request $request)
+	{	
+
+		$get_email = User::where('otp', $request->otp)->first();
 
 		return view('auth.cek_nid');
 	}
+
+
 
 	public function proses_cek_nid(Request $request){
 
@@ -32,7 +36,8 @@ class AuthController extends Controller
 			$get_id = User::where('nid_unmer', $request->nid_unmer)->pluck('id');
 			// return $get_id;
 			$this->received($get_id);
-			return redirect('/cek_otp')->with('success', 'Kami telah mengirimkan kode OTP, Silahkan masukkan kode otp anda');
+			
+			return view('auth.cek_otp', compact('cek_nid'))->with('success', 'Kami telah mengirimkan kode OTP, Silahkan masukkan kode otp anda');
 		}else{
 			return redirect()->back()->with('error', 'NID belum terdaftar');
 
@@ -62,18 +67,22 @@ class AuthController extends Controller
 	public function cek_otp()
 	{
 
+		
 		return view('auth.cek_otp');
 	}
+
 
 	public function proses_cek_otp(Request $request){
 
 
 		$cek_otp = User::where('otp', $request->otp)->first();
+		// $get_email = User::where('nid_unmer', $request->nid_unmer)->first();
+
 		// return $cek_otp;
 		if ($cek_otp) {
 
+
 			$hapus_otp = User::where('otp', $cek_otp->otp)->first();
-			
 			
 			$input = [
 				'otp' => null,
@@ -81,7 +90,7 @@ class AuthController extends Controller
 
 			$hapus_otp->update($input);
 
-			return redirect('/login')->with('success', 'Silahkan masukkan password anda');
+			return view('auth.login', compact('cek_otp'))->with('success', 'Silahkan masukkan password anda');
 		}else{
 			return redirect()->back()->with('error', 'Kode OTP Salah');
 
@@ -89,8 +98,14 @@ class AuthController extends Controller
 	}
 
 
+
+
+
 	public function login()
 	{
+
+		
+
 
 		return view('auth.login');
 	}

@@ -27,7 +27,8 @@
               <img src="public/assets/img/Unmer_Branding_Biru.png" alt="logo" width="200" >
             </div>
              <div class="text-center" style="color: #192999"><h6>Silakan Login</h6></div>
-             <div class="text-center" style="color: #192999"><h6>Universitas Merdeka Malang</h6></div><br>
+             <div class="text-center" style="color: #192999"><h6>Universitas Merdeka Malang</h6></div>
+             <div class="text-center" style="color: #192999"><h6>Ke Email : {{$cek_otp->email}}</h6></div><br>
                           @if (session('success'))
                                 <div class="alert alert-success">
                                     {{ session('success') }}
@@ -44,7 +45,7 @@
               <div class="card-body">
                 <form action="{{route('proses_login')}}" method="post">
                   {{csrf_field()}}
-                  <input type="text" class="form-control" tabindex="1" required="" name="email" placeholder="email"><br>
+                  <input type="hidden" class="form-control" tabindex="1" required="" name="email"  value="{{$cek_otp->email}}" >
                   <input type="password" class="form-control" tabindex="1" required="" name="password" placeholder="Password"><br>
                  
                   <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
